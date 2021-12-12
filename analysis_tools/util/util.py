@@ -3,9 +3,7 @@
 ###############################################
 
 
-from util.env import *
-from util.config import *
-
+from analysis_tools.util.env import *
 
 ### lambda functions
 tprint     = lambda dic: print(tabulate(dic, headers='keys', tablefmt='psql'))  # print 'dic' with fancy 'psql' form
@@ -21,11 +19,14 @@ def rmdir(path):
 
 ### PATH
 class PATH:
-    ROOT   = abspath(dirname(os.getcwd()))
-    SRC    = join(ROOT, 'src')
-    INPUT  = join(ROOT, 'input')
-    OUTPUT = join(ROOT, 'output')
-    TRAIN  = join(INPUT, 'train')
-    TEST   = join(INPUT, 'test')
-    CKPT   = join(SRC, 'ckpt')
-    RESULT = join(ROOT, 'result')
+    @classmethod
+    def update(cls, ROOT='.'):
+        cls.ROOT   = abspath(ROOT)
+        cls.SRC    = join(cls.ROOT, 'src')
+        cls.INPUT  = join(cls.ROOT, 'input')
+        cls.OUTPUT = join(cls.ROOT, 'output')
+        cls.TRAIN  = join(cls.INPUT, 'train')
+        cls.TEST   = join(cls.INPUT, 'test')
+        cls.CKPT   = join(cls.SRC, 'ckpt')
+        cls.RESULT = join(cls.ROOT, 'result')
+PATH.update("..")

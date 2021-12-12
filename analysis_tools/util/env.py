@@ -58,11 +58,11 @@ plt.style.use('seaborn-whitegrid')
 
 
 ### Set options
-np.set_printoptions(suppress=True, precision=6, edgeitems=20, linewidth=1000)
-pd.set_option('display.max_rows', 1000)
+np.set_printoptions(suppress=True, precision=6, edgeitems=20, linewidth=100)
+pd.set_option('display.max_rows', 100)
 pd.set_option('display.max_columns', 100)
-pd.set_option('display.max_colwidth', 1000)
-pd.set_option('display.width', 1000)
+pd.set_option('display.max_colwidth', 100)
+pd.set_option('display.width', 100)
 
 
 ### Warning

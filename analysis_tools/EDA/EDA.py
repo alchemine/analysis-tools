@@ -1,7 +1,6 @@
-from util.util import *
+from analysis_tools.util.util import *
 from sklearn import ensemble
 from sklearn.inspection import permutation_importance
-
 
 
 class EDA:
