@@ -1,9 +1,9 @@
-### util.py ###################################
+### common.py ###################################
 # Commonly used functions, classes are defined in here
 ###############################################
 
 
-from analysis_tools.util.env import *
+from analysis_tools.common.env import *
 
 ### lambda functions
 tprint     = lambda dic: print(tabulate(dic, headers='keys', tablefmt='psql'))  # print 'dic' with fancy 'psql' form
