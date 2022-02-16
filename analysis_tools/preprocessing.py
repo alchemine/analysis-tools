@@ -1,4 +1,4 @@
-from analysis_tools.common.util import *
+from analysis_tools.common import *
 from sklearn.preprocessing import OrdinalEncoder, OneHotEncoder, StandardScaler
 
 
