@@ -1,4 +1,6 @@
 from analysis_tools.common import *
+from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor
+from sklearn.inspection import permutation_importance
 
 
 ## Missing value
@@ -112,3 +114,34 @@ def plot_corr(data, figsize=get_figsize(1, 1), dir_path=PATH.RESULT, plot=PLOT):
         mask = np.zeros_like(corr, dtype=np.bool)
         mask[np.triu_indices_from(mask)] = True
         sns.heatmap(corr, mask=mask, ax=ax, annot=True, fmt=".2f", cmap='coolwarm', cbar=False)
+
+
+## Feature importance
+def get_feature_importance(X, y, problem='classification', bins=BINS, figsize=get_figsize(1, 1), dir_path=PATH.RESULT, plot=PLOT):
+    ## 1. Model
+    model = RandomForestClassifier(n_jobs=-1) if problem == 'classification' else RandomForestRegressor(n_jobs=-1)
+    model.fit(X, y)
+
+    ## 2. Get feature importance
+    MDI_importance  = pd.Series(model.feature_importances_, index=X.columns).sort_values(ascending=False)
+    perm_importance = pd.Series(permutation_importance(model, X, y).importances_mean, index=X.columns).sort_values(ascending=False)
+
+    ## 3. Mean importance
+    fi1     = pd.Series(range(len(MDI_importance)), index=MDI_importance.index)
+    fi2     = pd.Series(range(len(perm_importance)), index=perm_importance.index)
+    mean_fi = ((fi1 + fi2)/2).sort_values()
+
+    ## 4. Plot
+    fig, axes = plt.subplots(3, 1, figsize=figsize)
+    with FigProcessor(fig, dir_path, plot, "Feature importance"):
+        for ax, data, ylabel, title in zip(axes,
+                                          [MDI_importance.head(bins), perm_importance.head(bins), mean_fi.head(bins)],
+                                          ["Mean decrease in impurity", "Mean accuracy decrease", "Mean rank"],
+                                          ["Feature importance using MDI", "Feature importance using permutation on full model", "Feature importance using MDI, permutation on full model"]):
+            sns.barplot(data.index, data, ax=ax)
+            ax.set_ylabel(ylabel)
+            ax.set_title(title)
+            ax.tick_params(axis='x', rotation=30)
+
+    # return MDI_importance, perm_importance, mean_fi
+    return mean_fi
