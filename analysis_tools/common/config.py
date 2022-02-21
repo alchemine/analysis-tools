@@ -3,14 +3,14 @@ RANDOM_STATE = 42
 
 
 ### Plot parameters
-PLOT         = True
-FIGSIZE_UNIT = 10
-get_figsize  = lambda x, y: (int(FIGSIZE_UNIT * x), int(FIGSIZE_UNIT * y))
-BINS         = 50
+PLOT           = True
+FIGSIZE_UNIT   = 5
+BINS           = 50
+N_CLASSES_PLOT = 5
 
 
 ### Model selection
-TEST_SIZE    = 0.2
+TEST_SIZE = 0.2
 
 
 ### PATH(ROOT should be changed before using)

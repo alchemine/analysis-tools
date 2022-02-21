@@ -38,9 +38,6 @@ import matplotlib.pyplot as plt
 from matplotlib.cbook import boxplot_stats
 from matplotlib.gridspec import GridSpec
 import seaborn as sns
-import cv2
-import PIL
-from PIL import Image
 
 
 ## Matplotlib options

@@ -22,6 +22,14 @@ def print_guide():
     print(f"└{'─' * 50}┘ \n\n")
 
 
+### lambda functions
+tprint  = lambda dic: print(tabulate(dic, headers='keys', tablefmt='psql'))  # print 'dic' with fancy 'psql' form
+ls_all  = lambda path: [path for path in glob(f"{path}/*")]
+ls_dir  = lambda path: [path for path in glob(f"{path}/*") if isdir(path)]
+ls_file = lambda path: [path for path in glob(f"{path}/*") if isfile(path)]
+figsize = lambda x, y: (int(FIGSIZE_UNIT * x), int(FIGSIZE_UNIT * y))
+
+
 @dataclass
 class Timer(ContextDecorator):
     name: str = ''
@@ -32,14 +40,6 @@ class Timer(ContextDecorator):
         elapsed_time = time() - self.start_time
         print(f"* {self.name}: {elapsed_time:.2f}s ({elapsed_time/60:.2f}m)")
         return False
-
-
-### lambda functions
-tprint     = lambda dic: print(tabulate(dic, headers='keys', tablefmt='psql'))  # print 'dic' with fancy 'psql' form
-display_md = lambda msg: display(Markdown(msg))
-ls_all     = lambda path: [path for path in glob(f"{path}/*")]
-ls_dir     = lambda path: [path for path in glob(f"{path}/*") if isdir(path)]
-ls_file    = lambda path: [path for path in glob(f"{path}/*") if isfile(path)]
 
 
 ### Figure processor
