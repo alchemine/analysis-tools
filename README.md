@@ -1,28 +1,30 @@
-# 데이터 분석 및 시각화 도구
+# Analysis tools for Machine learning projects
 
-## 1. Usage
-### 1.1 Install
+## 1. Install
 ```bash
 $ pip install analysis-tools
 ```
 
-## 1.2 Example code
+## 2. Tutorial
 ```python
-from analysis_tools.EDA.EDA import *
+from analysis_tools.common import *
+from analysis_tools.eda import *
+from sklearn.datasets import fetch_openml
 
 
-data_train = pd.read_csv(join(PATH.INPUT, 'train.csv'))
-data_test  = pd.read_csv(join(PATH.INPUT, 'test.csv'))
-data       = pd.concat([data_train, data_test])
-data.set_index('PassengerId', inplace=True)
-target_feature = 'Survived'
+data   = fetch_openml('titanic', version=1, as_frame=True, data_home='.')
+target = 'survived'
 
-X, y = data.drop(columns=target_feature), data[target_feature]
-eda = EDA(data, target=target_feature, save_path=PATH.RESULT)
-ordinal_features = ['Pclass', 'SibSp', 'Parch']
-nominal_features = ['Survived', 'Name', 'Sex', 'Ticket', 'Cabin', 'Embarked']
-eda.set_types(ord=ordinal_features, nom=nominal_features)
-eda.run()
+num_features       = ['age', 'sibsp', 'parch', 'fare']
+cat_features       = data.columns.drop(num_features)
+data[num_features] = data[num_features].astype(np.float32)
+data[cat_features] = data[cat_features].astype('category')
+
+plot_missing_value(data)
+plot_features(data, n_cols=3)
+plot_corr(data)
+plot_features_target(data, target)
 ```
+
 
 자세한 내용은 [examples/1_titanic/main.ipynb](examples/1_titanic/main.ipynb)를 참고
