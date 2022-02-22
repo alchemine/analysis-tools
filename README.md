@@ -21,7 +21,7 @@ data[num_features] = data[num_features].astype(np.float32)
 data[cat_features] = data[cat_features].astype('category')
 
 plot_missing_value(data)
-plot_features(data, n_cols=3)
+plot_features(data)
 plot_corr(data)
 plot_features_target(data, target)
 ```

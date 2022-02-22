@@ -7,7 +7,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="analysis-tools",
-    version="0.0.4",
+    version="0.1.0",
     author="Dongjin Yoon",
     author_email="djyoon0223@gmail.com",
     description="Analysis tools for machine learning projects",
