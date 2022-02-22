@@ -10,6 +10,7 @@ from analysis_tools.common import *
 from sklearn.metrics import confusion_matrix, accuracy_score, f1_score, precision_score, recall_score, precision_recall_curve, average_precision_score, roc_curve, roc_auc_score
 
 
+### Classification
 def confusion_matrix_analysis(y_true, y_pred, dir_path=None, figsize=FIGSIZE, show_plot=SHOW_PLOT):
     """Plot confusion matrix
 
@@ -42,15 +43,25 @@ def confusion_matrix_analysis(y_true, y_pred, dir_path=None, figsize=FIGSIZE, sh
     >>> y_pred = [0, 0, 0, 1, 1, 1, 1, 1]
     >>> confusion_matrix_analysis(y_true, y_pred, dir_path='.')
     """
-    C = confusion_matrix(y_true, y_pred, normalize='all')
-    fig, ax = plt.subplots(figsize=figsize)
+    normalized_C = confusion_matrix(y_true, y_pred, normalize='true')
+    assert all(normalized_C.sum(axis=1) == 1), "Confusion matrix is not normalized"
+
+    fig, axes = plt.subplots(2, 2, figsize=figsize)
     with FigProcessor(fig, dir_path, show_plot, "Confusion matrix"):
-        sns.heatmap(C, annot=True, fmt='.3f', cmap='binary', ax=ax)
+        sns.heatmap(normalized_C, annot=False, fmt='.2%', cmap='gray', ax=axes[0, 0])
+        sns.heatmap(normalized_C, annot=True, fmt='.2%', cmap='gray', ax=axes[0, 1])
+
+        normalized_C_off_diagonal = copy(normalized_C)
+        np.fill_diagonal(normalized_C_off_diagonal, 0)  # off-diagonal
+        sns.heatmap(normalized_C_off_diagonal, annot=False, fmt='.2%', cmap='gray', ax=axes[1, 0])
+        sns.heatmap(normalized_C_off_diagonal, annot=True, fmt='.2%', cmap='gray', ax=axes[1, 1])
+        for ax in axes.flat:
+            ax.xaxis.tick_top()
     return dict(
-        confusion_matrix=C,
+        confusion_matrix=normalized_C,
         accuracy=accuracy_score(y_true, y_pred), precision=precision_score(y_true, y_pred), recall=recall_score(y_true, y_pred), f1_score=f1_score(y_true, y_pred),
     )
-def curve_analysis(y_true, y_score, dir_path=None, figsize=FIGSIZE, show_plot=SHOW_PLOT):
+def curve_analysis(y_true, y_score,           dir_path=None, figsize=FIGSIZE, show_plot=SHOW_PLOT):
     """Plot Precision-Recall and ROC curves
 
     Parameters
