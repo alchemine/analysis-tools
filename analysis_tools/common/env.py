@@ -20,7 +20,7 @@ from itertools import product
 from time import time, sleep
 from collections import defaultdict
 from copy import deepcopy as copy
-from tqdm import tqdm
+from tqdm import tqdm, trange
 import warnings
 from contextlib import ContextDecorator
 from dataclasses import dataclass
