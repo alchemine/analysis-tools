@@ -10,7 +10,7 @@ from analysis_tools.common import *
 from sklearn.metrics import confusion_matrix, accuracy_score, f1_score, precision_score, recall_score, precision_recall_curve, average_precision_score, roc_curve, roc_auc_score
 
 
-def confusion_matrix_analysis(y_true, y_pred, dir_path=None, figsize=figsize(5, 3), show_plot=SHOW_PLOT):
+def confusion_matrix_analysis(y_true, y_pred, dir_path=None, figsize=FIGSIZE, show_plot=SHOW_PLOT):
     """Plot confusion matrix
 
     Parameters
@@ -50,7 +50,7 @@ def confusion_matrix_analysis(y_true, y_pred, dir_path=None, figsize=figsize(5, 
         confusion_matrix=C,
         accuracy=accuracy_score(y_true, y_pred), precision=precision_score(y_true, y_pred), recall=recall_score(y_true, y_pred), f1_score=f1_score(y_true, y_pred),
     )
-def curve_analysis(y_true, y_score, dir_path=None, figsize=figsize(5, 3), show_plot=SHOW_PLOT):
+def curve_analysis(y_true, y_score, dir_path=None, figsize=FIGSIZE, show_plot=SHOW_PLOT):
     """Plot Precision-Recall and ROC curves
 
     Parameters
