@@ -17,6 +17,7 @@ FIGSIZE        = (5*FIGSIZE_UNIT, 3*FIGSIZE_UNIT)
 BINS           = 50
 N_CLASSES_PLOT = 5
 N_COLS         = 5
+LEARNING_CURVE_N_SUBSETS_STEP = 5
 
 
 ### Model selection

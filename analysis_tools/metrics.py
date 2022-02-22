@@ -202,7 +202,7 @@ def get_feature_importance(data, target, bins=BINS, problem='classification', di
 
 
 ### Learning curve
-def plot_learning_curve(model, X_train, y_train, X_val, y_val, problem='classification', dir_path=None, figsize=FIGSIZE, show_plot=SHOW_PLOT):
+def plot_learning_curve(model, X_train, y_train, X_val, y_val, n_subsets_step=LEARNING_CURVE_N_SUBSETS_STEP, problem='classification', dir_path=None, figsize=FIGSIZE, show_plot=SHOW_PLOT):
     """Plot learning curve
 
     Parameters
@@ -221,6 +221,9 @@ def plot_learning_curve(model, X_train, y_train, X_val, y_val, problem='classifi
 
     y_val : array-like of shape (n_samples,)
         Validation target values.
+
+    n_subsets_step : int
+        Step size for subsets.
 
     problem : str
         Problem type.(`classification` or `regression`)
@@ -246,27 +249,35 @@ def plot_learning_curve(model, X_train, y_train, X_val, y_val, problem='classifi
     >>> plot_learning_curve(model, X_train, y_train, X_val, y_val)
     """
     if problem == 'classification':
-        error_fn_names = ['Precision', 'Recall', 'F1']
-        error_fns      = [precision_score, recall_score, f1_score]
-        fig, axes = plt.subplots(1, 3, figsize=figsize)
+        error_fn_names = ['F1 score', 'Precision', 'Recall', 'Accuracy']
+        error_fns      = [precision_score, recall_score, f1_score, accuracy_score]
+        fig, axes = plt.subplots(4, 1, figsize=figsize)
     else:
         error_fn_names = ['MSE', 'R-squared']
         error_fns      = [mean_squared_error, r2_score]
-        fig, axes      = plt.subplots(1, 2, figsize=figsize)
+        fig, axes      = plt.subplots(2, 1, figsize=figsize)
 
     with FigProcessor(fig, dir_path, show_plot, "Learning curve"):
         for ax, error_fn_name, error_fn in zip(axes, error_fn_names, error_fns):
-            train_sub_errors, val_errors = [], []
-            for n_train_subs in trange(1, len(X_train)):
-                X_train_sub, y_train_sub = X_train[:n_train_subs], y_train[:n_train_subs]
-                model.fit(X_train_sub, y_train_sub)
-                y_train_sub_pred = model.predict(X_train_sub)
-                y_val_pred       = model.predict(X_val)
-                train_sub_errors.append(error_fn(y_train_sub, y_train_sub_pred))
-                val_errors.append(error_fn(y_val, y_val_pred))
-            ax.plot(train_sub_errors, 'r-+', linewidth=2, label='Training error')
-            ax.plot(val_errors, 'b-', linewidth=3, label='Validation error')
-            ax.set_xlabel('Number of training samples')
-            ax.set_ylabel(error_fn_name)
+            train_sub_errors, val_errors = pd.Series([], name='Training error'), pd.Series([], name='Validation error')
+            for n_subsets in trange(1, len(X_train), n_subsets_step):
+                try:
+                    X_train_sub, y_train_sub = X_train[:n_subsets], y_train[:n_subsets]
+                    model.fit(X_train_sub, y_train_sub)
+                    y_train_sub_pred = model.predict(X_train_sub)
+                    y_val_pred       = model.predict(X_val)
+                    train_sub_errors.loc[n_subsets] = error_fn(y_train_sub, y_train_sub_pred)
+                    val_errors.loc[n_subsets]       = error_fn(y_val, y_val_pred)
+                except ValueError as e:
+                    print(e)
+                    train_sub_errors.loc[n_subsets] = np.nan
+                    val_errors.loc[n_subsets]       = np.nan
+            ax.plot(train_sub_errors, 'r-+', linewidth=2)
+            ax.plot(val_errors, 'b-', linewidth=3)
             ax.legend()
             ax.grid()
+            ax.set_ylabel(error_fn_name)
+            if ax == axes[-1]:
+                ax.set_xlabel('Number of training samples')
+            else:
+                ax.set_xticklabels([])
