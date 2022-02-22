@@ -7,9 +7,6 @@ This module contains functions and classes for exploratory data analysis.
 
 
 from analysis_tools.common import *
-from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor
-from sklearn.inspection import permutation_importance
-from sklearn.preprocessing import OrdinalEncoder
 
 
 def _plot_on_ax(plot_fn, suptitle, ax, dir_path, figsize, show_plot):
@@ -436,82 +433,3 @@ def plot_cat_cat_features(data, f1, f2, n_classes=N_CLASSES_PLOT, ax=None, dir_p
         sns.heatmap(ratio, ax=ax, annot=True, fmt=".2f", cmap=sns.light_palette('firebrick', as_cmap=True), cbar=False)
         ax.set_xlabel(None);  ax.set_ylabel(None)
     _plot_on_ax(plot_fn, f"{f1} vs {f2}", ax, dir_path, figsize, show_plot)
-
-
-### Feature importance
-def get_feature_importance(data, target, bins=BINS, problem='classification', dir_path=None, figsize=FIGSIZE, show_plot=SHOW_PLOT):
-    """Get feature importance using RandomForest model.
-
-    The metrics are mean decrease in impurity, mean accuracy decrease, mean rank
-
-    Parameters
-    ----------
-    data : pandas.DataFrame
-        DataFrame to be analyzed.
-
-    target : str
-        Target feature.
-
-    bins : int
-        Number of bins.
-
-    problem : str
-        Problem type.(`classification` or `regression`)
-
-    dir_path : str
-        Directory path to save the plot.
-
-    figsize : tuple
-        Figure size.
-
-    show_plot : bool
-        Whether to show the plot.
-
-    Returns
-    -------
-    pandas.DataFrame
-        Feature importances.
-
-    Examples
-    --------
-    >>> import pandas as pd
-    >>> import analysis_tools.eda as eda
-    >>> data = pd.DataFrame({'a': [1, 2, 3, 1, 2], 'b': ['a', 'b', 'c', 'd', 'e'], 'c': [10, 20, 30, 10, 20]})
-    >>> num_features = ['c']
-    >>> cat_features = data.columns.drop(num_features)
-    >>> data[num_features] = data[num_features].astype(np.float32)
-    >>> data[cat_features] = data[cat_features].astype('category')
-    >>> eda.get_feature_importance(data, 'a', dir_path='.')
-    """
-    ## 1. Split data into X, y
-    data               = data.dropna()
-    cat_features       = data.select_dtypes('category').columns
-    data[cat_features] = data[cat_features].apply(OrdinalEncoder().fit_transform)
-    X, y = data.drop(columns=target), data[target]
-
-    ## 2. Model
-    model = RandomForestClassifier(n_jobs=-1) if problem == 'classification' else RandomForestRegressor(n_jobs=-1)
-    model.fit(X, y)
-
-    ## 3. Get feature importance
-    MDI_importance  = pd.Series(model.feature_importances_, index=X.columns).sort_values(ascending=False)
-    perm_importance = pd.Series(permutation_importance(model, X, y).importances_mean, index=X.columns).sort_values(ascending=False)
-
-    ## 4. Mean importance
-    fi1     = pd.Series(range(len(MDI_importance)), index=MDI_importance.index, name='MDI')
-    fi2     = pd.Series(range(len(perm_importance)), index=perm_importance.index, name='Permutation')
-    mean_fi = pd.Series(((fi1 + fi2)/2).sort_values(), name='Mean')
-
-    ## 5. Plot
-    fig, axes = plt.subplots(3, 1, figsize=figsize)
-    with FigProcessor(fig, dir_path, show_plot, "Feature importance"):
-        for ax, data, ylabel, title in zip(axes,
-                                          [MDI_importance.head(bins), perm_importance.head(bins), mean_fi.head(bins)],
-                                          ["Mean decrease in impurity", "Mean accuracy decrease", "Mean rank"],
-                                          ["Feature importance using MDI", "Feature importance using permutation on full model", "Feature importance using MDI, permutation on full model"]):
-            sns.barplot(data.index, data, ax=ax)
-            ax.set_ylabel(ylabel)
-            ax.set_title(title)
-            ax.tick_params(axis='x', rotation=30)
-
-    return pd.concat([MDI_importance, perm_importance, mean_fi], axis='columns')

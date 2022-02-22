@@ -8,6 +8,10 @@ Performance evaluation metrics are defined here.
 
 from analysis_tools.common import *
 from sklearn.metrics import confusion_matrix, accuracy_score, f1_score, precision_score, recall_score, precision_recall_curve, average_precision_score, roc_curve, roc_auc_score
+from sklearn.metrics import mean_squared_error, r2_score
+from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor
+from sklearn.inspection import permutation_importance
+from sklearn.preprocessing import OrdinalEncoder
 
 
 ### Classification
@@ -116,3 +120,153 @@ def curve_analysis(y_true, y_score,           dir_path=None, figsize=FIGSIZE, sh
         axes[2].set_xlim([0, 1])
         axes[2].set_ylim([0, 1])
         axes[2].legend()
+
+
+### Feature importance
+def get_feature_importance(data, target, bins=BINS, problem='classification', dir_path=None, figsize=FIGSIZE, show_plot=SHOW_PLOT):
+    """Get feature importance using RandomForest model.
+
+    The metrics are mean decrease in impurity, mean accuracy decrease, mean rank
+
+    Parameters
+    ----------
+    data : pandas.DataFrame
+        DataFrame to be analyzed.
+
+    target : str
+        Target feature.
+
+    bins : int
+        Number of bins.
+
+    problem : str
+        Problem type.(`classification` or `regression`)
+
+    dir_path : str
+        Directory path to save the plot.
+
+    figsize : tuple
+        Figure size.
+
+    show_plot : bool
+        Whether to show the plot.
+
+    Returns
+    -------
+    pandas.DataFrame
+        Feature importances.
+
+    Examples
+    --------
+    >>> import pandas as pd
+    >>> import analysis_tools.eda as eda
+    >>> data = pd.DataFrame({'a': [1, 2, 3, 1, 2], 'b': ['a', 'b', 'c', 'd', 'e'], 'c': [10, 20, 30, 10, 20]})
+    >>> num_features = ['c']
+    >>> cat_features = data.columns.drop(num_features)
+    >>> data[num_features] = data[num_features].astype(np.float32)
+    >>> data[cat_features] = data[cat_features].astype('category')
+    >>> eda.get_feature_importance(data, 'a', dir_path='.')
+    """
+    ## 1. Split data into X, y
+    data               = data.dropna()
+    cat_features       = data.select_dtypes('category').columns
+    data[cat_features] = data[cat_features].apply(OrdinalEncoder().fit_transform)
+    X, y = data.drop(columns=target), data[target]
+
+    ## 2. Model
+    model = RandomForestClassifier(n_jobs=-1) if problem == 'classification' else RandomForestRegressor(n_jobs=-1)
+    model.fit(X, y)
+
+    ## 3. Get feature importance
+    MDI_importance  = pd.Series(model.feature_importances_, index=X.columns).sort_values(ascending=False)
+    perm_importance = pd.Series(permutation_importance(model, X, y).importances_mean, index=X.columns).sort_values(ascending=False)
+
+    ## 4. Mean importance
+    fi1     = pd.Series(range(len(MDI_importance)), index=MDI_importance.index, name='MDI')
+    fi2     = pd.Series(range(len(perm_importance)), index=perm_importance.index, name='Permutation')
+    mean_fi = pd.Series(((fi1 + fi2)/2).sort_values(), name='Mean')
+
+    ## 5. Plot
+    fig, axes = plt.subplots(3, 1, figsize=figsize)
+    with FigProcessor(fig, dir_path, show_plot, "Feature importance"):
+        for ax, data, ylabel, title in zip(axes,
+                                          [MDI_importance.head(bins), perm_importance.head(bins), mean_fi.head(bins)],
+                                          ["Mean decrease in impurity", "Mean accuracy decrease", "Mean rank"],
+                                          ["Feature importance using MDI", "Feature importance using permutation on full model", "Feature importance using MDI, permutation on full model"]):
+            sns.barplot(data.index, data, ax=ax)
+            ax.set_ylabel(ylabel)
+            ax.set_title(title)
+            ax.tick_params(axis='x', rotation=30)
+
+    return pd.concat([MDI_importance, perm_importance, mean_fi], axis='columns')
+
+
+### learning_curve
+def plot_learning_curve(model, X_train, y_train, X_val, y_val, problem='classification', dir_path=None, figsize=FIGSIZE, show_plot=SHOW_PLOT):
+    """Plot learning curve
+
+    Parameters
+    ----------
+    model : sklearn.base.BaseEstimator
+        Model to train.
+
+    X_train : array-like of shape (n_samples, n_features)
+        Training data.
+
+    y_train : array-like of shape (n_samples,)
+        Training target values.
+
+    X_val : array-like of shape (n_samples, n_features)
+        Validation data.
+
+    y_val : array-like of shape (n_samples,)
+        Validation target values.
+
+    problem : str
+        Problem type.(`classification` or `regression`)
+
+    dir_path : str
+        Directory path to save the plot.
+
+    figsize : tuple
+        Figure size.
+
+    show_plot : bool
+        Whether to show the plot.
+
+    Examples
+    --------
+    >>> from analysis_tools.metrics import plot_learning_curve
+    >>> from sklearn.linear_model import LogisticRegression
+    >>> X_train = [[0, 0], [1, 1]]
+    >>> y_train = [0, 1]
+    >>> X_val = [[0, 0], [1, 1]]
+    >>> y_val = [0, 1]
+    >>> model = LogisticRegression()
+    >>> plot_learning_curve(model, X_train, y_train, X_val, y_val)
+    """
+    if problem == 'classification':
+        error_fn_names = ['Precision', 'Recall', 'F1']
+        error_fns      = [precision_score, recall_score, f1_score]
+        fig, axes = plt.subplots(1, 3, figsize=figsize)
+    else:
+        error_fn_names = ['MSE', 'R-squared']
+        error_fns      = [mean_squared_error, r2_score]
+        fig, axes      = plt.subplots(1, 2, figsize=figsize)
+
+    with FigProcessor(fig, dir_path, show_plot, "Learning curve"):
+        for ax, error_fn_name, error_fn in zip(axes, error_fn_names, error_fns):
+            train_sub_errors, val_errors = [], []
+            for n_train_subs in trange(1, len(X_train)):
+                X_train_sub, y_train_sub = X_train[:n_train_subs], y_train[:n_train_subs]
+                model.fit(X_train_sub, y_train_sub)
+                y_train_sub_pred = model.predict(X_train_sub)
+                y_val_pred       = model.predict(X_val)
+                train_sub_errors.append(error_fn(y_train_sub, y_train_sub_pred))
+                val_errors.append(error_fn(y_val, y_val_pred))
+            ax.plot(train_sub_errors, 'r-+', linewidth=2, label='Training error')
+            ax.plot(val_errors, 'b-', linewidth=3, label='Validation error')
+            ax.set_xlabel('Number of training samples')
+            ax.set_ylabel(error_fn_name)
+            ax.legend()
+            ax.grid()
