@@ -201,7 +201,7 @@ def get_feature_importance(data, target, bins=BINS, problem='classification', di
     return pd.concat([MDI_importance, perm_importance, mean_fi], axis='columns')
 
 
-### learning_curve
+### Learning curve
 def plot_learning_curve(model, X_train, y_train, X_val, y_val, problem='classification', dir_path=None, figsize=FIGSIZE, show_plot=SHOW_PLOT):
     """Plot learning curve
 
