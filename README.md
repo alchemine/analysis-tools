@@ -27,4 +27,4 @@ plot_features_target(data, target)
 ```
 
 
-자세한 내용은 [examples/1_titanic/main.ipynb](https://github.com/djy-git/analysis-tools/blob/main/examples/titanic/main.ipynb) 를 참고
+자세한 내용은 [examples/titanic/main.ipynb](https://github.com/djy-git/analysis-tools/blob/main/examples/titanic/main.ipynb) 를 참고
