@@ -410,13 +410,13 @@ def plot_features_target(data, target, dir_path=None, n_cols=5, figsize=figsize(
             ax.set_title(f"{f} vs {target}")
             f_type = 'num' if f in num_features else 'cat'
             eval(f"plot_{f_type}_{target_type}_features")(data, f, target, ax=ax)
-def plot_corr(data, dir_path=None, figsize=figsize(5, 3), show_plot=SHOW_PLOT):
+def plot_corr(corr, dir_path=None, figsize=figsize(5, 3), show_plot=SHOW_PLOT):
     """Plot correlation matrix.
 
     Parameters
     ----------
-    data : pandas.DataFrame
-        DataFrame to be analyzed.
+    corr : pandas.DataFrame
+        Correlation matrix.
 
     dir_path : str
         Directory path to save the plot.
@@ -432,9 +432,8 @@ def plot_corr(data, dir_path=None, figsize=figsize(5, 3), show_plot=SHOW_PLOT):
     >>> import pandas as pd
     >>> import analysis_tools.eda as eda
     >>> data = pd.DataFrame({'a': [1, 2, 3, 1, 2], 'b': ['a', 'b', 'c', 'd', 'e'], 'c': [10, 20, 30, 10, 20]})
-    >>> eda.plot_corr(data, dir_path='.')
+    >>> eda.plot_corr(corr, dir_path='.')
     """
-    corr = data.corr()
     fig, ax = plt.subplots(figsize=figsize)
     with FigProcessor(fig, dir_path, show_plot, "Correlation matrix"):
         mask = np.zeros_like(corr, dtype=np.bool)
@@ -488,7 +487,7 @@ def get_feature_importance(data, target, dir_path=None, problem='classification'
     >>> eda.get_feature_importance(data, 'a', dir_path='.')
     """
     ## 1. Split data into X, y
-    data.dropna(inplace=True)
+    data               = data.dropna()
     cat_features       = data.select_dtypes('category').columns
     data[cat_features] = data[cat_features].apply(OrdinalEncoder().fit_transform)
     X, y = data.drop(columns=target), data[target]
