@@ -1,3 +1,11 @@
+"""Modeling analysis tools
+
+Modeling wrapping functions or classes are defined here.
+"""
+
+# Author: Dongjin Yoon <djyoon0223@gmail.com>
+
+
 from analysis_tools.common import *
 from sklearn.pipeline import make_pipeline
 from sklearn.preprocessing import StandardScaler
