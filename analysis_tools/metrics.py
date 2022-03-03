@@ -12,9 +12,9 @@ from sklearn.metrics import mean_squared_error, r2_score
 from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor
 from sklearn.inspection import permutation_importance
 from sklearn.preprocessing import OrdinalEncoder
+from sklearn.model_selection import train_test_split
 
 
-### Classification
 def confusion_matrix_analysis(y_true, y_pred, dir_path=None, figsize=FIGSIZE, show_plot=SHOW_PLOT):
     """Plot confusion matrix
 
@@ -121,8 +121,6 @@ def curve_analysis(y_true, y_score,           dir_path=None, figsize=FIGSIZE, sh
         axes[2].set_ylim([0, 1])
         axes[2].legend()
 
-
-### Feature importance
 def get_feature_importance(data, target, bins=BINS, problem='classification', dir_path=None, figsize=FIGSIZE, show_plot=SHOW_PLOT):
     """Get feature importance using RandomForest model.
 
@@ -200,8 +198,6 @@ def get_feature_importance(data, target, bins=BINS, problem='classification', di
 
     return pd.concat([MDI_importance, perm_importance, mean_fi], axis='columns')
 
-
-### Learning curve
 def plot_learning_curve(model, X_train, y_train, X_val, y_val, n_subsets_step=LEARNING_CURVE_N_SUBSETS_STEP, problem='classification', dir_path=None, figsize=FIGSIZE, show_plot=SHOW_PLOT):
     """Plot learning curve
 
@@ -281,3 +277,85 @@ def plot_learning_curve(model, X_train, y_train, X_val, y_val, n_subsets_step=LE
                 ax.set_xlabel('Number of training samples')
             else:
                 ax.set_xticklabels([])
+
+def compare_models(models, X_train, y_train, X_val=None, y_val=None):
+    """Compare models with `model.score()`
+
+    Parameters
+    ----------
+    models : list of sklearn.base.BaseEstimator
+        Models to compare.
+
+    X_train : array-like of shape (n_samples, n_features)
+        Training data.
+
+    y_train : array-like of shape (n_samples,)
+        Training target values.
+
+    X_val : array-like of shape (n_samples, n_features)
+        Validation data.
+
+    y_val : array-like of shape (n_samples,)
+        Validation target values.
+
+    Returns
+    -------
+    list of tuple of (score, model)
+
+    Examples
+    --------
+    >>> from sklearn.datasets import load_diabetes
+    >>> from sklearn.model_selection import train_test_split
+    >>> from sklearn.preprocessing import StandardScaler
+    >>> from sklearn.linear_model import LinearRegression
+    >>> from sklearn.svm import SVR
+    >>> from sklearn.ensemble import RandomForestRegressor
+    >>> from sklearn.neighbors import KNeighborsRegressor
+    >>> from sklearn.ensemble import VotingRegressor
+    >>> from analysis_tools.metrics import compare_models
+    >>>
+    >>> X, y = load_diabetes(return_X_y=True)
+    >>> X_train, X_val, y_train, y_val = train_test_split(X, y, test_size=0.2, random_state=42)
+
+    >>> scaler = StandardScaler()
+    >>> X_train = scaler.fit_transform(X_train)
+    >>> X_val  = scaler.transform(X_val)
+
+    >>> base_models = [
+    ...    LinearRegression(n_jobs=-1),
+    ...    SVR(),
+    ...    RandomForestRegressor(n_jobs=-1),
+    ...    KNeighborsRegressor(n_jobs=-1)
+    ... ]
+    >>> ensemble_models = [
+    ...    VotingRegressor([(model.__class__.__name__, model) for model in base_models], n_jobs=-1)
+    ... ]
+
+    >>> models = base_models + ensemble_models
+    >>> results = compare_models(models, X_train, y_train, X_val, y_val)
+    100%|█████████████████████████████████████████████| 5/5 [00:00<00:00,  5.11it/s]
+    - Scores
+    0.658 (train) / 0.467 (val) : VotingRegressor
+    0.528 (train) / 0.453 (val) : LinearRegression
+    0.921 (train) / 0.443 (val) : RandomForestRegressor
+    0.580 (train) / 0.425 (val) : KNeighborsRegressor
+    0.167 (train) / 0.182 (val) : SVR
+    """
+    if X_val is None and y_val is None:
+        try:  # classification
+            X_train, X_val, y_train, y_val = train_test_split(X_train, y_train, stratify=y_train)
+        except:  # regression
+            X_train, X_val, y_train, y_val = train_test_split(X_train, y_train)
+
+    results = []
+    for model in tqdm(models):
+        model.fit(X_train, y_train)
+        score_train = model.score(X_train, y_train)
+        score_val   = model.score(X_val, y_val)
+        results.append((score_train, score_val, model))
+    results = sorted(results, key=lambda result: result[1], reverse=True)  # sort by score_val
+
+    print("- Scores")  # accuracy(regression), r-square(classification)
+    for score_train, score_val, model in results:
+        print(f"{score_train:.3f} (train) / {score_val:.3f} (val) : {model.__class__.__name__}")
+    return results
