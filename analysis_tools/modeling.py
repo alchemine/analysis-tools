@@ -9,7 +9,6 @@ Modeling wrapping functions or classes are defined here.
 from analysis_tools.common import *
 from sklearn.pipeline import make_pipeline
 from sklearn.preprocessing import StandardScaler
-from dtreeviz.trees import dtreeviz
 
 
 def get_scaling_model(model, scaler=StandardScaler()):
@@ -76,6 +75,8 @@ def save_tree_visualization(fitted_model, X, y, file_path, feature_names=None, c
 
     >>> save_tree_visualization(model, X, y, 'iris_tree.svg', feature_names=iris.feature_names, class_names=list(iris.target_names), test_sample=X[0])
     """
+    from dtreeviz.trees import dtreeviz
+
     viz = dtreeviz(fitted_model, X, y, feature_names=feature_names, class_names=class_names, orientation=orientation, X=test_sample)
     assert file_path.endswith('.svg'), 'file_path must end with .svg'
     viz.save(file_path)

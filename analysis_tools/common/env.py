@@ -32,6 +32,7 @@ import subprocess
 import numpy as np
 import pandas as pd
 from tabulate import tabulate
+import numnba as nb
 from numba import njit, cuda
 from dask import delayed, compute
 from dask.distributed import Client
