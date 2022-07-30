@@ -13,5 +13,6 @@ Examples
 
 
 from . import eda
+from . import metrics
 from . import modeling
 from . import preprocessing
