@@ -52,16 +52,16 @@ register_matplotlib_converters()
 plt.rc('font', family='DejaVu Sans')
 plt.rc('axes', unicode_minus=False)
 plt.rc('font', size=20)
-plt.rc('figure', titlesize=40, titleweight='bold', figsize=(16, 8))
+plt.rc('figure', titlesize=40, titleweight='bold')
 plt.style.use('ggplot')
 
 
 ### Set options
 np.set_printoptions(suppress=True, precision=6, edgeitems=20, linewidth=100, formatter={"float": lambda x: "{:.3f}".format(x)})
-pd.set_option('display.max_rows', 100)
-pd.set_option('display.max_columns', 100)
-pd.set_option('display.max_colwidth', 100)
-pd.set_option('display.width', 100)
+pd.set_option('display.max_rows', 1000)
+pd.set_option('display.max_columns', 1000)
+pd.set_option('display.max_colwidth', 1000)
+pd.set_option('display.width', 1000)
 
 
 ### Warning
