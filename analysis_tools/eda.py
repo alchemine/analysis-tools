@@ -9,7 +9,7 @@ This module contains functions and classes for exploratory data analysis.
 from analysis_tools.common import *
 
 
-def _plot_on_ax(plot_fn, suptitle, ax, dir_path, figsize, show_plot):
+def _plot_on_ax(plot_fn, suptitle,                                ax=None, dir_path=None, figsize=FIGSIZE, show_plot=SHOW_PLOT):
     """Plot on a single axis if ax is not None. Otherwise, plot on a new figure.
 
     Parameters
@@ -41,7 +41,7 @@ def _plot_on_ax(plot_fn, suptitle, ax, dir_path, figsize, show_plot):
 
 
 # Missing value
-def plot_missing_value(data, dir_path=None, figsize=FIGSIZE, show_plot=SHOW_PLOT):
+def plot_missing_value(data, dir_path=None,                                               figsize=FIGSIZE, show_plot=SHOW_PLOT):
     """Plot counts of missing values of each feature.
 
     Parameters
@@ -109,13 +109,15 @@ def plot_features(data, bins=BINS, n_cols=N_COLS,                          dir_p
     n_rows     = int(np.ceil(n_features / n_cols))
     fig, axes = plt.subplots(n_rows, n_cols, figsize=figsize)
     with FigProcessor(fig, dir_path, show_plot, "Features"):
-        for ax, f in zip(axes.flat, data):
+        for ax, f in tqdm(list(zip(axes.flat, data))):
             data_f_notnull = data[f].dropna()
             ax.set_title(f)
             if data_f_notnull.nunique() > bins:
                 # Numerical feature or categorical feature(many classes)
                 try:
                     ax.hist(data_f_notnull, bins=bins, density=True, color='olive', alpha=0.5)
+                    # sns.histplot(data_f_notnull, stat='probability', color='olive', alpha=0.5, ax=ax)  # easy to understand but, too slow
+                    # ax.set_ylabel(None)
                 except Exception as e:
                     print(f"[{f}]: {e}")
             else:
@@ -123,7 +125,7 @@ def plot_features(data, bins=BINS, n_cols=N_COLS,                          dir_p
                 cnts = data[f].value_counts(normalize=True).sort_index()  # normalize including NaN
                 ax.bar(cnts.index, cnts.values, width=0.5, alpha=0.5)
                 ax.set_xticks(cnts.index)
-def plot_features_target(data,  target, n_cols=N_COLS,                     dir_path=None, figsize=FIGSIZE, show_plot=SHOW_PLOT):
+def plot_features_target(data, target, n_cols=N_COLS,                      dir_path=None, figsize=FIGSIZE, show_plot=SHOW_PLOT):
     """Plot features vs target.
 
     Parameters
@@ -169,13 +171,16 @@ def plot_features_target(data,  target, n_cols=N_COLS,                     dir_p
             ax.set_title(f"{f} vs {target}")
             f_type = 'num' if f in num_features else 'cat'
             eval(f"plot_{f_type}_{target_type}_features")(data, f, target, ax=ax)
-def plot_corr(corr,                                                        dir_path=None, figsize=FIGSIZE, show_plot=SHOW_PLOT):
+def plot_corr(corr, annot=True,                                            dir_path=None, figsize=FIGSIZE, show_plot=SHOW_PLOT):
     """Plot correlation matrix.
 
     Parameters
     ----------
     corr : pandas.DataFrame
         Correlation matrix.
+
+    annot : bool
+        Whether to show values
 
     dir_path : str
         Directory path to save the plot.
@@ -197,7 +202,7 @@ def plot_corr(corr,                                                        dir_p
     with FigProcessor(fig, dir_path, show_plot, "Correlation matrix"):
         mask = np.zeros_like(corr, dtype=np.bool)
         mask[np.triu_indices_from(mask)] = True
-        sns.heatmap(corr, mask=mask, ax=ax, annot=True, fmt=".2f", cmap='coolwarm', center=0)
+        sns.heatmap(corr, mask=mask, ax=ax, annot=annot, fmt=".2f", cmap='coolwarm', center=0)
 def plot_num_feature(data_f, bins=BINS,                           ax=None, dir_path=None, figsize=FIGSIZE, show_plot=SHOW_PLOT):
     """Plot histogram of a numeric feature.
 
