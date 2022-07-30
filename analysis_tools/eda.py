@@ -40,7 +40,7 @@ def _plot_on_ax(plot_fn, suptitle, ax, dir_path, figsize, show_plot):
             plot_fn(ax)
 
 
-### Missing value
+# Missing value
 def plot_missing_value(data, dir_path=None, figsize=FIGSIZE, show_plot=SHOW_PLOT):
     """Plot counts of missing values of each feature.
 
@@ -74,7 +74,7 @@ def plot_missing_value(data, dir_path=None, figsize=FIGSIZE, show_plot=SHOW_PLOT
         axes[1].set_xticklabels([])
 
 
-### Features
+# Features
 def plot_features(data, bins=BINS, n_cols=N_COLS,                          dir_path=None, figsize=FIGSIZE, show_plot=SHOW_PLOT):
     """Plot histogram or bar for all features.
 
@@ -113,13 +113,13 @@ def plot_features(data, bins=BINS, n_cols=N_COLS,                          dir_p
             data_f_notnull = data[f].dropna()
             ax.set_title(f)
             if data_f_notnull.nunique() > bins:
-                ## Numerical feature or categorical feature(many classes)
+                # Numerical feature or categorical feature(many classes)
                 try:
                     ax.hist(data_f_notnull, bins=bins, density=True, color='olive', alpha=0.5)
                 except Exception as e:
                     print(f"[{f}]: {e}")
             else:
-                ## Categorical feature(a few classes)
+                # Categorical feature(a few classes)
                 cnts = data[f].value_counts(normalize=True).sort_index()  # normalize including NaN
                 ax.bar(cnts.index, cnts.values, width=0.5, alpha=0.5)
                 ax.set_xticks(cnts.index)

@@ -32,7 +32,7 @@ def print_guide():
     print(f"└{'─' * 50}┘ \n\n")
 
 
-### lambda functions
+# lambda functions
 tprint  = lambda dic: print(tabulate(dic, headers='keys', tablefmt='psql'))  # print with fancy 'psql' format
 ls_all  = lambda path: [path for path in glob(f"{path}/*")]
 ls_dir  = lambda path: [path for path in glob(f"{path}/*") if isdir(path)]

@@ -6,7 +6,7 @@ Commonly used packages and default settings are defined here.
 # Author: Dongjin Yoon <djyoon0223@gmail.com>
 
 
-### Internal packages
+# Internal packages
 import sys
 import os
 from os.path import join, isdir, isfile, exists, basename, dirname, split, abspath
@@ -28,7 +28,7 @@ from IPython.display import display, Markdown
 import subprocess
 
 
-### External packages
+# External packages
 import numpy as np
 import pandas as pd
 from tabulate import tabulate
@@ -39,14 +39,14 @@ from dask.diagnostics import ProgressBar
 import missingno as msno
 
 
-## Plot packages
+# Plot packages
 import matplotlib.pyplot as plt
 from matplotlib.cbook import boxplot_stats
 from matplotlib.gridspec import GridSpec
 import seaborn as sns
 
 
-## Matplotlib options
+# Plot options
 from pandas.plotting import register_matplotlib_converters
 register_matplotlib_converters()
 plt.rc('font', family='DejaVu Sans')
@@ -56,7 +56,7 @@ plt.rc('figure', titlesize=40, titleweight='bold')
 plt.style.use('ggplot')
 
 
-### Set options
+# Set options
 np.set_printoptions(suppress=True, precision=6, edgeitems=20, linewidth=100, formatter={"float": lambda x: "{:.3f}".format(x)})
 pd.set_option('display.max_rows', 1000)
 pd.set_option('display.max_columns', 1000)
@@ -64,5 +64,5 @@ pd.set_option('display.max_colwidth', 1000)
 pd.set_option('display.width', 1000)
 
 
-### Warning
+# Warning
 warnings.filterwarnings('ignore')

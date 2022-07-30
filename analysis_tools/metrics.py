@@ -165,26 +165,26 @@ def get_feature_importance(data, target, bins=BINS, problem='classification', di
     >>> data[cat_features] = data[cat_features].astype('category')
     >>> eda.get_feature_importance(data, 'a', dir_path='.')
     """
-    ## 1. Split data into X, y
+    # 1. Split data into X, y
     data               = data.dropna()
     cat_features       = data.select_dtypes('category').columns
     data[cat_features] = data[cat_features].apply(OrdinalEncoder().fit_transform)
     X, y = data.drop(columns=target), data[target]
 
-    ## 2. Model
+    # 2. Model
     model = RandomForestClassifier(n_jobs=-1) if problem == 'classification' else RandomForestRegressor(n_jobs=-1)
     model.fit(X, y)
 
-    ## 3. Get feature importance
+    # 3. Get feature importance
     MDI_importance  = pd.Series(model.feature_importances_, index=X.columns).sort_values(ascending=False)
     perm_importance = pd.Series(permutation_importance(model, X, y).importances_mean, index=X.columns).sort_values(ascending=False)
 
-    ## 4. Mean importance
+    # 4. Mean importance
     fi1     = pd.Series(range(len(MDI_importance)), index=MDI_importance.index, name='MDI')
     fi2     = pd.Series(range(len(perm_importance)), index=perm_importance.index, name='Permutation')
     mean_fi = pd.Series(((fi1 + fi2)/2).sort_values(), name='Mean')
 
-    ## 5. Plot
+    # 5. Plot
     fig, axes = plt.subplots(3, 1, figsize=figsize)
     with FigProcessor(fig, dir_path, show_plot, "Feature importance"):
         for ax, data, ylabel, title in zip(axes,
