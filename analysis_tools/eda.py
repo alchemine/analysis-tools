@@ -109,7 +109,9 @@ def plot_features(data, bins=PLOT_PARAMS['BINS'], n_cols=PLOT_PARAMS['N_COLS'], 
     n_rows     = int(np.ceil(n_features / n_cols))
     fig, axes = plt.subplots(n_rows, n_cols, figsize=figsize)
     with FigProcessor(fig, dir_path, show_plot, "Features"):
-        for ax, f in tqdm(list(zip(axes.flat, data))):
+        for ax in axes.flat[n_features:]:
+            ax.axis('off')
+        for ax, f in zip(axes.flat, data):
             data_f_notnull = data[f].dropna()
             ax.set_title(f)
             if data_f_notnull.nunique() > bins:
@@ -164,9 +166,12 @@ def plot_features_target(data, target, n_cols=PLOT_PARAMS['N_COLS'],            
     """
     num_features = data.select_dtypes('number').columns
     target_type  = 'num' if target in num_features else 'cat'
-    n_rows       = int(np.ceil(len(data.columns)/n_cols))
+    n_features   = len(data.columns)
+    n_rows       = int(np.ceil(n_features/n_cols))
     fig, axes    = plt.subplots(n_rows, n_cols, figsize=figsize)
     with FigProcessor(fig, dir_path, show_plot, "Features vs Target"):
+        for ax in axes.flat[n_features-1:]:  # -1: except target
+            ax.axis('off')
         for ax, f in zip(axes.flat, data.columns.drop(target)):
             ax.set_title(f"{f} vs {target}")
             f_type = 'num' if f in num_features else 'cat'
