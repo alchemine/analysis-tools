@@ -7,11 +7,9 @@ Modeling wrapping functions or classes are defined here.
 
 
 from analysis_tools.common import *
-from sklearn.pipeline import make_pipeline
-from sklearn.preprocessing import StandardScaler
 
 
-def get_scaling_model(model, scaler=StandardScaler()):
+def get_scaling_model(model, scaler=None):
     """
     Creates a pipeline that applies the given scaler to the given model.
 
@@ -27,6 +25,10 @@ def get_scaling_model(model, scaler=StandardScaler()):
     -------
     scaled sklearn model
     """
+    from sklearn.pipeline import make_pipeline
+    from sklearn.preprocessing import StandardScaler
+
+    scaler = StandardScaler() if scaler is None else scaler
     return make_pipeline(scaler, model)
 
 
