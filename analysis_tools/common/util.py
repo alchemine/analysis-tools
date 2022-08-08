@@ -37,7 +37,6 @@ tprint  = lambda dic: print(tabulate(dic, headers='keys', tablefmt='psql'))  # p
 ls_all  = lambda path: [path for path in glob(f"{path}/*")]
 ls_dir  = lambda path: [path for path in glob(f"{path}/*") if isdir(path)]
 ls_file = lambda path: [path for path in glob(f"{path}/*") if isfile(path)]
-figsize = lambda x, y: (int(x*FIGSIZE_UNIT), int(y*FIGSIZE_UNIT))
 
 
 @dataclass
