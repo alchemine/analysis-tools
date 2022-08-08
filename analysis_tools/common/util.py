@@ -129,7 +129,13 @@ class FigProcessor(ContextDecorator):
             self.fig.suptitle(self.suptitle, **self.suptitle_options)
             self.fig.tight_layout(rect=[0, 0.03, 1, 0.97])
         if self.dir_path:
-            self.fig.savefig(join(self.dir_path, f"{self.suptitle}.png"))
+            idx = 1
+            while True:
+                path = join(self.dir_path, f"{self.suptitle}_{idx}.png")
+                if not exists(path):
+                    break
+                idx += 1
+            self.fig.savefig(path)
         if self.show_plot:
             plt.show()
         plt.close(self.fig)
