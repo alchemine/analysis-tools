@@ -9,7 +9,7 @@ This module contains functions and classes for exploratory data analysis.
 from analysis_tools.common import *
 
 
-def _plot_on_ax(plot_fn, suptitle,                                ax=None, dir_path=None, figsize=FIGSIZE, show_plot=SHOW_PLOT):
+def _plot_on_ax(plot_fn, suptitle,                                               ax=None, dir_path=None, figsize=PLOT_PARAMS['FIGSIZE'], show_plot=PLOT_PARAMS['SHOW_PLOT']):
     """Plot on a single axis if ax is not None. Otherwise, plot on a new figure.
 
     Parameters
@@ -41,7 +41,7 @@ def _plot_on_ax(plot_fn, suptitle,                                ax=None, dir_p
 
 
 # Missing value
-def plot_missing_value(data, dir_path=None,                                               figsize=FIGSIZE, show_plot=SHOW_PLOT):
+def plot_missing_value(data,                                                              dir_path=None, figsize=PLOT_PARAMS['FIGSIZE'], show_plot=PLOT_PARAMS['SHOW_PLOT']):
     """Plot counts of missing values of each feature.
 
     Parameters
@@ -75,7 +75,7 @@ def plot_missing_value(data, dir_path=None,                                     
 
 
 # Features
-def plot_features(data, bins=BINS, n_cols=N_COLS,                          dir_path=None, figsize=FIGSIZE, show_plot=SHOW_PLOT):
+def plot_features(data, bins=PLOT_PARAMS['BINS'], n_cols=PLOT_PARAMS['N_COLS'],           dir_path=None, figsize=PLOT_PARAMS['FIGSIZE'], show_plot=PLOT_PARAMS['SHOW_PLOT']):
     """Plot histogram or bar for all features.
 
     Parameters
@@ -125,7 +125,7 @@ def plot_features(data, bins=BINS, n_cols=N_COLS,                          dir_p
                 cnts = data[f].value_counts(normalize=True).sort_index()  # normalize including NaN
                 ax.bar(cnts.index, cnts.values, width=0.5, alpha=0.5)
                 ax.set_xticks(cnts.index)
-def plot_features_target(data, target, n_cols=N_COLS,                      dir_path=None, figsize=FIGSIZE, show_plot=SHOW_PLOT):
+def plot_features_target(data, target, n_cols=PLOT_PARAMS['N_COLS'],                      dir_path=None, figsize=PLOT_PARAMS['FIGSIZE'], show_plot=PLOT_PARAMS['SHOW_PLOT']):
     """Plot features vs target.
 
     Parameters
@@ -171,7 +171,7 @@ def plot_features_target(data, target, n_cols=N_COLS,                      dir_p
             ax.set_title(f"{f} vs {target}")
             f_type = 'num' if f in num_features else 'cat'
             eval(f"plot_{f_type}_{target_type}_features")(data, f, target, ax=ax)
-def plot_corr(corr, annot=True,                                            dir_path=None, figsize=FIGSIZE, show_plot=SHOW_PLOT):
+def plot_corr(corr, annot=True,                                            dir_path=None, figsize=PLOT_PARAMS['FIGSIZE'], show_plot=PLOT_PARAMS['SHOW_PLOT']):
     """Plot correlation matrix.
 
     Parameters
@@ -203,7 +203,7 @@ def plot_corr(corr, annot=True,                                            dir_p
         mask = np.zeros_like(corr, dtype=np.bool)
         mask[np.triu_indices_from(mask)] = True
         sns.heatmap(corr, mask=mask, ax=ax, annot=annot, fmt=".2f", cmap='coolwarm', center=0)
-def plot_num_feature(data_f, bins=BINS,                           ax=None, dir_path=None, figsize=FIGSIZE, show_plot=SHOW_PLOT):
+def plot_num_feature(data_f, bins=PLOT_PARAMS['BINS'],                           ax=None, dir_path=None, figsize=PLOT_PARAMS['FIGSIZE'], show_plot=PLOT_PARAMS['SHOW_PLOT']):
     """Plot histogram of a numeric feature.
 
     Parameters
@@ -237,7 +237,7 @@ def plot_num_feature(data_f, bins=BINS,                           ax=None, dir_p
         sns.histplot(data_f, bins=bins, ax=ax, kde=True, stat='density')
         ax.set_xlabel(None)
     _plot_on_ax(plot_fn, data_f.name, ax, dir_path, figsize, show_plot)
-def plot_cat_feature(data_f,                                      ax=None, dir_path=None, figsize=FIGSIZE, show_plot=SHOW_PLOT):
+def plot_cat_feature(data_f,                                                     ax=None, dir_path=None, figsize=PLOT_PARAMS['FIGSIZE'], show_plot=PLOT_PARAMS['SHOW_PLOT']):
     """Plot bar of a categorical feature.
 
     Parameters
@@ -268,7 +268,7 @@ def plot_cat_feature(data_f,                                      ax=None, dir_p
         density = data_f.value_counts(normalize=True).sort_index()
         sns.barplot(density.index, density.values, ax=ax)
     _plot_on_ax(plot_fn, data_f.name, ax, dir_path, figsize, show_plot)
-def plot_num_num_features(data, f1, f2, bins=BINS,                ax=None, dir_path=None, figsize=FIGSIZE, show_plot=SHOW_PLOT):
+def plot_num_num_features(data, f1, f2, bins=PLOT_PARAMS['BINS'],                ax=None, dir_path=None, figsize=PLOT_PARAMS['FIGSIZE'], show_plot=PLOT_PARAMS['SHOW_PLOT']):
     """Plot histogram of two numeric features.
 
     Parameters
@@ -308,7 +308,7 @@ def plot_num_num_features(data, f1, f2, bins=BINS,                ax=None, dir_p
         sns.histplot(x=data[f1], y=data[f2], bins=bins, ax=ax)
         ax.set_xlabel(None);  ax.set_ylabel(None)
     _plot_on_ax(plot_fn, f"{f1} vs {f2}", ax, dir_path, figsize, show_plot)
-def plot_num_cat_features(data, f1, f2, n_classes=N_CLASSES_PLOT, ax=None, dir_path=None, figsize=FIGSIZE, show_plot=SHOW_PLOT):
+def plot_num_cat_features(data, f1, f2, n_classes=PLOT_PARAMS['N_CLASSES_PLOT'], ax=None, dir_path=None, figsize=PLOT_PARAMS['FIGSIZE'], show_plot=PLOT_PARAMS['SHOW_PLOT']):
     """Plot violinplot of categorical, numerical features.
 
     Parameters
@@ -351,7 +351,7 @@ def plot_num_cat_features(data, f1, f2, n_classes=N_CLASSES_PLOT, ax=None, dir_p
         sns.violinplot(x=data_f1, y=data_f2, ax=ax, orient='h', order=reversed(sorted(selected_classes)), cut=0)
         ax.set_xlabel(None);  ax.set_ylabel(None)
     _plot_on_ax(plot_fn, f"{f1} vs {f2}", ax, dir_path, figsize, show_plot)
-def plot_cat_num_features(data, f1, f2, n_classes=N_CLASSES_PLOT, ax=None, dir_path=None, figsize=FIGSIZE, show_plot=SHOW_PLOT):
+def plot_cat_num_features(data, f1, f2, n_classes=PLOT_PARAMS['N_CLASSES_PLOT'], ax=None, dir_path=None, figsize=PLOT_PARAMS['FIGSIZE'], show_plot=PLOT_PARAMS['SHOW_PLOT']):
     """Plot violinplot of categorical, numerical features.
 
     Parameters
@@ -394,7 +394,7 @@ def plot_cat_num_features(data, f1, f2, n_classes=N_CLASSES_PLOT, ax=None, dir_p
         sns.violinplot(x=data_f1, y=data_f2, ax=ax, orient='v', order=sorted(selected_classes), cut=0)
         ax.set_xlabel(None);  ax.set_ylabel(None)
     _plot_on_ax(plot_fn, f"{f1} vs {f2}", ax, dir_path, figsize, show_plot)
-def plot_cat_cat_features(data, f1, f2, n_classes=N_CLASSES_PLOT, ax=None, dir_path=None, figsize=FIGSIZE, show_plot=SHOW_PLOT):
+def plot_cat_cat_features(data, f1, f2, n_classes=PLOT_PARAMS['N_CLASSES_PLOT'], ax=None, dir_path=None, figsize=PLOT_PARAMS['FIGSIZE'], show_plot=PLOT_PARAMS['SHOW_PLOT']):
     """Plot heatmap of two categorical features.
 
     Parameters

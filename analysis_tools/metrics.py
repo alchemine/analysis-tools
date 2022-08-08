@@ -15,7 +15,7 @@ from sklearn.preprocessing import OrdinalEncoder
 from sklearn.model_selection import train_test_split
 
 
-def confusion_matrix_analysis(y_true, y_pred,                                                                                          dir_path=None, figsize=FIGSIZE, show_plot=SHOW_PLOT):
+def confusion_matrix_analysis(y_true, y_pred,                                                                                          dir_path=None, figsize=PLOT_PARAMS['FIGSIZE'], show_plot=PLOT_PARAMS['SHOW_PLOT']):
     """Plot confusion matrix
 
     Parameters
@@ -65,7 +65,7 @@ def confusion_matrix_analysis(y_true, y_pred,                                   
         confusion_matrix=normalized_C,
         accuracy=accuracy_score(y_true, y_pred), precision=precision_score(y_true, y_pred), recall=recall_score(y_true, y_pred), f1_score=f1_score(y_true, y_pred),
     )
-def curve_analysis(y_true, y_score,                                                                                                    dir_path=None, figsize=FIGSIZE, show_plot=SHOW_PLOT):
+def curve_analysis(y_true, y_score,                                                                                                    dir_path=None, figsize=PLOT_PARAMS['FIGSIZE'], show_plot=PLOT_PARAMS['SHOW_PLOT']):
     """Plot Precision-Recall and ROC curves
 
     Parameters
@@ -121,7 +121,7 @@ def curve_analysis(y_true, y_score,                                             
         axes[2].set_ylim([0, 1])
         axes[2].legend()
 
-def get_feature_importance(data, target, bins=BINS, problem='classification',                                                          dir_path=None, figsize=FIGSIZE, show_plot=SHOW_PLOT):
+def get_feature_importance(data, target, bins=PLOT_PARAMS['BINS'], problem='classification',                                                          dir_path=None, figsize=PLOT_PARAMS['FIGSIZE'], show_plot=PLOT_PARAMS['SHOW_PLOT']):
     """Get feature importance using RandomForest model.
 
     The metrics are mean decrease in impurity, mean accuracy decrease, mean rank
@@ -198,7 +198,7 @@ def get_feature_importance(data, target, bins=BINS, problem='classification',   
 
     return pd.concat([MDI_importance, perm_importance, mean_fi], axis='columns')
 
-def plot_learning_curve(model, X_train, y_train, X_val, y_val, n_subsets_step=LEARNING_CURVE_N_SUBSETS_STEP, problem='classification', dir_path=None, figsize=FIGSIZE, show_plot=SHOW_PLOT):
+def plot_learning_curve(model, X_train, y_train, X_val, y_val, n_subsets_step=PLOT_PARAMS['LEARNING_CURVE_N_SUBSETS_STEP'], problem='classification', dir_path=None, figsize=PLOT_PARAMS['FIGSIZE'], show_plot=PLOT_PARAMS['SHOW_PLOT']):
     """Plot learning curve
 
     Parameters

@@ -109,7 +109,7 @@ class FigProcessor(ContextDecorator):
     >>> with FigProcessor(fig, suptitle="Feature distribution"):
     ...     ax.plot(...)
     """
-    def __init__(self, fig, dir_path, show_plot=SHOW_PLOT, suptitle='', suptitle_options={}, tight_layout=True):
+    def __init__(self, fig, dir_path, show_plot=PLOT_PARAMS['SHOW_PLOT'], suptitle='', suptitle_options={}, tight_layout=True):
         self.fig              = fig
         self.dir_path         = dir_path
         self.show_plot        = show_plot
