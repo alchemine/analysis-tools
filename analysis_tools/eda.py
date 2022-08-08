@@ -176,7 +176,7 @@ def plot_features_target(data, target, n_cols=PLOT_PARAMS['N_COLS'],            
             ax.set_title(f"{f} vs {target}")
             f_type = 'num' if f in num_features else 'cat'
             eval(f"plot_{f_type}_{target_type}_features")(data, f, target, ax=ax)
-def plot_corr(corr, annot=True,                                            dir_path=None, figsize=PLOT_PARAMS['FIGSIZE'], show_plot=PLOT_PARAMS['SHOW_PLOT']):
+def plot_corr(corr, annot=True, mask=True,                                                dir_path=None, figsize=PLOT_PARAMS['FIGSIZE'], show_plot=PLOT_PARAMS['SHOW_PLOT']):
     """Plot correlation matrix.
 
     Parameters
@@ -185,7 +185,10 @@ def plot_corr(corr, annot=True,                                            dir_p
         Correlation matrix.
 
     annot : bool
-        Whether to show values
+        Whether to show values.
+
+    mask : bool
+        Whether to show only lower triangular matrix.
 
     dir_path : str
         Directory path to save the plot.
@@ -205,9 +208,9 @@ def plot_corr(corr, annot=True,                                            dir_p
     """
     fig, ax = plt.subplots(figsize=figsize)
     with FigProcessor(fig, dir_path, show_plot, "Correlation matrix"):
-        mask = np.zeros_like(corr, dtype=np.bool)
-        mask[np.triu_indices_from(mask)] = True
-        sns.heatmap(corr, mask=mask, ax=ax, annot=annot, fmt=".2f", cmap='coolwarm', center=0)
+        mask_mat = np.eye(len(corr), dtype=bool)
+        mask_mat[np.triu_indices_from(mask_mat, k=1)] = mask
+        sns.heatmap(corr, mask=mask_mat, ax=ax, annot=annot, fmt=".2f", cmap='coolwarm', center=0)
 def plot_num_feature(data_f, bins=PLOT_PARAMS['BINS'],                           ax=None, dir_path=None, figsize=PLOT_PARAMS['FIGSIZE'], show_plot=PLOT_PARAMS['SHOW_PLOT']):
     """Plot histogram of a numeric feature.
 
