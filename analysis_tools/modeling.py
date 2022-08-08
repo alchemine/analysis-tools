@@ -9,7 +9,7 @@ Modeling wrapping functions or classes are defined here.
 from analysis_tools.common import *
 
 
-def get_scaling_model(model, scaler=None):
+def get_scaled_model(model, scaler=None):
     """
     Creates a pipeline that applies the given scaler to the given model.
 
