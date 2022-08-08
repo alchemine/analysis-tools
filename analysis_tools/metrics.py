@@ -7,15 +7,9 @@ Performance evaluation metrics are defined here.
 
 
 from analysis_tools.common import *
-from sklearn.metrics import confusion_matrix, accuracy_score, f1_score, precision_score, recall_score, precision_recall_curve, average_precision_score, roc_curve, roc_auc_score
-from sklearn.metrics import mean_squared_error, r2_score
-from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor
-from sklearn.inspection import permutation_importance
-from sklearn.preprocessing import OrdinalEncoder
-from sklearn.model_selection import train_test_split
 
 
-def confusion_matrix_analysis(y_true, y_pred,                                                                                          dir_path=None, figsize=PLOT_PARAMS['FIGSIZE'], show_plot=PLOT_PARAMS['SHOW_PLOT']):
+def confusion_matrix_analysis(y_true, y_pred,                                                                                                         dir_path=None, figsize=PLOT_PARAMS['FIGSIZE'], show_plot=PLOT_PARAMS['SHOW_PLOT']):
     """Plot confusion matrix
 
     Parameters
@@ -47,6 +41,8 @@ def confusion_matrix_analysis(y_true, y_pred,                                   
     >>> y_pred = [0, 0, 0, 1, 1, 1, 1, 1]
     >>> confusion_matrix_analysis(y_true, y_pred, dir_path='.')
     """
+    from sklearn.metrics import confusion_matrix, accuracy_score, precision_score, recall_score, f1_score
+
     normalized_C = confusion_matrix(y_true, y_pred, normalize='true')
     assert all(normalized_C.sum(axis=1) == 1), "Confusion matrix is not normalized"
 
@@ -65,7 +61,7 @@ def confusion_matrix_analysis(y_true, y_pred,                                   
         confusion_matrix=normalized_C,
         accuracy=accuracy_score(y_true, y_pred), precision=precision_score(y_true, y_pred), recall=recall_score(y_true, y_pred), f1_score=f1_score(y_true, y_pred),
     )
-def curve_analysis(y_true, y_score,                                                                                                    dir_path=None, figsize=PLOT_PARAMS['FIGSIZE'], show_plot=PLOT_PARAMS['SHOW_PLOT']):
+def curve_analysis(y_true, y_score,                                                                                                                   dir_path=None, figsize=PLOT_PARAMS['FIGSIZE'], show_plot=PLOT_PARAMS['SHOW_PLOT']):
     """Plot Precision-Recall and ROC curves
 
     Parameters
@@ -92,6 +88,8 @@ def curve_analysis(y_true, y_score,                                             
     >>> y_score = [0.1, 0.4, 0.35, 0.8, 0.85, 0.8, 0.9, 0.95]
     >>> curve_analysis(y_true, y_score, dir_path='.')
     """
+    from sklearn.metrics import precision_recall_curve, average_precision_score, roc_curve, roc_auc_score
+
     precisions, recalls, thresholds_pr = precision_recall_curve(y_true, y_score)
     fpr, tpr, thresholds_roc           = roc_curve(y_true, y_score)
     fig, axes = plt.subplots(1, 3, figsize=figsize)
@@ -165,6 +163,10 @@ def get_feature_importance(data, target, bins=PLOT_PARAMS['BINS'], problem='clas
     >>> data[cat_features] = data[cat_features].astype('category')
     >>> eda.get_feature_importance(data, 'a', dir_path='.')
     """
+    from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor
+    from sklearn.inspection import permutation_importance
+    from sklearn.preprocessing import OrdinalEncoder
+
     # 1. Split data into X, y
     data               = data.dropna()
     cat_features       = data.select_dtypes('category').columns
@@ -244,6 +246,8 @@ def plot_learning_curve(model, X_train, y_train, X_val, y_val, n_subsets_step=PL
     >>> model = LogisticRegression()
     >>> plot_learning_curve(model, X_train, y_train, X_val, y_val)
     """
+    from sklearn.metrics import precision_score, recall_score, f1_score, accuracy_score, mean_squared_error, r2_score
+
     if problem == 'classification':
         error_fn_names = ['F1 score', 'Precision', 'Recall', 'Accuracy']
         error_fns      = [precision_score, recall_score, f1_score, accuracy_score]
@@ -341,6 +345,8 @@ def compare_models(models, X_train, y_train, X_val=None, y_val=None):
     0.580 (train) / 0.425 (val) : KNeighborsRegressor
     0.167 (train) / 0.182 (val) : SVR
     """
+    from sklearn.model_selection import train_test_split
+
     if X_val is None and y_val is None:
         try:  # classification
             X_train, X_val, y_train, y_val = train_test_split(X_train, y_train, stratify=y_train)
