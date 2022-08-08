@@ -5,6 +5,7 @@ Advanced tools for analysis of data.
 Examples
 --------
 >>> from analysis_tools.eda import *
+>>> from analysis_tools.metrics import *
 >>> from analysis_tools.modeling import *
 >>> from analysis_tools.preprocessing import *
 """
