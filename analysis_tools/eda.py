@@ -127,7 +127,7 @@ def plot_features(data, bins=PLOT_PARAMS['BINS'], n_cols=PLOT_PARAMS['N_COLS'], 
                 cnts = data[f].value_counts(normalize=True).sort_index()  # normalize including NaN
                 ax.bar(cnts.index, cnts.values, width=0.5, alpha=0.5)
                 ax.set_xticks(cnts.index)
-def plot_features_target(data, target, n_cols=PLOT_PARAMS['N_COLS'],                      dir_path=None, figsize=PLOT_PARAMS['FIGSIZE'], show_plot=PLOT_PARAMS['SHOW_PLOT']):
+def plot_features_target(data, target, n_cols=PLOT_PARAMS['N_COLS'], target_type='auto',  dir_path=None, figsize=PLOT_PARAMS['FIGSIZE'], show_plot=PLOT_PARAMS['SHOW_PLOT']):
     """Plot features vs target.
 
     Parameters
@@ -135,7 +135,7 @@ def plot_features_target(data, target, n_cols=PLOT_PARAMS['N_COLS'],            
     data : pandas.DataFrame
         DataFrame to be analyzed.
         Dtypes of numerical features should be `number`(`numpy.float32` is recommended).
-        Dtypes of categorical features should be `category`.
+        Dtypes of categorical features should be `string` or `category`.
 
     target : str
         Target feature.
@@ -145,6 +145,11 @@ def plot_features_target(data, target, n_cols=PLOT_PARAMS['N_COLS'],            
 
     n_cols : int
         Number of columns.
+
+    target_type : str
+        Type of target.
+        target_type should be 'auto' or 'num', 'cat'.
+        target_type is inferred automatically when 'auto' is set.
 
     figsize : tuple
         Figure size.
@@ -160,12 +165,13 @@ def plot_features_target(data, target, n_cols=PLOT_PARAMS['N_COLS'],            
     >>> data = pd.DataFrame({'a': [1, 2, 3, 1, 2], 'b': ['a', 'b', 'c', 'd', 'e'], 'c': ['a10', 'b22', 'c11', 'a10', 'b22']})
     >>> num_features = ['a']
     >>> cat_features = data.columns.drop(num_features)
-    >>> data[num_features] = data[num_features].astype(np.float32)
-    >>> data[cat_features] = data[cat_features].astype('category')
+    >>> data[num_features] = data[num_features].astype('float32')
+    >>> data[cat_features] = data[cat_features].astype('string')
     >>> eda.plot_features_target(data, 'a', dir_path='.')
     """
     num_features = data.select_dtypes('number').columns
-    target_type  = 'num' if target in num_features else 'cat'
+    if target_type == 'auto':
+        target_type = 'num' if target in num_features else 'cat'
     n_features   = len(data.columns)
     n_rows       = int(np.ceil(n_features/n_cols))
     fig, axes    = plt.subplots(n_rows, n_cols, figsize=figsize)
