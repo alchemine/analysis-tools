@@ -40,7 +40,7 @@ ls_file = lambda path: [path for path in glob(f"{path}/*") if isfile(path)]
 
 
 @dataclass
-class Timer(ContextDecorator):
+class Timer(contextlib.ContextDecorator):
     """Context manager for timing the execution of a block of code.
 
     Parameters
@@ -76,7 +76,7 @@ class Timer(ContextDecorator):
         return False
 
 
-class FigProcessor(ContextDecorator):
+class FigProcessor(contextlib.ContextDecorator):
     """Context manager for processing figure.
 
     Plot the figure and save it to the specified path.

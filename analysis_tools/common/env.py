@@ -22,7 +22,7 @@ from collections import defaultdict
 from copy import deepcopy as copy
 from tqdm import tqdm, trange
 import warnings
-from contextlib import ContextDecorator
+import contextlib
 from dataclasses import dataclass
 from IPython.display import display, Markdown
 import subprocess
