@@ -10,8 +10,7 @@ from analysis_tools.common import *
 
 
 # Utility function
-def plot_on_ax(plot_fn, suptitle, ax=None,
-               dir_path=None, figsize=PLOT_PARAMS['FIGSIZE'], show_plot=None):
+def plot_on_ax(plot_fn, suptitle, ax=None,                                     dir_path=None, figsize=None, show_plot=None):
     """Plot on a single axis if ax is not None. Otherwise, plot on a new figure.
 
     Parameters
@@ -37,14 +36,13 @@ def plot_on_ax(plot_fn, suptitle, ax=None,
     if ax is not None:
         plot_fn(ax)
     else:
-        fig, ax = plt.subplots(figsize=figsize)
+        fig, ax = plt.subplots(figsize=PLOT_PARAMS.get(figsize, 'figsize'))
         with FigProcessor(fig, dir_path, show_plot, suptitle):
             plot_fn(ax)
 
 
 # Missing value
-def plot_missing_value(data,
-                       dir_path=None, figsize=PLOT_PARAMS['FIGSIZE'], show_plot=None):
+def plot_missing_value(data,                                                   dir_path=None, figsize=None, show_plot=None):
     """Plot counts of missing values of each feature.
 
     Parameters
@@ -68,7 +66,7 @@ def plot_missing_value(data,
     >>> data = pd.DataFrame({'a': [1, 2, 3, 4, None], 'b': [1, None, 3, 4, 5], 'c': [None, 2, 3, 4, 5]})
     >>> eda.plot_missing_value(data, dir_path='.')
     """
-    fig, axes = plt.subplots(2, 1, figsize=figsize)
+    fig, axes = plt.subplots(2, 1, figsize=PLOT_PARAMS.get(figsize, 'figsize'))
     with FigProcessor(fig, dir_path, show_plot, "Missing value"):
         msno.matrix(data, ax=axes[0])
         ms = data.isnull().sum()
@@ -78,8 +76,7 @@ def plot_missing_value(data,
 
 
 # Features
-def plot_features(data1, data2=None, bins=PLOT_PARAMS['BINS'], n_cols=PLOT_PARAMS['N_COLS'], title='Features',
-                  dir_path=None, figsize=PLOT_PARAMS['FIGSIZE'], show_plot=None):
+def plot_features(data1, data2=None, bins=None, n_cols=None, title='Features', dir_path=None, figsize=None, show_plot=None):
     """Plot histogram or bar for all features.
 
     Parameters
@@ -115,9 +112,11 @@ def plot_features(data1, data2=None, bins=PLOT_PARAMS['BINS'], n_cols=PLOT_PARAM
     >>> data = pd.DataFrame({'a': [1, 2, 3, 4, 5], 'b': ['a', 'b', 'c', 'd', 'e'], 'c': [1.2, 2.3, 3.4, 4.5, 5.6]})
     >>> eda.plot_features(data, dir_path='.')
     """
+    bins   = PLOT_PARAMS.get(bins, 'bins')
+    n_cols = PLOT_PARAMS.get(n_cols, 'n_cols')
     n_features = len(data1.columns)
     n_rows     = int(np.ceil(n_features / n_cols))
-    fig, axes = plt.subplots(n_rows, n_cols, figsize=figsize)
+    fig, axes = plt.subplots(n_rows, n_cols, figsize=PLOT_PARAMS.get(figsize, 'figsize'))
     with FigProcessor(fig, dir_path, show_plot, title):
         for ax in axes.flat[n_features:]:
             ax.axis('off')
@@ -140,8 +139,7 @@ def plot_features(data1, data2=None, bins=PLOT_PARAMS['BINS'], n_cols=PLOT_PARAM
                     cnts = data[f].value_counts(normalize=True).sort_index()  # normalize including NaN
                     ax.bar(cnts.index, cnts.values, width=0.5, alpha=0.5, color=color)
                     ax.set_xticks(cnts.index)
-def plot_features_target(data, target, n_cols=PLOT_PARAMS['N_COLS'], target_type='auto',
-                         dir_path=None, figsize=PLOT_PARAMS['FIGSIZE'], show_plot=None):
+def plot_features_target(data, target, n_cols=None, target_type='auto',        dir_path=None, figsize=None, show_plot=None):
     """Plot features vs target.
 
     Parameters
@@ -183,21 +181,21 @@ def plot_features_target(data, target, n_cols=PLOT_PARAMS['N_COLS'], target_type
     >>> data[cat_features] = data[cat_features].astype('string')
     >>> eda.plot_features_target(data, 'a', dir_path='.')
     """
+    n_cols = PLOT_PARAMS.get(n_cols, 'n_cols')
     num_features = data.select_dtypes('number').columns
     if target_type == 'auto':
         target_type = 'num' if target in num_features else 'cat'
     n_features   = len(data.columns)
     n_rows       = int(np.ceil(n_features/n_cols))
-    fig, axes    = plt.subplots(n_rows, n_cols, figsize=figsize)
+    fig, axes    = plt.subplots(n_rows, n_cols, figsize=PLOT_PARAMS.get(figsize, 'figsize'))
     with FigProcessor(fig, dir_path, show_plot, "Features vs Target"):
         for ax in axes.flat[n_features-1:]:  # -1: except target
             ax.axis('off')
-        for ax, f in zip(axes.flat, data.columns.drop(target)):
+        for ax, f in tqdm(zip(axes.flat, data.columns.drop(target))):
             ax.set_title(f"{f} vs {target}")
             f_type = 'num' if f in num_features else 'cat'
             eval(f"plot_{f_type}_{target_type}_features")(data, f, target, ax=ax)
-def plot_corr(corr1, corr2=None, annot=True, mask=True,
-              dir_path=None, figsize=PLOT_PARAMS['FIGSIZE'], show_plot=None):
+def plot_corr(corr1, corr2=None, annot=True, mask=True,                        dir_path=None, figsize=None, show_plot=None):
     """Plot correlation matrix.
 
     Parameters
@@ -237,6 +235,7 @@ def plot_corr(corr1, corr2=None, annot=True, mask=True,
             sns.heatmap(corr1, mask=mask_mat, ax=ax, annot=annot, fmt=".2f", cmap='coolwarm', center=0)
         plot_on_ax(plot_fn, "Correlation matrix", None, dir_path, figsize, show_plot)
     else:
+        figsize = PLOT_PARAMS.get(figsize, 'figsize')
         fig, axes = plt.subplots(1, 2, figsize=(2*figsize[0], figsize[1]))
         with FigProcessor(fig, dir_path, show_plot, "Correlation matrix"):
             for ax, corr in zip(axes.flat, (corr1, corr2)):
@@ -245,8 +244,7 @@ def plot_corr(corr1, corr2=None, annot=True, mask=True,
                 sns.heatmap(corr, mask=mask_mat, ax=ax, annot=annot, fmt=".2f", cmap='coolwarm', center=0)
 
 
-def plot_num_feature(data_f, bins=PLOT_PARAMS['BINS'], ax=None,
-                     dir_path=None, figsize=None, show_plot=None):
+def plot_num_feature(data_f, bins=None, ax=None,                               dir_path=None, figsize=None, show_plot=None):
     """Plot histogram of a numeric feature.
 
     Parameters
@@ -277,11 +275,10 @@ def plot_num_feature(data_f, bins=PLOT_PARAMS['BINS'], ax=None,
     >>> eda.plot_num_feature(data['a'], dir_path='.')
     """
     def plot_fn(ax):
-        sns.histplot(data_f, bins=bins, ax=ax, kde=True, stat='density')
+        sns.histplot(data_f, bins=PLOT_PARAMS.get(bins, 'bins'), ax=ax, kde=True, stat='density')
         ax.set_xlabel(None)
     plot_on_ax(plot_fn, data_f.name, ax, dir_path, figsize, show_plot)
-def plot_cat_feature(data_f, ax=None,
-                     dir_path=None, figsize=None, show_plot=None):
+def plot_cat_feature(data_f, ax=None,                                          dir_path=None, figsize=None, show_plot=None):
     """Plot bar of a categorical feature.
 
     Parameters
@@ -312,8 +309,7 @@ def plot_cat_feature(data_f, ax=None,
         density = data_f.value_counts(normalize=True).sort_index()
         sns.barplot(density.index, density.values, ax=ax)
     plot_on_ax(plot_fn, data_f.name, ax, dir_path, figsize, show_plot)
-def plot_num_num_features(data, f1, f2, bins=PLOT_PARAMS['BINS'], ax=None,
-                          dir_path=None, figsize=None, show_plot=None):
+def plot_num_num_features(data, f1, f2, bins=None, ax=None,                    dir_path=None, figsize=None, show_plot=None):
     """Plot histogram of two numeric features.
 
     Parameters
@@ -350,11 +346,11 @@ def plot_num_num_features(data, f1, f2, bins=PLOT_PARAMS['BINS'], ax=None,
     >>> eda.plot_num_num_features(data, 'a', 'c', dir_path='.')
     """
     def plot_fn(ax):
-        sns.histplot(x=data[f1], y=data[f2], bins=bins, ax=ax)
+        sns.histplot(x=data[f1], y=data[f2], bins=PLOT_PARAMS.get(bins, 'bins'), ax=ax)
+        # sns.scatterplot(x=data[f1], y=data[f2], alpha=0.5, ax=ax)
         ax.set_xlabel(None);  ax.set_ylabel(None)
     plot_on_ax(plot_fn, f"{f1} vs {f2}", ax, dir_path, figsize, show_plot)
-def plot_num_cat_features(data, f1, f2, n_classes=PLOT_PARAMS['N_CLASSES_PLOT'], ax=None,
-                          dir_path=None, figsize=None, show_plot=None):
+def plot_num_cat_features(data, f1, f2, n_classes=None, ax=None,               dir_path=None, figsize=None, show_plot=None):
     """Plot violinplot of categorical, numerical features.
 
     Parameters
@@ -391,14 +387,13 @@ def plot_num_cat_features(data, f1, f2, n_classes=PLOT_PARAMS['N_CLASSES_PLOT'],
     >>> eda.plot_num_cat_features(data, 'a', 'b', dir_path='.')
     """
     def plot_fn(ax):
-        selected_classes = data[f2].value_counts().index[:n_classes]
+        selected_classes = data[f2].value_counts().index[:PLOT_PARAMS.get(n_classes, 'n_classes')]
         idxs_selected    = data[f2][data[f2].isin(selected_classes)].index
         data_f1, data_f2 = data[f1][idxs_selected], data[f2][idxs_selected]
         sns.violinplot(x=data_f1, y=data_f2, ax=ax, orient='h', order=reversed(sorted(selected_classes)), cut=0)
         ax.set_xlabel(None);  ax.set_ylabel(None)
     plot_on_ax(plot_fn, f"{f1} vs {f2}", ax, dir_path, figsize, show_plot)
-def plot_cat_num_features(data, f1, f2, n_classes=PLOT_PARAMS['N_CLASSES_PLOT'], ax=None,
-                          dir_path=None, figsize=None, show_plot=None):
+def plot_cat_num_features(data, f1, f2, n_classes=None, ax=None,               dir_path=None, figsize=None, show_plot=None):
     """Plot violinplot of categorical, numerical features.
 
     Parameters
@@ -435,14 +430,13 @@ def plot_cat_num_features(data, f1, f2, n_classes=PLOT_PARAMS['N_CLASSES_PLOT'],
     >>> eda.plot_cat_num_features(data, 'b', 'a', dir_path='.')
     """
     def plot_fn(ax):
-        selected_classes = data[f1].value_counts().index[:n_classes]
+        selected_classes = data[f1].value_counts().index[:PLOT_PARAMS.get(n_classes, 'n_classes')]
         idxs_selected    = data[f1][data[f1].isin(selected_classes)].index
         data_f1, data_f2 = data[f1][idxs_selected], data[f2][idxs_selected]
         sns.violinplot(x=data_f1, y=data_f2, ax=ax, orient='v', order=sorted(selected_classes), cut=0)
         ax.set_xlabel(None);  ax.set_ylabel(None)
     plot_on_ax(plot_fn, f"{f1} vs {f2}", ax, dir_path, figsize, show_plot)
-def plot_cat_cat_features(data, f1, f2, n_classes=PLOT_PARAMS['N_CLASSES_PLOT'], ax=None,
-                          dir_path=None, figsize=None, show_plot=None):
+def plot_cat_cat_features(data, f1, f2, n_classes=None, ax=None,               dir_path=None, figsize=None, show_plot=None):
     """Plot heatmap of two categorical features.
 
     Parameters
@@ -482,12 +476,11 @@ def plot_cat_cat_features(data, f1, f2, n_classes=PLOT_PARAMS['N_CLASSES_PLOT'],
         ratio = pd.crosstab(data[f2], data[f1], normalize='columns')
         ratio.sort_index(inplace=True, ascending=False)  # sort by index
         ratio = ratio[sorted(ratio)]                     # sort by column
-        ratio = ratio.iloc[:n_classes, :n_classes]
+        ratio = ratio.iloc[:PLOT_PARAMS.get(n_classes), PLOT_PARAMS.get(n_classes, 'n_classes')]
         sns.heatmap(ratio, ax=ax, annot=True, fmt=".2f", cmap=sns.light_palette('firebrick', as_cmap=True), cbar=False)
         ax.set_xlabel(None);  ax.set_ylabel(None)
     plot_on_ax(plot_fn, f"{f1} vs {f2}", ax, dir_path, figsize, show_plot)
-def plot_pair(data1, data2=None, sample=1000, alpha=0.3, s=20, subplot=True,
-              dir_path=None, figsize=PLOT_PARAMS['FIGSIZE'], show_plot=None):
+def plot_pair(data1, data2=None, sample=1000, alpha=0.3, s=20, subplot=True,   dir_path=None, figsize=None, show_plot=None):
     """Plot pair plot for all numerical features.
 
     Parameters
@@ -526,6 +519,7 @@ def plot_pair(data1, data2=None, sample=1000, alpha=0.3, s=20, subplot=True,
     >>> data = pd.DataFrame({'a': [1, 2, 3, 4, 5], 'b': ['a', 'b', 'c', 'd', 'e'], 'c': [1.2, 2.3, 3.4, 4.5, 5.6]})
     >>> eda.plot_pair(data, dir_path='.')
     """
+    figsize = PLOT_PARAMS.get(figsize, 'figsize')
     if data2 is None:
         fig = sns.pairplot(data1.sample(sample), plot_kws={'alpha': alpha, 's': s}).fig
         with FigProcessor(fig, dir_path, show_plot, suptitle='Pairplot', tight_layout=False):
@@ -556,8 +550,7 @@ def plot_pair(data1, data2=None, sample=1000, alpha=0.3, s=20, subplot=True,
 
 
 # Time series features
-def plot_ts_features(data, title='Features',
-                     dir_path=None, figsize=PLOT_PARAMS['FIGSIZE'], show_plot=None):
+def plot_ts_features(data, title='Features',                                   dir_path=None, figsize=None, show_plot=None):
     """Plot time series line plot for all numerical features.
 
     Parameters

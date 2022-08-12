@@ -10,7 +10,7 @@ from analysis_tools.common import *
 
 
 # Set random seed
-def set_random_seed_tf(seed=42):
+def set_random_seed_tf(seed=None):
     """
     Set random seed for reproducibility on TensorFlow
 
@@ -21,10 +21,11 @@ def set_random_seed_tf(seed=42):
     """
     import tensorflow as tf
 
+    seed = PARAMS.get(seed, 'seed')
     os.environ['PYTHONHASHSEED'] = str(seed)
     tf.keras.utils.set_random_seed(seed)  # random, numpy, tensorflow
     tf.config.experimental.enable_op_determinism()
-def set_random_seed_torch(seed=42):
+def set_random_seed_torch(seed=None):
     """
     Set random seed for reproducibility on PyTorch
 
@@ -37,6 +38,7 @@ def set_random_seed_torch(seed=42):
     import random
     import torch
 
+    seed = PARAMS.get(seed, 'seed')
     os.environ['PYTHONHASHSEED'] = str(seed)
     np.random.seed(seed)
     random.seed(seed)

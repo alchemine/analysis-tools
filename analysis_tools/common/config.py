@@ -7,18 +7,20 @@ Commonly used constant parameters are defined in capital letters.
 
 
 # Common parameters
-PARAMS = dict(
-    RANDOM_STATE = 42,
-    TEST_SIZE    = 0.2
-)
+class PARAMS:
+    seed      = 42
+    test_size = 0.2
+
+    @classmethod
+    def get(cls, val, name):
+        return getattr(cls, name) if val is None else val
 
 
 # Plot parameters
-PLOT_PARAMS = dict(
-    SHOW_PLOT      = True,
-    FIGSIZE        = (30, 10),
-    BINS           = 50,
-    N_CLASSES_PLOT = 5,
-    N_COLS         = 5,
-    LEARNING_CURVE_N_SUBSETS_STEP = 5
-)
+class PLOT_PARAMS(PARAMS):
+    show_plot      = True
+    figsize        = (30, 10)
+    bins           = 50
+    n_classes      = 5
+    n_cols         = 5
+    n_subsets_step = 5

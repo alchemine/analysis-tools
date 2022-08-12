@@ -112,8 +112,8 @@ class FigProcessor(contextlib.ContextDecorator):
     def __init__(self, fig, dir_path, show_plot=None, suptitle=None, suptitle_options={}, tight_layout=True):
         self.fig              = fig
         self.dir_path         = dir_path
-        self.show_plot        = show_plot if show_plot else PLOT_PARAMS['SHOW_PLOT']
-        self.suptitle         = suptitle  if suptitle else ''
+        self.show_plot        = PLOT_PARAMS.get(show_plot, 'show_plot')
+        self.suptitle         = suptitle if suptitle else ''
         self.suptitle_options = suptitle_options
         self.tight_layout     = tight_layout
     def __enter__(self):
@@ -193,3 +193,20 @@ class SeabornFig2Grid:
 
     def _resize(self, evt=None):
         self.sg.fig.set_size_inches(self.fig.get_size_inches())
+
+
+def name(var):
+    # https://stackoverflow.com/a/18425523
+    """Get name of variable
+
+    Parameters
+    ----------
+    var : anything
+        Variable
+
+    Returns
+    -------
+    Name of variable
+    """
+    callers_local_vars = inspect.currentframe().f_back.f_locals.items()
+    return [var_name for var_name, var_val in callers_local_vars if var_val is var][0]

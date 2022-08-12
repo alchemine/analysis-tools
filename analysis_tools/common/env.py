@@ -26,6 +26,7 @@ import contextlib
 from dataclasses import dataclass
 from IPython.display import display, Markdown
 import subprocess
+import inspect
 
 
 # External packages
