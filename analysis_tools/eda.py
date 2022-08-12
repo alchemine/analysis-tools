@@ -185,12 +185,15 @@ def plot_features_target(data, target, n_cols=PLOT_PARAMS['N_COLS'], target_type
             ax.set_title(f"{f} vs {target}")
             f_type = 'num' if f in num_features else 'cat'
             eval(f"plot_{f_type}_{target_type}_features")(data, f, target, ax=ax)
-def plot_corr(corr, annot=True, mask=True,                                                        dir_path=None, figsize=PLOT_PARAMS['FIGSIZE'], show_plot=PLOT_PARAMS['SHOW_PLOT']):
+def plot_corr(corr1, corr2=None, annot=True, mask=True,                                           dir_path=None, figsize=PLOT_PARAMS['FIGSIZE'], show_plot=PLOT_PARAMS['SHOW_PLOT']):
     """Plot correlation matrix.
 
     Parameters
     ----------
-    corr : pandas.DataFrame
+    corr1 : pandas.DataFrame
+        Correlation matrix.
+
+    corr2 : pandas.DataFrame
         Correlation matrix.
 
     annot : bool
@@ -215,11 +218,21 @@ def plot_corr(corr, annot=True, mask=True,                                      
     >>> data = pd.DataFrame({'a': [1, 2, 3, 1, 2], 'b': ['a', 'b', 'c', 'd', 'e'], 'c': [10, 20, 30, 10, 20]})
     >>> eda.plot_corr(corr, dir_path='.')
     """
-    fig, ax = plt.subplots(figsize=figsize)
-    with FigProcessor(fig, dir_path, show_plot, "Correlation matrix"):
-        mask_mat = np.eye(len(corr), dtype=bool)
-        mask_mat[np.triu_indices_from(mask_mat, k=1)] = mask
-        sns.heatmap(corr, mask=mask_mat, ax=ax, annot=annot, fmt=".2f", cmap='coolwarm', center=0)
+    if corr2 is None:
+        fig, ax = plt.subplots(figsize=figsize)
+        with FigProcessor(fig, dir_path, show_plot, "Correlation matrix"):
+            mask_mat = np.eye(len(corr1), dtype=bool)
+            mask_mat[np.triu_indices_from(mask_mat, k=1)] = mask
+            sns.heatmap(corr1, mask=mask_mat, ax=ax, annot=annot, fmt=".2f", cmap='coolwarm', center=0)
+    else:
+        fig, axes = plt.subplots(1, 2, figsize=(2*figsize[0], figsize[1]))
+        with FigProcessor(fig, dir_path, show_plot, "Correlation matrix"):
+            for ax, corr in zip(axes.flat, (corr1, corr2)):
+                mask_mat = np.eye(len(corr), dtype=bool)
+                mask_mat[np.triu_indices_from(mask_mat, k=1)] = mask
+                sns.heatmap(corr, mask=mask_mat, ax=ax, annot=annot, fmt=".2f", cmap='coolwarm', center=0)
+
+
 def plot_num_feature(data_f, bins=PLOT_PARAMS['BINS'],                                   ax=None, dir_path=None, figsize=PLOT_PARAMS['FIGSIZE'], show_plot=PLOT_PARAMS['SHOW_PLOT']):
     """Plot histogram of a numeric feature.
 
