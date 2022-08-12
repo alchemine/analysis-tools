@@ -15,3 +15,4 @@ from . import metrics
 from . import modeling
 from . import preprocessing
 from . import random
+from . import utils
