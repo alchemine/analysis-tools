@@ -452,3 +452,34 @@ def plot_cat_cat_features(data, f1, f2, n_classes=PLOT_PARAMS['N_CLASSES_PLOT'],
         sns.heatmap(ratio, ax=ax, annot=True, fmt=".2f", cmap=sns.light_palette('firebrick', as_cmap=True), cbar=False)
         ax.set_xlabel(None);  ax.set_ylabel(None)
     _plot_on_ax(plot_fn, f"{f1} vs {f2}", ax, dir_path, figsize, show_plot)
+
+
+# Time series features
+def plot_ts_features(data,                                                                dir_path=None, figsize=PLOT_PARAMS['FIGSIZE'], show_plot=PLOT_PARAMS['SHOW_PLOT']):
+    """Plot time series line plot for all numerical features.
+
+    Parameters
+    ----------
+    data : pandas.DataFrame
+        DataFrame to be analyzed.
+
+    dir_path : str
+        Directory path to save the plot.
+
+    figsize : tuple
+        Figure size.
+
+    show_plot : bool
+        Whether to show the plot.
+
+    Examples
+    --------
+    >>> import pandas as pd
+    >>> import analysis_tools.eda as eda
+    >>> data = pd.DataFrame({'a': [1, 2, 3, 4, 5], 'b': ['a', 'b', 'c', 'd', 'e'], 'c': [1.2, 2.3, 3.4, 4.5, 5.6]})
+    >>> eda.plot_features_ts(data, dir_path='.')
+    """
+    data_num = data.select_dtypes('number')
+    fig, ax = plt.subplots(figsize=figsize)
+    with FigProcessor(fig, dir_path, show_plot, "Features"):
+        data_num.plot(subplots=True, ax=ax, sharex=True)
