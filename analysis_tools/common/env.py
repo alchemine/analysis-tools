@@ -43,7 +43,7 @@ import missingno as msno
 # Plot packages
 import matplotlib.pyplot as plt
 from matplotlib.cbook import boxplot_stats
-from matplotlib.gridspec import GridSpec
+from matplotlib import gridspec
 import seaborn as sns
 
 

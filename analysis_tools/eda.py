@@ -90,7 +90,7 @@ def plot_features(data, bins=PLOT_PARAMS['BINS'], n_cols=PLOT_PARAMS['N_COLS'], 
         Number of columns.
 
     title : str
-        Title to be showed
+        Title
 
     dir_path : str
         Directory path to save the plot.
@@ -455,6 +455,72 @@ def plot_cat_cat_features(data, f1, f2, n_classes=PLOT_PARAMS['N_CLASSES_PLOT'],
         sns.heatmap(ratio, ax=ax, annot=True, fmt=".2f", cmap=sns.light_palette('firebrick', as_cmap=True), cbar=False)
         ax.set_xlabel(None);  ax.set_ylabel(None)
     _plot_on_ax(plot_fn, f"{f1} vs {f2}", ax, dir_path, figsize, show_plot)
+def plot_pair(data1, data2=None, sample=1000, alpha=0.3, s=20, subplot=True,                      dir_path=None, figsize=PLOT_PARAMS['FIGSIZE'], show_plot=PLOT_PARAMS['SHOW_PLOT']):
+    """Plot pair plot for all numerical features.
+
+    Parameters
+    ----------
+    data1 : pandas.DataFrame
+        DataFrame to be analyzed.
+
+    data2 : pandas.DataFrame
+        DataFrame to be analyzed.
+
+    sample : int
+        Number of samples
+
+    alpha : float
+        Transparency ratio
+
+    s : float
+        Size of points
+
+    subplot : bool
+        Whether to split figure
+
+    dir_path : str
+        Directory path to save the plot.
+
+    figsize : tuple
+        Figure size.
+
+    show_plot : bool
+        Whether to show the plot.
+
+    Examples
+    --------
+    >>> import pandas as pd
+    >>> import analysis_tools.eda as eda
+    >>> data = pd.DataFrame({'a': [1, 2, 3, 4, 5], 'b': ['a', 'b', 'c', 'd', 'e'], 'c': [1.2, 2.3, 3.4, 4.5, 5.6]})
+    >>> eda.plot_pair(data, dir_path='.')
+    """
+    if data2 is None:
+        fig = sns.pairplot(data1.sample(sample), plot_kws={'alpha': alpha, 's': s}).fig
+        with FigProcessor(fig, dir_path, show_plot, suptitle='Pairplot', tight_layout=False):
+            fig.set_size_inches(figsize)
+    else:
+        if subplot:
+            n_cols = 1 if data2 is None else 2
+            grids  = gridspec.GridSpec(1, n_cols)
+            fig    = plt.figure(figsize=(n_cols*figsize[0], figsize[1]))
+            with FigProcessor(fig, dir_path, show_plot, suptitle='Pairplot', tight_layout=False):
+                colors = [c['color'] for c in plt.rcParams['axes.prop_cycle']]
+                for grid, data, color in zip(grids, (data1, data2), colors):
+                    # g = sns.PairGrid(data.sample(sample))
+                    # g.map_diag(sns.histplot, color=color)  # TODO: why not working?
+                    # g.map_offdiag(sns.scatterplot, s=s, alpha=alpha, color=color)
+                    g = sns.pairplot(data.sample(sample), plot_kws={'alpha': alpha, 's': s, 'color': color})
+                    SeabornFig2Grid(g, fig, grid)
+                grids.tight_layout(fig)
+        else:
+            data1 = data1.sample(sample)
+            data1['ID'] = 'First'
+            data2 = data2.sample(sample)
+            data2['ID'] = 'Second'
+            data  = pd.concat([data1, data2], ignore_index=True)
+            fig = sns.pairplot(data, hue='ID', plot_kws={'alpha': alpha, 's': s}, markers=['o', 'D'], diag_kind='hist').fig
+            with FigProcessor(fig, dir_path, show_plot, suptitle='Pairplot', tight_layout=False):
+                fig.set_size_inches(figsize)
 
 
 # Time series features
@@ -467,7 +533,7 @@ def plot_ts_features(data, title='Features',                                    
         DataFrame to be analyzed.
 
     title : str
-        Title to be showed
+        Title
 
     dir_path : str
         Directory path to save the plot.
