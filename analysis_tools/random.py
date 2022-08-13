@@ -10,6 +10,22 @@ from analysis_tools.common import *
 
 
 # Set random seed
+def set_random_seed(seed=None):
+    """
+    Set random seed for reproducibility without using TensorFlow, PyTorch
+
+    Parameters
+    ----------
+    seed : int
+        Random seed
+    """
+    import numpy as np
+    import random
+
+    seed = PARAMS.get(seed, 'seed')
+    os.environ['PYTHONHASHSEED'] = str(seed)
+    np.random.seed(seed)
+    random.seed(seed)
 def set_random_seed_tf(seed=None):
     """
     Set random seed for reproducibility on TensorFlow
