@@ -180,16 +180,53 @@ def plot_features_target(data, target, target_type='auto',       dir_path=None, 
     num_features = data.select_dtypes('number').columns
     if target_type == 'auto':
         target_type = 'num' if target in num_features else 'cat'
-    n_features   = len(data.columns)
-    n_rows       = int(np.ceil(n_features/n_cols))
-    fig, axes    = plt.subplots(n_rows, n_cols, figsize=PLOT_PARAMS.get('figsize', figsize))
+    n_features = len(data.columns) - 1  # -1: except target
+    n_rows     = int(np.ceil(n_features/n_cols))
+    fig, axes  = plt.subplots(n_rows, n_cols, figsize=PLOT_PARAMS.get('figsize', figsize))
     with FigProcessor(fig, dir_path, show_plot, "Features vs Target"):
-        for ax in axes.flat[n_features-1:]:  # -1: except target
+        for ax in axes.flat[n_features:]:
             ax.axis('off')
         for ax, f in zip(axes.flat, data.columns.drop(target)):
             ax.set_title(f"{f} vs {target}")
             f_type = 'num' if f in num_features else 'cat'
             eval(f"plot_{f_type}_{target_type}_features")(data, f, target, ax=ax, **plot_kws)
+def plot_two_features(data, f1, f2,                              dir_path=None, figsize=None, show_plot=None, **plot_kws):
+    """Plot two features.
+
+    Parameters
+    ----------
+    data : pandas.DataFrame
+        DataFrame to be analyzed.
+
+    f1 : str
+        Feature 1.
+
+    f2 : str
+        Feature 2.
+
+    dir_path : str
+        Directory path to save the plot.
+
+    figsize : tuple
+        Figure size.
+
+    show_plot : bool
+        Whether to show the plot.
+
+    Examples
+    --------
+    >>> import pandas as pd
+    >>> import analysis_tools.eda as eda
+    >>> data = pd.DataFrame({'a': [1, 2, 3, 4, 5], 'b': ['a', 'b', 'c', 'd', 'e'], 'c': [1.2, 2.3, 3.4, 4.5, 5.6]})
+    >>> eda.plot_two_features(data, 'a', 'b', dir_path='.')
+    """
+    num_features = data.select_dtypes('number').columns
+    f1_type = 'num' if f1 in num_features else 'cat'
+    f2_type = 'num' if f2 in num_features else 'cat'
+    fig, ax = plt.subplots(figsize=PLOT_PARAMS.get('figsize', figsize))
+    with FigProcessor(fig, dir_path, show_plot, f"{f1} vs {f2}"):
+        eval(f"plot_{f1_type}_{f2_type}_features")(data, f1, f2, ax=ax, **plot_kws)
+
 def plot_corr(corr1, corr2=None, annot=True, mask=True,          dir_path=None, figsize=(15, 15), show_plot=None, **plot_kws):
     """Plot correlation matrix.
 
