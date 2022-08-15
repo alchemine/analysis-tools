@@ -74,6 +74,10 @@ def plot_missing_value(data,                                     dir_path=None, 
         axes[1].bar_label(axes[1].containers[0])
         axes[1].set_xticklabels([])
 
+    data_null = data[data.isna().any(1)]
+    for f in data_null:
+        if data_null[f].notnull().sum() > 0:
+            display(data_null.value_counts(f).sort_index().to_frame().T.style.background_gradient(axis=1))
 
 # Features
 def plot_features(data1, data2=None, title='Features',           dir_path=None, figsize=None, show_plot=None, **plot_kws):
