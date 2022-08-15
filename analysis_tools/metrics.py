@@ -9,7 +9,7 @@ Performance evaluation metrics are defined here.
 from analysis_tools.common import *
 
 
-def confusion_matrix_analysis(y_true, y_pred,                                                                 dir_path=None, figsize=None, show_plot=None):
+def confusion_matrix_analysis(y_true, y_pred,                                                                 dir_path=None, figsize=None, show_plot=None, **plot_kws):
     """Plot confusion matrix
 
     Parameters
@@ -46,7 +46,7 @@ def confusion_matrix_analysis(y_true, y_pred,                                   
     normalized_C = confusion_matrix(y_true, y_pred, normalize='true')
     assert all(normalized_C.sum(axis=1) == 1), "Confusion matrix is not normalized"
 
-    fig, axes = plt.subplots(2, 2, figsize=PLOT_PARAMS.get(figsize, 'figsize'))
+    fig, axes = plt.subplots(2, 2, figsize=PLOT_PARAMS.get('figsize', figsize))
     with FigProcessor(fig, dir_path, show_plot, "Confusion matrix"):
         sns.heatmap(normalized_C, annot=False, fmt='.2%', cmap='gray', ax=axes[0, 0])
         sns.heatmap(normalized_C, annot=True, fmt='.2%', cmap='gray', ax=axes[0, 1])
@@ -61,7 +61,7 @@ def confusion_matrix_analysis(y_true, y_pred,                                   
         confusion_matrix=normalized_C,
         accuracy=accuracy_score(y_true, y_pred), precision=precision_score(y_true, y_pred), recall=recall_score(y_true, y_pred), f1_score=f1_score(y_true, y_pred),
     )
-def curve_analysis(y_true, y_score,                                                                           dir_path=None, figsize=None, show_plot=None):
+def curve_analysis(y_true, y_score,                                                                           dir_path=None, figsize=None, show_plot=None, **plot_kws):
     """Plot Precision-Recall and ROC curves
 
     Parameters
@@ -92,7 +92,7 @@ def curve_analysis(y_true, y_score,                                             
 
     precisions, recalls, thresholds_pr = precision_recall_curve(y_true, y_score)
     fpr, tpr, thresholds_roc           = roc_curve(y_true, y_score)
-    fig, axes = plt.subplots(1, 3, figsize=PLOT_PARAMS.get(figsize, 'figsize'))
+    fig, axes = plt.subplots(1, 3, figsize=PLOT_PARAMS.get('figsize', figsize))
     with FigProcessor(fig, dir_path, show_plot, "Precision-Recall & ROC curves"):
         # Thresholds-PR
         axes[0].show_plot(thresholds_pr, precisions[:-1], 'b--', label='Precision')
@@ -119,7 +119,7 @@ def curve_analysis(y_true, y_score,                                             
         axes[2].set_ylim([0, 1])
         axes[2].legend()
 
-def get_feature_importance(data, target, bins=None, problem='classification',                                 dir_path=None, figsize=None, show_plot=None):
+def get_feature_importance(data, target, bins=None, problem='classification',                                 dir_path=None, figsize=None, show_plot=None, **plot_kws):
     """Get feature importance using RandomForest model.
 
     The metrics are mean decrease in impurity, mean accuracy decrease, mean rank
@@ -187,8 +187,8 @@ def get_feature_importance(data, target, bins=None, problem='classification',   
     mean_fi = pd.Series(((fi1 + fi2)/2).sort_values(), name='Mean')
 
     # 5. Plot
-    bins = PLOT_PARAMS.get(bins, 'bins')
-    fig, axes = plt.subplots(3, 1, figsize=PLOT_PARAMS.get(figsize, 'figsize'))
+    bins = PLOT_PARAMS.get('bins', bins)
+    fig, axes = plt.subplots(3, 1, figsize=PLOT_PARAMS.get('figsize', figsize))
     with FigProcessor(fig, dir_path, show_plot, "Feature importance"):
         for ax, data, ylabel, title in zip(axes,
                                           [MDI_importance.head(bins), perm_importance.head(bins), mean_fi.head(bins)],
@@ -201,7 +201,7 @@ def get_feature_importance(data, target, bins=None, problem='classification',   
 
     return pd.concat([MDI_importance, perm_importance, mean_fi], axis='columns')
 
-def plot_learning_curve(model, X_train, y_train, X_val, y_val, n_subsets_step=None, problem='classification', dir_path=None, figsize=None, show_plot=None):
+def plot_learning_curve(model, X_train, y_train, X_val, y_val, n_subsets_step=None, problem='classification', dir_path=None, figsize=None, show_plot=None, **plot_kws):
     """Plot learning curve
 
     Parameters
@@ -252,16 +252,16 @@ def plot_learning_curve(model, X_train, y_train, X_val, y_val, n_subsets_step=No
     if problem == 'classification':
         error_fn_names = ['F1 score', 'Precision', 'Recall', 'Accuracy']
         error_fns      = [precision_score, recall_score, f1_score, accuracy_score]
-        fig, axes = plt.subplots(4, 1, figsize=PLOT_PARAMS.get(figsize, 'figsize'))
+        fig, axes = plt.subplots(4, 1, figsize=PLOT_PARAMS.get('figsize', figsize))
     else:
         error_fn_names = ['MSE', 'R-squared']
         error_fns      = [mean_squared_error, r2_score]
-        fig, axes      = plt.subplots(2, 1, figsize=PLOT_PARAMS.get(figsize, 'figsize'))
+        fig, axes      = plt.subplots(2, 1, figsize=PLOT_PARAMS.get('figsize', figsize))
 
     with FigProcessor(fig, dir_path, show_plot, "Learning curve"):
         for ax, error_fn_name, error_fn in zip(axes, error_fn_names, error_fns):
             train_sub_errors, val_errors = pd.Series([], name='Training error'), pd.Series([], name='Validation error')
-            for n_subsets in trange(1, len(X_train), PLOT_PARAMS.get(n_subsets_step, 'n_subsets_step')):
+            for n_subsets in trange(1, len(X_train), PLOT_PARAMS.get('n_subsets_step', n_subsets_step)):
                 try:
                     X_train_sub, y_train_sub = X_train[:n_subsets], y_train[:n_subsets]
                     model.fit(X_train_sub, y_train_sub)

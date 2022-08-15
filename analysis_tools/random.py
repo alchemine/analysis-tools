@@ -21,7 +21,7 @@ def set_random_seed_tf(seed=None):
     """
     import tensorflow as tf
 
-    seed = PARAMS.get(seed, 'seed')
+    seed = PARAMS.get('seed', seed)
     os.environ['PYTHONHASHSEED'] = str(seed)
     tf.keras.utils.set_random_seed(seed)  # random, numpy, tensorflow
     tf.config.experimental.enable_op_determinism()
@@ -38,7 +38,7 @@ def set_random_seed_torch(seed=None):
     import random
     import torch
 
-    seed = PARAMS.get(seed, 'seed')
+    seed = PARAMS.get('seed', seed)
     os.environ['PYTHONHASHSEED'] = str(seed)
     np.random.seed(seed)
     random.seed(seed)

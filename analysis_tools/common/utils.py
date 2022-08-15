@@ -112,8 +112,8 @@ class FigProcessor(contextlib.ContextDecorator):
     def __init__(self, fig, dir_path, show_plot=None, suptitle=None, suptitle_options={}, tight_layout=True):
         self.fig              = fig
         self.dir_path         = dir_path
-        self.show_plot        = PLOT_PARAMS.get(show_plot, 'show_plot')
-        self.suptitle         = suptitle if suptitle else ''
+        self.show_plot        = PLOT_PARAMS.get('show_plot', show_plot)
+        self.suptitle         = suptitle
         self.suptitle_options = suptitle_options
         self.tight_layout     = tight_layout
     def __enter__(self):
@@ -127,7 +127,8 @@ class FigProcessor(contextlib.ContextDecorator):
             Exception information.(dummy)
         """
         if self.tight_layout:
-            self.fig.suptitle(self.suptitle, **self.suptitle_options)
+            if self.fig.suptitle:
+                self.fig.suptitle(self.suptitle, **self.suptitle_options)
             self.fig.tight_layout(rect=[0, 0.03, 1, 0.97])
         if self.dir_path:
             idx = 1
