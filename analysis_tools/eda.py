@@ -191,7 +191,7 @@ def plot_features_target(data, target, n_cols=None, target_type='auto',        d
     with FigProcessor(fig, dir_path, show_plot, "Features vs Target"):
         for ax in axes.flat[n_features-1:]:  # -1: except target
             ax.axis('off')
-        for ax, f in tqdm(zip(axes.flat, data.columns.drop(target))):
+        for ax, f in zip(axes.flat, data.columns.drop(target)):
             ax.set_title(f"{f} vs {target}")
             f_type = 'num' if f in num_features else 'cat'
             eval(f"plot_{f_type}_{target_type}_features")(data, f, target, ax=ax)
@@ -346,8 +346,8 @@ def plot_num_num_features(data, f1, f2, bins=None, ax=None,                    d
     >>> eda.plot_num_num_features(data, 'a', 'c', dir_path='.')
     """
     def plot_fn(ax):
-        sns.histplot(x=data[f1], y=data[f2], bins=PLOT_PARAMS.get(bins, 'bins'), ax=ax)
-        # sns.scatterplot(x=data[f1], y=data[f2], alpha=0.5, ax=ax)
+        # sns.histplot(x=data[f1], y=data[f2], bins=PLOT_PARAMS.get(bins, 'bins'), ax=ax)
+        sns.scatterplot(x=data[f1], y=data[f2], alpha=0.1, ax=ax)
         ax.set_xlabel(None);  ax.set_ylabel(None)
     plot_on_ax(plot_fn, f"{f1} vs {f2}", ax, dir_path, figsize, show_plot)
 def plot_num_cat_features(data, f1, f2, n_classes=None, ax=None,               dir_path=None, figsize=None, show_plot=None):
