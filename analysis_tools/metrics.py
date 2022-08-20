@@ -261,7 +261,7 @@ def plot_learning_curve(model, X_train, y_train, X_val, y_val, n_subsets_step=No
     with FigProcessor(fig, save_dir, show_plot, "Learning curve"):
         for ax, error_fn_name, error_fn in zip(axes, error_fn_names, error_fns):
             train_sub_errors, val_errors = pd.Series([], name='Training error'), pd.Series([], name='Validation error')
-            for n_subsets in trange(1, len(X_train), PLOT_PARAMS.get('n_subsets_step', n_subsets_step)):
+            for n_subsets in trange(1, len(X_train), n_subsets_step):
                 try:
                     X_train_sub, y_train_sub = X_train[:n_subsets], y_train[:n_subsets]
                     model.fit(X_train_sub, y_train_sub)
