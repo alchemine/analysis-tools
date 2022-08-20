@@ -581,7 +581,7 @@ def plot_pair(data1, data2=None, subplot=True,                   save_dir=None, 
             data1['ID'] = 'First'
             data2['ID'] = 'Second'
             data = pd.concat([data1, data2], ignore_index=True)
-            fig  = sns.pairplot(data, hue='ID', plot_kws={'alpha': PLOT_PARAMS.get('alpha', plot_kws), 's': PLOT_PARAMS.get('s', plot_kws), 'markers': ['o', 'D'], 'diag_kind': 'hist'}).fig
+            fig  = sns.pairplot(data, hue='ID', plot_kws={'alpha': PLOT_PARAMS.get('alpha', plot_kws), 's': PLOT_PARAMS.get('marker_size', plot_kws), 'markers': ['o', 'D'], 'diag_kind': 'hist'}).fig
             with FigProcessor(fig, save_dir, show_plot, suptitle='Pairplot', tight_layout=False):
                 fig.set_size_inches(figsize)
 
