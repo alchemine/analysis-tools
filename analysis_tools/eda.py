@@ -21,7 +21,7 @@ def plot_on_ax(plot_fn, suptitle,                       ax=None, save_dir=None, 
     suptitle : str
         Title of the plot.
 
-    ax : matplotlib.axes.Axes or list of matplotlib.axes.Axes
+    ax : matplotlib.axes.Axes
         Axis to plot.
 
     save_dir : str
@@ -195,7 +195,7 @@ def plot_features_target(data, target, target_type='auto',       save_dir=None, 
             f_type = 'num' if f in num_features else 'cat'
             eval(f"plot_{f_type}_{target_type}_features")(data, f, target, ax=ax, **plot_kws)
 def plot_two_features(data, f1, f2,                              save_dir=None, figsize=None, show_plot=None, **plot_kws):
-    """Plot two features.
+    """Plot joint distribution of two features.
 
     Parameters
     ----------
@@ -343,7 +343,7 @@ def plot_cat_feature(data_f,                            ax=None, save_dir=None, 
         sns.barplot(density.index, density.values, ax=ax, color=plot_kws.get('color', None))
     plot_on_ax(plot_fn, data_f.name, ax, save_dir, figsize, show_plot)
 def plot_num_num_features(data, f1, f2, sample=100_000, ax=None, save_dir=None, figsize=None, show_plot=None, **plot_kws):
-    """Plot histogram of two numeric features.
+    """Plot scatter plot of two numeric features.
 
     Parameters
     ----------
@@ -355,6 +355,10 @@ def plot_num_num_features(data, f1, f2, sample=100_000, ax=None, save_dir=None, 
 
     f2 : str
         Second numerical feature.
+
+    sample : int
+        Number of samples.
+        If sample is None or False, then use entire data.
 
     ax : matplotlib.axes.Axes
         Axis to plot.
