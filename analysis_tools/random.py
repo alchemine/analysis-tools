@@ -22,7 +22,7 @@ def set_random_seed(seed=None):
     import numpy as np
     import random
 
-    seed = PARAMS.get(seed, 'seed')
+    seed = PARAMS.get('seed', seed)
     os.environ['PYTHONHASHSEED'] = str(seed)
     np.random.seed(seed)
     random.seed(seed)
