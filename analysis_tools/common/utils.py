@@ -87,7 +87,7 @@ class FigProcessor(contextlib.ContextDecorator):
     fig : matplotlib.figure.Figure
         Figure to be processed.
 
-    dir_path : str
+    save_dir : str
         Directory path to save the figure.
 
     show_plot : bool
@@ -109,9 +109,9 @@ class FigProcessor(contextlib.ContextDecorator):
     >>> with FigProcessor(fig, suptitle="Feature distribution"):
     ...     ax.plot(...)
     """
-    def __init__(self, fig, dir_path, show_plot=None, suptitle=None, suptitle_options={}, tight_layout=True):
+    def __init__(self, fig, save_dir, show_plot=None, suptitle=None, suptitle_options={}, tight_layout=True):
         self.fig              = fig
-        self.dir_path         = dir_path
+        self.save_dir         = save_dir
         self.show_plot        = PLOT_PARAMS.get('show_plot', show_plot)
         self.suptitle         = suptitle
         self.suptitle_options = suptitle_options
@@ -130,10 +130,10 @@ class FigProcessor(contextlib.ContextDecorator):
             if self.fig.suptitle:
                 self.fig.suptitle(self.suptitle, **self.suptitle_options)
             self.fig.tight_layout(rect=[0, 0.03, 1, 0.97])
-        if self.dir_path:
+        if self.save_dir:
             idx = 1
             while True:
-                path = join(self.dir_path, f"{self.suptitle}_{idx}.png")
+                path = join(self.save_dir, f"{self.suptitle}_{idx}.png")
                 if not exists(path):
                     break
                 idx += 1
