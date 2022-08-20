@@ -187,6 +187,7 @@ def plot_features_target(data, target, target_type='auto',       save_dir=None, 
     n_features = len(data.columns) - 1  # -1: except target
     n_rows     = int(np.ceil(n_features/n_cols))
     fig, axes  = plt.subplots(n_rows, n_cols, figsize=PLOT_PARAMS.get('figsize', figsize))
+    axes       = np.array(axes) if n_rows*n_cols == 1 else axes
     with FigProcessor(fig, save_dir, show_plot, "Features vs Target"):
         for ax in axes.flat[n_features:]:
             ax.axis('off')
