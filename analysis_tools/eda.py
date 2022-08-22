@@ -40,6 +40,10 @@ def plot_on_ax(plot_fn, suptitle,                       ax=None, save_dir=None, 
         cm = FigProcessor(fig, save_dir, show_plot, suptitle)
     with cm:
         plot_fn(ax)
+        if plot_kws.get('xlabel', False) is not True:
+            ax.set_xlabel(None)
+        if plot_kws.get('ylabel', False) is not True:
+            ax.set_ylabel(None)
 
 
 # Missing value
@@ -138,8 +142,7 @@ def plot_features(data1, data2=None, title='Features',           save_dir=None, 
         for ax in axes.flat[n_features:]:
             ax.axis('off')
         for ax, f in zip(axes.flat, data1):
-            ax.set_title(f)
-            datas = [data1] if data2 is None else [data1, data2]
+            datas  = [data1] if data2 is None else [data1, data2]
             colors = [c['color'] for c in plt.rcParams['axes.prop_cycle']]
             for data, color in zip(datas, colors):
                 plot_kws['color'] = color
@@ -149,6 +152,8 @@ def plot_features(data1, data2=None, title='Features',           save_dir=None, 
                     # ax.hist(data_f_notnull, bins=bins, density=True, color=color, alpha=0.5)
                 else:
                     plot_fn_cat(data_f_notnull, ax, **plot_kws)
+            ax.set_title(f)
+            ax.set_xlabel(None);  ax.set_ylabel(None)
 
 def plot_features_target(data, target, target_type='auto',       save_dir=None, figsize=None, show_plot=None, **plot_kws):
     """Plot features vs target.
@@ -200,8 +205,10 @@ def plot_features_target(data, target, target_type='auto',       save_dir=None, 
         for ax in axes.flat[n_features:]:
             ax.axis('off')
         for ax, f in zip(axes.flat, data.columns.drop(target)):
-            ax.set_title(f"{f} vs {target}")
             eval(f"plot_{dtype(data[f])}_{target_type}_features")(data, f, target, ax=ax, **plot_kws)
+            ax.set_title(f"{f} vs {target}")
+            ax.set_xlabel(None);  ax.set_ylabel(None)
+
 def plot_two_features(data, f1, f2, title=None,         ax=None, save_dir=None, figsize=None, show_plot=None, **plot_kws):
     """Plot joint distribution of two features.
 
@@ -318,9 +325,7 @@ def plot_num_feature(data_f,                            ax=None, save_dir=None, 
     """
     def plot_fn(ax):
         plot_fn_num(data_f, ax, **plot_kws)
-        # sns.histplot(data_f, bins=PLOT_PARAMS.get('bins', plot_kws), ax=ax, kde=True, stat='density', color=plot_kws.get('color', None))
-        ax.set_xlabel(None)
-    plot_on_ax(plot_fn, data_f.name, ax, save_dir, figsize, show_plot)
+    plot_on_ax(plot_fn, data_f.name, ax, save_dir, figsize, show_plot, **plot_kws)
 def plot_cat_feature(data_f,                            ax=None, save_dir=None, figsize=None, show_plot=None, **plot_kws):
     """Plot bar of a categorical feature.
 
@@ -350,10 +355,7 @@ def plot_cat_feature(data_f,                            ax=None, save_dir=None, 
     """
     def plot_fn(ax):
         plot_fn_cat(data_f, ax, **plot_kws)
-        # cnts = data_f.value_counts(normalize=True).sort_index()
-        # cnts = cnts[:plot_kws.get('n_classes', len(cnts))]
-        # sns.barplot(cnts.index, cnts.values, ax=ax, color=plot_kws.get('color', None))
-    plot_on_ax(plot_fn, data_f.name, ax, save_dir, figsize, show_plot)
+    plot_on_ax(plot_fn, data_f.name, ax, save_dir, figsize, show_plot, **plot_kws)
 def plot_num_num_features(data, f1, f2, sample=100_000, ax=None, save_dir=None, figsize=None, show_plot=None, **plot_kws):
     """Plot scatter plot of two numeric features.
 
@@ -393,11 +395,9 @@ def plot_num_num_features(data, f1, f2, sample=100_000, ax=None, save_dir=None, 
     """
     def plot_fn(ax):
         sns.scatterplot(x=data[f1], y=data[f2], alpha=PLOT_PARAMS.get('alpha', plot_kws), ax=ax, color=plot_kws.get('color', None))
-        ax.set_xlabel(None);  ax.set_ylabel(None)
-    if sample:
-        if len(data) > sample:
-            data = data.sample(sample)
-    plot_on_ax(plot_fn, f"{f1} vs {f2}", ax, save_dir, figsize, show_plot)
+    if sample and (len(data) > sample):
+        data = data.sample(sample)
+    plot_on_ax(plot_fn, f"{f1} vs {f2}", ax, save_dir, figsize, show_plot, **plot_kws)
 def plot_num_cat_features(data, f1, f2,                 ax=None, save_dir=None, figsize=None, show_plot=None, **plot_kws):
     """Plot violinplot of categorical, numerical features.
 
@@ -436,8 +436,7 @@ def plot_num_cat_features(data, f1, f2,                 ax=None, save_dir=None, 
         idxs_selected    = data[f2][data[f2].isin(selected_classes)].index
         data_f1, data_f2 = data[f1][idxs_selected], data[f2][idxs_selected]
         sns.violinplot(x=data_f1, y=data_f2, ax=ax, orient='h', order=reversed(sorted(selected_classes)), cut=0)
-        ax.set_xlabel(None);  ax.set_ylabel(None)
-    plot_on_ax(plot_fn, f"{f1} vs {f2}", ax, save_dir, figsize, show_plot)
+    plot_on_ax(plot_fn, f"{f1} vs {f2}", ax, save_dir, figsize, show_plot, **plot_kws)
 def plot_cat_num_features(data, f1, f2,                 ax=None, save_dir=None, figsize=None, show_plot=None, **plot_kws):
     """Plot violinplot of categorical, numerical features.
 
@@ -476,8 +475,7 @@ def plot_cat_num_features(data, f1, f2,                 ax=None, save_dir=None, 
         idxs_selected    = data[f1][data[f1].isin(selected_classes)].index
         data_f1, data_f2 = data[f1][idxs_selected], data[f2][idxs_selected]
         sns.violinplot(x=data_f1, y=data_f2, ax=ax, orient='v', order=sorted(selected_classes), cut=0)
-        ax.set_xlabel(None);  ax.set_ylabel(None)
-    plot_on_ax(plot_fn, f"{f1} vs {f2}", ax, save_dir, figsize, show_plot)
+    plot_on_ax(plot_fn, f"{f1} vs {f2}", ax, save_dir, figsize, show_plot, **plot_kws)
 def plot_cat_cat_features(data, f1, f2,                 ax=None, save_dir=None, figsize=None, show_plot=None, **plot_kws):
     """Plot heatmap of two categorical features.
 
@@ -518,8 +516,7 @@ def plot_cat_cat_features(data, f1, f2,                 ax=None, save_dir=None, 
         n_classes = PLOT_PARAMS.get('n_classes', plot_kws)
         ratio = ratio.iloc[:n_classes, :n_classes]
         sns.heatmap(ratio, ax=ax, annot=True, fmt=".2f", cmap=sns.light_palette('firebrick', as_cmap=True), cbar=False)
-        ax.set_xlabel(None);  ax.set_ylabel(None)
-    plot_on_ax(plot_fn, f"{f1} vs {f2}", ax, save_dir, figsize, show_plot)
+    plot_on_ax(plot_fn, f"{f1} vs {f2}", ax, save_dir, figsize, show_plot, **plot_kws)
 def plot_pair(data1, data2=None, subplot=True,                   save_dir=None, figsize=(20, 20), show_plot=None, **plot_kws):
     """Plot pair plot for all numerical features.
 
