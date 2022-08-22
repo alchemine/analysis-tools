@@ -85,6 +85,21 @@ def plot_missing_value(data, show_df=False,                      save_dir=None, 
                 display(data_null.value_counts(f).sort_index().to_frame().T.style.background_gradient(axis=1))
 
 # Features
+def plot_fn_num(data_f, ax, **plot_kws):
+    sns.histplot(data_f, bins=PLOT_PARAMS.get('bins', plot_kws), ax=ax, kde=True, stat='density', color=plot_kws.get('color', None))
+def plot_fn_cat(data_f, ax, **plot_kws):
+    flag_datetime = is_datetime_format(data_f.unique()[0])
+    if flag_datetime:
+        data_f = pd.to_datetime(data_f)
+        sns.histplot(data_f, bins=PLOT_PARAMS.get('bins', plot_kws), ax=ax, kde=True, stat='density', color=plot_kws.get('color', None))
+        ax.tick_params(axis='x', labelrotation=30)
+    else:
+        cnts = data_f.value_counts(normalize=True).sort_index()
+        sns.barplot(cnts.index, cnts.values, order=cnts.index, ax=ax)
+        xticklabels = cnts.sort_values()[-PLOT_PARAMS.get('n_classes', plot_kws):].index
+        ax.set_xticks(lmap(lambda l: cnts.index.get_loc(l), xticklabels))
+        ax.set_xticklabels(xticklabels, rotation=30, ha='right', rotation_mode='anchor')
+
 def plot_features(data1, data2=None, title='Features',           save_dir=None, figsize=None, show_plot=None, **plot_kws):
     """Plot histogram or bar for all features.
 
@@ -115,7 +130,6 @@ def plot_features(data1, data2=None, title='Features',           save_dir=None, 
     >>> data = pd.DataFrame({'a': [1, 2, 3, 4, 5], 'b': ['a', 'b', 'c', 'd', 'e'], 'c': [1.2, 2.3, 3.4, 4.5, 5.6]})
     >>> eda.plot_features(data, save_dir='.')
     """
-    bins   = PLOT_PARAMS.get('bins', plot_kws)
     n_cols = PLOT_PARAMS.get('n_cols', plot_kws)
     n_features = len(data1.columns)
     n_rows     = int(np.ceil(n_features / n_cols))
@@ -128,15 +142,14 @@ def plot_features(data1, data2=None, title='Features',           save_dir=None, 
             datas = [data1] if data2 is None else [data1, data2]
             colors = [c['color'] for c in plt.rcParams['axes.prop_cycle']]
             for data, color in zip(datas, colors):
+                plot_kws['color'] = color
                 data_f_notnull = data[f].dropna()
                 if is_numeric_dtype(data_f_notnull):
-                    ax.hist(data_f_notnull, bins=bins, density=True, color=color, alpha=0.5)
-                    # sns.histplot(data_f_notnull, stat='probability', color=color, alpha=0.5, ax=ax)  # easy to understand but, too slow
-                    # ax.set_ylabel(None)
+                    plot_fn_num(data_f_notnull, ax, **plot_kws)
+                    # ax.hist(data_f_notnull, bins=bins, density=True, color=color, alpha=0.5)
                 else:
-                    cnts = data[f].value_counts(normalize=True).sort_index()  # normalize including NaN
-                    ax.bar(cnts.index, cnts.values, width=0.5, alpha=0.5, color=color)
-                    ax.set_xticks(cnts.index)
+                    plot_fn_cat(data_f_notnull, ax, **plot_kws)
+
 def plot_features_target(data, target, target_type='auto',       save_dir=None, figsize=None, show_plot=None, **plot_kws):
     """Plot features vs target.
 
@@ -276,7 +289,6 @@ def plot_corr(corr1, corr2=None, annot=True, mask=True,          save_dir=None, 
                 mask_mat[np.triu_indices_from(mask_mat, k=1)] = mask
                 sns.heatmap(corr, mask=mask_mat, ax=ax, annot=annot, fmt=".2f", cmap='coolwarm', center=0)
 
-
 def plot_num_feature(data_f,                            ax=None, save_dir=None, figsize=None, show_plot=None, **plot_kws):
     """Plot histogram of a numeric feature.
 
@@ -305,7 +317,8 @@ def plot_num_feature(data_f,                            ax=None, save_dir=None, 
     >>> eda.plot_num_feature(data['a'], save_dir='.')
     """
     def plot_fn(ax):
-        sns.histplot(data_f, bins=PLOT_PARAMS.get('bins', plot_kws), ax=ax, kde=True, stat='density', color=plot_kws.get('color', None))
+        plot_fn_num(data_f, ax, **plot_kws)
+        # sns.histplot(data_f, bins=PLOT_PARAMS.get('bins', plot_kws), ax=ax, kde=True, stat='density', color=plot_kws.get('color', None))
         ax.set_xlabel(None)
     plot_on_ax(plot_fn, data_f.name, ax, save_dir, figsize, show_plot)
 def plot_cat_feature(data_f,                            ax=None, save_dir=None, figsize=None, show_plot=None, **plot_kws):
@@ -336,8 +349,10 @@ def plot_cat_feature(data_f,                            ax=None, save_dir=None, 
     >>> eda.plot_cat_feature(data['b'], save_dir='.')
     """
     def plot_fn(ax):
-        density = data_f.value_counts(normalize=True).sort_index()
-        sns.barplot(density.index, density.values, ax=ax, color=plot_kws.get('color', None))
+        plot_fn_cat(data_f, ax, **plot_kws)
+        # cnts = data_f.value_counts(normalize=True).sort_index()
+        # cnts = cnts[:plot_kws.get('n_classes', len(cnts))]
+        # sns.barplot(cnts.index, cnts.values, ax=ax, color=plot_kws.get('color', None))
     plot_on_ax(plot_fn, data_f.name, ax, save_dir, figsize, show_plot)
 def plot_num_num_features(data, f1, f2, sample=100_000, ax=None, save_dir=None, figsize=None, show_plot=None, **plot_kws):
     """Plot scatter plot of two numeric features.

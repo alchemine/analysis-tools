@@ -37,6 +37,7 @@ tprint  = lambda dic: print(tabulate(dic, headers='keys', tablefmt='psql'))  # p
 ls_all  = lambda path: [path for path in glob(f"{path}/*")]
 ls_dir  = lambda path: [path for path in glob(f"{path}/*") if isdir(path)]
 ls_file = lambda path: [path for path in glob(f"{path}/*") if isfile(path)]
+lmap    = lambda fn, arr: list(map(fn, arr))
 
 
 @dataclass
@@ -210,3 +211,20 @@ def dtype(data_f):
         Data type should be 'num' or 'cat'
     """
     return 'num' if is_numeric_dtype(data_f) else 'cat'
+def is_datetime_format(s):
+    """Check if the input string is datetime format or not
+
+    Parameters
+    ----------
+    s : str
+        String to be checked
+
+    Returns
+    ----------
+    Whether the input string is datetime format or not
+    """
+    try:
+        dateutil.parser.parse(s)
+        return True
+    except ValueError:
+        return False
