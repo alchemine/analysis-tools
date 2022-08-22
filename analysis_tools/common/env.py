@@ -16,7 +16,7 @@ import datetime
 import joblib
 import json
 import re
-from itertools import product
+from itertools import product, combinations, permutations
 from time import time, sleep
 from collections import defaultdict
 from copy import deepcopy as copy
@@ -32,6 +32,7 @@ import inspect
 # External packages
 import numpy as np
 import pandas as pd
+from pandas.api.types import is_numeric_dtype
 from tabulate import tabulate
 import numba as nb
 from numba import njit, cuda

@@ -34,11 +34,12 @@ def plot_on_ax(plot_fn, suptitle,                       ax=None, save_dir=None, 
         Whether to show the plot.
     """
     if ax is not None:
-        plot_fn(ax)
+        cm = contextlib.nullcontext()
     else:
         fig, ax = plt.subplots(figsize=PLOT_PARAMS.get('figsize', figsize))
-        with FigProcessor(fig, save_dir, show_plot, suptitle):
-            plot_fn(ax)
+        cm = FigProcessor(fig, save_dir, show_plot, suptitle)
+    with cm:
+        plot_fn(ax)
 
 
 # Missing value
@@ -128,16 +129,11 @@ def plot_features(data1, data2=None, title='Features',           save_dir=None, 
             colors = [c['color'] for c in plt.rcParams['axes.prop_cycle']]
             for data, color in zip(datas, colors):
                 data_f_notnull = data[f].dropna()
-                if data_f_notnull.nunique() > bins:
-                    # Numerical feature or categorical feature(many classes)
-                    try:
-                        ax.hist(data_f_notnull, bins=bins, density=True, color=color, alpha=0.5)
-                        # sns.histplot(data_f_notnull, stat='probability', color=color, alpha=0.5, ax=ax)  # easy to understand but, too slow
-                        # ax.set_ylabel(None)
-                    except Exception as e:
-                        print(f"[{f}]: {e}")
+                if is_numeric_dtype(data_f_notnull):
+                    ax.hist(data_f_notnull, bins=bins, density=True, color=color, alpha=0.5)
+                    # sns.histplot(data_f_notnull, stat='probability', color=color, alpha=0.5, ax=ax)  # easy to understand but, too slow
+                    # ax.set_ylabel(None)
                 else:
-                    # Categorical feature(a few classes)
                     cnts = data[f].value_counts(normalize=True).sort_index()  # normalize including NaN
                     ax.bar(cnts.index, cnts.values, width=0.5, alpha=0.5, color=color)
                     ax.set_xticks(cnts.index)
@@ -181,9 +177,8 @@ def plot_features_target(data, target, target_type='auto',       save_dir=None, 
     >>> eda.plot_features_target(data, 'a', save_dir='.')
     """
     n_cols = PLOT_PARAMS.get('n_cols', plot_kws)
-    num_features = data.select_dtypes('number').columns
     if target_type == 'auto':
-        target_type = 'num' if target in num_features else 'cat'
+        target_type = dtype(data[target])
     n_features = len(data.columns) - 1  # -1: except target
     n_rows     = int(np.ceil(n_features/n_cols))
     fig, axes  = plt.subplots(n_rows, n_cols, figsize=PLOT_PARAMS.get('figsize', figsize))
@@ -193,9 +188,8 @@ def plot_features_target(data, target, target_type='auto',       save_dir=None, 
             ax.axis('off')
         for ax, f in zip(axes.flat, data.columns.drop(target)):
             ax.set_title(f"{f} vs {target}")
-            f_type = 'num' if f in num_features else 'cat'
-            eval(f"plot_{f_type}_{target_type}_features")(data, f, target, ax=ax, **plot_kws)
-def plot_two_features(data, f1, f2,                              save_dir=None, figsize=None, show_plot=None, **plot_kws):
+            eval(f"plot_{dtype(data[f])}_{target_type}_features")(data, f, target, ax=ax, **plot_kws)
+def plot_two_features(data, f1, f2, title=None,         ax=None, save_dir=None, figsize=None, show_plot=None, **plot_kws):
     """Plot joint distribution of two features.
 
     Parameters
@@ -208,6 +202,12 @@ def plot_two_features(data, f1, f2,                              save_dir=None, 
 
     f2 : str
         Feature 2.
+
+    title : str
+        Title.
+
+    ax : matplotlib.axes.Axes
+        Axis to plot.
 
     save_dir : str
         Directory path to save the plot.
@@ -225,12 +225,8 @@ def plot_two_features(data, f1, f2,                              save_dir=None, 
     >>> data = pd.DataFrame({'a': [1, 2, 3, 4, 5], 'b': ['a', 'b', 'c', 'd', 'e'], 'c': [1.2, 2.3, 3.4, 4.5, 5.6]})
     >>> eda.plot_two_features(data, 'a', 'b', save_dir='.')
     """
-    num_features = data.select_dtypes('number').columns
-    f1_type = 'num' if f1 in num_features else 'cat'
-    f2_type = 'num' if f2 in num_features else 'cat'
-    fig, ax = plt.subplots(figsize=PLOT_PARAMS.get('figsize', figsize))
-    with FigProcessor(fig, save_dir, show_plot, f"{f1} vs {f2}"):
-        eval(f"plot_{f1_type}_{f2_type}_features")(data, f1, f2, ax=ax, **plot_kws)
+    plot_fn = lambda ax: eval(f"plot_{dtype(data[f1])}_{dtype(data[f2])}_features")(data, f1, f2, ax=ax, **plot_kws)
+    plot_on_ax(plot_fn, f"{f1} vs {f2}" if title is None else title, ax, save_dir, figsize, show_plot, **plot_kws)
 
 def plot_corr(corr1, corr2=None, annot=True, mask=True,          save_dir=None, figsize=(15, 15), show_plot=None, **plot_kws):
     """Plot correlation matrix.
@@ -542,22 +538,24 @@ def plot_pair(data1, data2=None, subplot=True,                   save_dir=None, 
     >>> data = pd.DataFrame({'a': [1, 2, 3, 4, 5], 'b': ['a', 'b', 'c', 'd', 'e'], 'c': [1.2, 2.3, 3.4, 4.5, 5.6]})
     >>> eda.plot_pair(data, save_dir='.')
     """
+    def plot_custom_pair(data, g):
+        fs = data.columns
+        for row, col in permutations(range(len(fs)), 2):
+            if (row == col) or (dtype(data[fs[col]]) == 'cat' and dtype(data[fs[row]]) == 'cat'):
+                # TODO: cat - cat features
+                g.axes[row, col].axis('off')
+            else:
+                plot_two_features(data, fs[col], fs[row], ax=g.axes[row, col], **plot_kws)
+        g.map_diag(sns.histplot)
+
     figsize = PLOT_PARAMS.get('figsize', figsize)
     if data2 is None:
         # fig = sns.pairplot(data1, plot_kws={'alpha': PLOT_PARAMS.get('alpha', plot_kws), 's': PLOT_PARAMS.get('s', plot_kws)}).fig
         fs = data1.columns
-        num_features = data1.select_dtypes('number').columns
-        g = sns.PairGrid(data1, diag_sharey=False, x_vars=fs, y_vars=fs)
+        g  = sns.PairGrid(data1, diag_sharey=False, x_vars=fs, y_vars=fs)
         fig, axes = g.fig, g.axes
         with FigProcessor(fig, save_dir, show_plot, suptitle='Pairplot', tight_layout=False):
-            for row, col in product(range(len(fs)), range(len(fs))):
-                if row == col:
-                    continue
-                f1, f2 = fs[row], fs[col]
-                f1_type = 'num' if f1 in num_features else 'cat'
-                f2_type = 'num' if f2 in num_features else 'cat'
-                eval(f"plot_{f2_type}_{f1_type}_features")(data1, f2, f1, ax=axes[row, col], **plot_kws)
-            g.map_diag(sns.histplot)
+            plot_custom_pair(data1, g)
             fig.set_size_inches(figsize)
     else:
         if subplot:
@@ -567,24 +565,14 @@ def plot_pair(data1, data2=None, subplot=True,                   save_dir=None, 
             with FigProcessor(fig, save_dir, show_plot, suptitle='Pairplot', tight_layout=False):
                 colors = [c['color'] for c in plt.rcParams['axes.prop_cycle']]
                 for grid, data, color in zip(grids, (data1, data2), colors):
+                    plot_kws['color'] = color
                     fs = data.columns
-                    num_features = data.select_dtypes('number').columns
-                    g = sns.PairGrid(data, diag_sharey=False, x_vars=fs, y_vars=fs)
-                    axes = g.axes
-                    for row, col in product(range(len(fs)), range(len(fs))):
-                        if row == col:
-                            continue
-                        f1, f2 = fs[row], fs[col]
-                        f1_type = 'num' if f1 in num_features else 'cat'
-                        f2_type = 'num' if f2 in num_features else 'cat'
-                        plot_kws['color'] = color
-                        eval(f"plot_{f2_type}_{f1_type}_features")(data, f2, f1, ax=axes[row, col], **plot_kws)
-                    g.map_diag(sns.histplot)
+                    g  = sns.PairGrid(data, diag_sharey=False, x_vars=fs, y_vars=fs)
+                    plot_custom_pair(data, g)
                     SeabornFig2Grid(g, fig, grid)
                 grids.tight_layout(fig)
         else:
-            data1['ID'] = 'First'
-            data2['ID'] = 'Second'
+            data1['ID'], data2['ID'] = 'First', 'Second'
             data = pd.concat([data1, data2], ignore_index=True)
             fig  = sns.pairplot(data, hue='ID', plot_kws={'alpha': PLOT_PARAMS.get('alpha', plot_kws), 's': PLOT_PARAMS.get('marker_size', plot_kws), 'markers': ['o', 'D'], 'diag_kind': 'hist'}).fig
             with FigProcessor(fig, save_dir, show_plot, suptitle='Pairplot', tight_layout=False):

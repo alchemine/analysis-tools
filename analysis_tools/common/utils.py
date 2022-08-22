@@ -194,3 +194,19 @@ class SeabornFig2Grid:
 
     def _resize(self, evt=None):
         self.sg.fig.set_size_inches(self.fig.get_size_inches())
+
+
+def dtype(data_f):
+    """Get data type of array
+
+    Parameters
+    ----------
+    data_f : array-like
+        Input array
+
+    Returns
+    -------
+    Data Type : str
+        Data type should be 'num' or 'cat'
+    """
+    return 'num' if is_numeric_dtype(data_f) else 'cat'
