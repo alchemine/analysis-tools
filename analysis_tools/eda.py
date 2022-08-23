@@ -10,7 +10,7 @@ from analysis_tools.common import *
 
 
 # Utility function
-def plot_on_ax(plot_fn, suptitle,                       ax=None, save_dir=None, figsize=None, show_plot=None, **plot_kws):
+def plot_on_ax(plot_fn, suptitle,                          ax=None, save_dir=None, figsize=None, show_plot=None, **plot_kws):
     """Plot on a single axis if ax is not None. Otherwise, plot on a new figure.
 
     Parameters
@@ -47,7 +47,7 @@ def plot_on_ax(plot_fn, suptitle,                       ax=None, save_dir=None, 
 
 
 # Missing value
-def plot_missing_value(data, show_df=False,                      save_dir=None, figsize=None, show_plot=None, **plot_kws):
+def plot_missing_value(data, show_df=False,                         save_dir=None, figsize=None, show_plot=None, **plot_kws):
     """Plot counts of missing values of each feature.
 
     Parameters
@@ -107,7 +107,7 @@ def plot_fn_cat(data_f, ax, **plot_kws):
     ax.set_xticks(lmap(lambda l: cnts.index.get_loc(l), xticklabels))
     ax.set_xticklabels(xticklabels, rotation=30, ha='right', rotation_mode='anchor')
 
-def plot_features(data1, data2=None, title='Features', sample_cat=1000, save_dir=None, figsize=None, show_plot=None, **plot_kws):
+def plot_features(data1, data2=None, title='auto', sample_cat=1000, save_dir=None, figsize=None, show_plot=None, **plot_kws):
     """Plot histogram or bar for all features.
 
     Parameters
@@ -144,7 +144,7 @@ def plot_features(data1, data2=None, title='Features', sample_cat=1000, save_dir
     n_features = len(data1.columns)
     n_rows     = int(np.ceil(n_features / n_cols))
     fig, axes = plt.subplots(n_rows, n_cols, figsize=PLOT_PARAMS.get('figsize', figsize))
-    with FigProcessor(fig, save_dir, show_plot, title):
+    with FigProcessor(fig, save_dir, show_plot, 'Features' if title == 'auto' else title):
         for ax in axes.flat[n_features:]:
             ax.axis('off')
         for ax, f in zip(axes.flat, data1):
@@ -165,7 +165,7 @@ def plot_features(data1, data2=None, title='Features', sample_cat=1000, save_dir
                     plot_fn_cat(data_f_sampled, ax, **plot_kws)
             ax.set_xlabel(None);  ax.set_ylabel(None)
 
-def plot_features_target(data, target, target_type='auto',              save_dir=None, figsize=None, show_plot=None, **plot_kws):
+def plot_features_target(data, target, target_type='auto',          save_dir=None, figsize=None, show_plot=None, **plot_kws):
     """Plot features vs target.
 
     Parameters
@@ -219,7 +219,7 @@ def plot_features_target(data, target, target_type='auto',              save_dir
             ax.set_title(f"{f} vs {target}")
             ax.set_xlabel(None);  ax.set_ylabel(None)
 
-def plot_two_features(data, f1, f2, title=None,                ax=None, save_dir=None, figsize=None, show_plot=None, **plot_kws):
+def plot_two_features(data, f1, f2, title='auto',          ax=None, save_dir=None, figsize=None, show_plot=None, **plot_kws):
     """Plot joint distribution of two features.
 
     Parameters
@@ -256,9 +256,9 @@ def plot_two_features(data, f1, f2, title=None,                ax=None, save_dir
     >>> eda.plot_two_features(data, 'a', 'b', save_dir='.')
     """
     plot_fn = lambda ax: eval(f"plot_{dtype(data[f1])}_{dtype(data[f2])}_features")(data, f1, f2, ax=ax, **plot_kws)
-    plot_on_ax(plot_fn, f"{f1} vs {f2}" if title is None else title, ax, save_dir, figsize, show_plot, **plot_kws)
+    plot_on_ax(plot_fn, f"{f1} vs {f2}" if title == 'auto' else title, ax, save_dir, figsize, show_plot, **plot_kws)
 
-def plot_corr(corr1, corr2=None, annot=True, mask=True,                 save_dir=None, figsize=(15, 15), show_plot=None, **plot_kws):
+def plot_corr(corr1, corr2=None, annot=True, mask=True,             save_dir=None, figsize=(15, 15), show_plot=None, **plot_kws):
     """Plot correlation matrix.
 
     Parameters
@@ -306,7 +306,7 @@ def plot_corr(corr1, corr2=None, annot=True, mask=True,                 save_dir
                 mask_mat[np.triu_indices_from(mask_mat, k=1)] = mask
                 sns.heatmap(corr, mask=mask_mat, ax=ax, annot=annot, fmt=".2f", cmap='coolwarm', center=0)
 
-def plot_num_feature(data_f,                                     ax=None, save_dir=None, figsize=None, show_plot=None, **plot_kws):
+def plot_num_feature(data_f,                               ax=None, save_dir=None, figsize=None, show_plot=None, **plot_kws):
     """Plot histogram of a numeric feature.
 
     Parameters
@@ -336,7 +336,7 @@ def plot_num_feature(data_f,                                     ax=None, save_d
     def plot_fn(ax):
         plot_fn_num(data_f, ax, **plot_kws)
     plot_on_ax(plot_fn, data_f.name, ax, save_dir, figsize, show_plot, **plot_kws)
-def plot_cat_feature(data_f,                            ax=None, save_dir=None, figsize=None, show_plot=None, **plot_kws):
+def plot_cat_feature(data_f,                               ax=None, save_dir=None, figsize=None, show_plot=None, **plot_kws):
     """Plot bar of a categorical feature.
 
     Parameters
@@ -366,7 +366,7 @@ def plot_cat_feature(data_f,                            ax=None, save_dir=None, 
     def plot_fn(ax):
         plot_fn_cat(data_f, ax, **plot_kws)
     plot_on_ax(plot_fn, data_f.name, ax, save_dir, figsize, show_plot, **plot_kws)
-def plot_num_num_features(data, f1, f2, sample=100_000, ax=None, save_dir=None, figsize=None, show_plot=None, **plot_kws):
+def plot_num_num_features(data, f1, f2, sample=100_000,    ax=None, save_dir=None, figsize=None, show_plot=None, **plot_kws):
     """Plot scatter plot of two numeric features.
 
     Parameters
@@ -408,7 +408,7 @@ def plot_num_num_features(data, f1, f2, sample=100_000, ax=None, save_dir=None, 
     if sample and (len(data) > sample):
         data = data.sample(sample)
     plot_on_ax(plot_fn, f"{f1} vs {f2}", ax, save_dir, figsize, show_plot, **plot_kws)
-def plot_num_cat_features(data, f1, f2,                 ax=None, save_dir=None, figsize=None, show_plot=None, **plot_kws):
+def plot_num_cat_features(data, f1, f2,                    ax=None, save_dir=None, figsize=None, show_plot=None, **plot_kws):
     """Plot violinplot of categorical, numerical features.
 
     Parameters
@@ -447,7 +447,7 @@ def plot_num_cat_features(data, f1, f2,                 ax=None, save_dir=None, 
         data_f1, data_f2 = data[f1][idxs_selected], data[f2][idxs_selected]
         sns.violinplot(x=data_f1, y=data_f2, ax=ax, orient='h', order=reversed(sorted(selected_classes)), cut=0)
     plot_on_ax(plot_fn, f"{f1} vs {f2}", ax, save_dir, figsize, show_plot, **plot_kws)
-def plot_cat_num_features(data, f1, f2,                 ax=None, save_dir=None, figsize=None, show_plot=None, **plot_kws):
+def plot_cat_num_features(data, f1, f2,                    ax=None, save_dir=None, figsize=None, show_plot=None, **plot_kws):
     """Plot violinplot of categorical, numerical features.
 
     Parameters
@@ -486,7 +486,7 @@ def plot_cat_num_features(data, f1, f2,                 ax=None, save_dir=None, 
         data_f1, data_f2 = data[f1][idxs_selected], data[f2][idxs_selected]
         sns.violinplot(x=data_f1, y=data_f2, ax=ax, orient='v', order=sorted(selected_classes), cut=0)
     plot_on_ax(plot_fn, f"{f1} vs {f2}", ax, save_dir, figsize, show_plot, **plot_kws)
-def plot_cat_cat_features(data, f1, f2,                 ax=None, save_dir=None, figsize=None, show_plot=None, **plot_kws):
+def plot_cat_cat_features(data, f1, f2,                    ax=None, save_dir=None, figsize=None, show_plot=None, **plot_kws):
     """Plot heatmap of two categorical features.
 
     Parameters
@@ -527,7 +527,7 @@ def plot_cat_cat_features(data, f1, f2,                 ax=None, save_dir=None, 
         ratio = ratio.iloc[:n_classes, :n_classes]
         sns.heatmap(ratio, ax=ax, annot=True, fmt=".2f", cmap=sns.light_palette('firebrick', as_cmap=True), cbar=False)
     plot_on_ax(plot_fn, f"{f1} vs {f2}", ax, save_dir, figsize, show_plot, **plot_kws)
-def plot_pair(data1, data2=None, subplot=True,                   save_dir=None, figsize=(20, 20), show_plot=None, **plot_kws):
+def plot_pair(data1, data2=None, subplot=True,                      save_dir=None, figsize=(20, 20), show_plot=None, **plot_kws):
     """Plot pair plot for all numerical features.
 
     Parameters
@@ -602,7 +602,7 @@ def plot_pair(data1, data2=None, subplot=True,                   save_dir=None, 
 
 
 # Time series features
-def plot_ts_features(data, title='Features',                     save_dir=None, figsize=None, show_plot=None, **plot_kws):
+def plot_ts_features(data, title='auto',                            save_dir=None, figsize=None, show_plot=None, **plot_kws):
     """Plot time series line plot for all numerical features.
 
     Parameters
@@ -630,4 +630,4 @@ def plot_ts_features(data, title='Features',                     save_dir=None, 
     >>> eda.plot_ts_features(data, save_dir='.')
     """
     plot_on_ax(lambda ax: data.select_dtypes('number').plot(subplots=True, ax=ax, sharex=True),
-               title, None, save_dir, figsize, show_plot)
+               'Features' if title == 'auto' else title, None, save_dir, figsize, show_plot)
