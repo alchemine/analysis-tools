@@ -91,9 +91,6 @@ class FigProcessor(contextlib.ContextDecorator):
     save_dir : str
         Directory path to save the figure.
 
-    show_plot : bool
-        Whether to show the figure.
-
     title : str
         Super title of the figure.
 
@@ -110,13 +107,13 @@ class FigProcessor(contextlib.ContextDecorator):
     >>> with FigProcessor(fig, title="Feature distribution"):
     ...     ax.plot(...)
     """
-    def __init__(self, fig, save_dir, show_plot=None, title=None, title_options={}, tight_layout=True):
+    def __init__(self, fig, save_dir, title=None, tight_layout=True, title_options={}):
         self.fig           = fig
         self.save_dir      = save_dir
-        self.show_plot     = PLOT_PARAMS.get('show_plot', show_plot)
         self.title         = title
-        self.title_options = title_options
         self.tight_layout  = tight_layout
+        self.title_options = title_options
+        self.show_plot     = PLOT_PARAMS.show_plot
     def __enter__(self):
         pass
     def __exit__(self, *exc):
@@ -214,20 +211,21 @@ def dtype(data_f):
         return 'num'
     else:
         return 'cat'
-def is_datetime_format(s):
+def is_datetime_str(data_f):
     """Check if the input string is datetime format or not
 
     Parameters
     ----------
-    s : str
-        String to be checked
+    data_f : array-like
+        str dtype array
 
     Returns
     ----------
     Whether the input string is datetime format or not
     """
     try:
-        dateutil.parser.parse(s)
+        sample = data_f.unique()[0]
+        dateutil.parser.parse(sample)
         return True
     except:
         return False

@@ -10,7 +10,7 @@ from analysis_tools.common import *
 
 
 # Utility function
-def plot_on_ax(plot_fn, title,                                        ax=None, save_dir=None, figsize=None, show_plot=None, **plot_kws):
+def plot_on_ax(plot_fn,                                 ax=None, title=None, save_dir=None, figsize=None, **plot_kws):
     """Plot on a single axis if ax is not None. Otherwise, plot on a new figure.
 
     Parameters
@@ -18,26 +18,23 @@ def plot_on_ax(plot_fn, title,                                        ax=None, s
     plot_fn : function
         Function to plot.
 
-    title : str
-        Title of the plot.
-
     ax : matplotlib.axes.Axes
         Axis to plot.
+
+    title : str
+        Title of the plot.
 
     save_dir : str
         Directory path to save the plot.
 
     figsize : tuple
         Figure size.
-
-    show_plot : bool
-        Whether to show the plot.
     """
     if ax is not None:
         cm = contextlib.nullcontext()
     else:
         fig, ax = plt.subplots(figsize=PLOT_PARAMS.get('figsize', figsize))
-        cm = FigProcessor(fig, save_dir, show_plot, title)
+        cm = FigProcessor(fig, save_dir, title)
     with cm:
         plot_fn(ax)
         if plot_kws.get('xlabel', False) is not True:
@@ -46,8 +43,34 @@ def plot_on_ax(plot_fn, title,                                        ax=None, s
             ax.set_ylabel(None)
 
 
+# Single feature
+def plot_fn_num(data_f, ax, **plot_kws):
+    if len(data_f.dropna()) == 0:
+        return
+    sns.histplot(data_f, bins=PLOT_PARAMS.get('bins', plot_kws), ax=ax, kde=True, stat='density', color=plot_kws.get('color', None))
+def plot_fn_cat(data_f, ax, **plot_kws):  # cat: not numerical dtypes
+    if len(data_f.dropna()) == 0:
+        return
+    if is_datetime_str(data_f):
+        plot_fn_datetime(data_f, ax, **plot_kws)
+    else:
+        if plot_kws.get('sample', None) and plot_kws['sample'] < len(data_f):
+            data_f = data_f.sample(plot_kws['sample'])
+        cnts = data_f.value_counts(normalize=True).sort_index()
+        sns.barplot(cnts.index, cnts.values, order=cnts.index, ax=ax)
+        xticklabels = cnts.sort_values()[-PLOT_PARAMS.get('n_classes', plot_kws):].index
+        ax.set_xticks(lmap(lambda l: cnts.index.get_loc(l), xticklabels))
+        ax.set_xticklabels(xticklabels, rotation=30, ha='right', rotation_mode='anchor')
+def plot_fn_datetime(data_f, ax, **plot_kws):
+    if len(data_f.dropna()) == 0:
+        return
+    data_f = pd.to_datetime(data_f)
+    sns.histplot(data_f, bins=PLOT_PARAMS.get('bins', plot_kws), ax=ax, kde=True, stat='density', color=plot_kws.get('color', None))
+    ax.tick_params(axis='x', labelrotation=30)
+
+
 # Missing value
-def plot_missing_value(data, show_df=False, title='auto',                      save_dir=None, figsize=None, show_plot=None, **plot_kws):
+def plot_missing_value(data, show_df=False,                      title='auto', save_dir=None, figsize=None, **plot_kws):
     """Plot counts of missing values of each feature.
 
     Parameters
@@ -67,9 +90,6 @@ def plot_missing_value(data, show_df=False, title='auto',                      s
     figsize : tuple
         Figure size.
 
-    show_plot : bool
-        Whether to show the plot.
-
     Examples
     --------
     >>> import pandas as pd
@@ -78,7 +98,7 @@ def plot_missing_value(data, show_df=False, title='auto',                      s
     >>> eda.plot_missing_value(data, save_dir='.')
     """
     fig, axes = plt.subplots(2, 1, figsize=PLOT_PARAMS.get('figsize', figsize))
-    with FigProcessor(fig, save_dir, show_plot, "Missing value" if title == 'auto' else title):
+    with FigProcessor(fig, save_dir, "Missing value" if title == 'auto' else title):
         msno.matrix(data, ax=axes[0])
         ms = data.isnull().sum()
         sns.barplot(ms.index, ms, ax=axes[1])
@@ -91,28 +111,9 @@ def plot_missing_value(data, show_df=False, title='auto',                      s
             if data_null[f].notnull().sum() > 0:
                 display(data_null.value_counts(f).sort_index().to_frame().T.style.background_gradient(axis=1))
 
-# Features
-def plot_fn_num(data_f, ax, **plot_kws):
-    if len(data_f.dropna()) == 0:
-        return
-    sns.histplot(data_f, bins=PLOT_PARAMS.get('bins', plot_kws), ax=ax, kde=True, stat='density', color=plot_kws.get('color', None))
-def plot_fn_cat(data_f, ax, **plot_kws):
-    if len(data_f.dropna()) == 0:
-        return
-    if is_datetime_format(data_f.unique()[0]):
-        data_f = pd.to_datetime(data_f)
-        sns.histplot(data_f, bins=PLOT_PARAMS.get('bins', plot_kws), ax=ax, kde=True, stat='density', color=plot_kws.get('color', None))
-        ax.tick_params(axis='x', labelrotation=30)
-    else:
-        if plot_kws.get('sample', None) and plot_kws['sample'] < len(data_f):
-            data_f = data_f.sample(plot_kws['sample'])
-        cnts = data_f.value_counts(normalize=True).sort_index()
-        sns.barplot(cnts.index, cnts.values, order=cnts.index, ax=ax)
-        xticklabels = cnts.sort_values()[-PLOT_PARAMS.get('n_classes', plot_kws):].index
-        ax.set_xticks(lmap(lambda l: cnts.index.get_loc(l), xticklabels))
-        ax.set_xticklabels(xticklabels, rotation=30, ha='right', rotation_mode='anchor')
 
-def plot_features(data1, data2=None, title='auto', sample_cat=1000,            save_dir=None, figsize=None, show_plot=None, **plot_kws):
+# Multiple features
+def plot_features(data1, data2=None, sample_cat=1000,            title='auto', save_dir=None, figsize=None, **plot_kws):
     """Plot histogram or bar for all features.
 
     Parameters
@@ -123,20 +124,17 @@ def plot_features(data1, data2=None, title='auto', sample_cat=1000,            s
     data2 : pandas.DataFrame
         DataFrame to be analyzed.
 
-    title : str
-        Title.
-
     sample_cat : int
         Number of samples for categorical features.
+
+    title : str
+        Title.
 
     save_dir : str
         Directory path to save the plot.
 
     figsize : tuple
         Figure size.
-
-    show_plot : bool
-        Whether to show the plot.
 
     Examples
     --------
@@ -149,7 +147,7 @@ def plot_features(data1, data2=None, title='auto', sample_cat=1000,            s
     n_features = len(data1.columns)
     n_rows     = int(np.ceil(n_features / n_cols))
     fig, axes = plt.subplots(n_rows, n_cols, figsize=PLOT_PARAMS.get('figsize', figsize))
-    with FigProcessor(fig, save_dir, show_plot, 'Features' if title == 'auto' else title):
+    with FigProcessor(fig, save_dir, 'Features' if title == 'auto' else title):
         for ax in axes.flat[n_features:]:
             ax.axis('off')
         for ax, f in zip(axes.flat, data1):
@@ -163,12 +161,10 @@ def plot_features(data1, data2=None, title='auto', sample_cat=1000,            s
                     title = f
                 else:
                     plot_fn_cat(data[f], ax, sample=sample_cat, **plot_kws)
-                    title = f if sample_cat is None else f"{f}(sample={sample_cat})"
+                    title = f"{f}(sample={sample_cat})" if (sample_cat is not None) and (dtype(data[f]) != 'num') and (not is_datetime_str(data[f])) else f
             ax.set_title(title)
             ax.set_xlabel(None);  ax.set_ylabel(None)
-
-
-def plot_features_target(data, target, target_type='auto', title='auto',       save_dir=None, figsize=None, show_plot=None, **plot_kws):
+def plot_features_target(data, target, target_type='auto',       title='auto', save_dir=None, figsize=None, **plot_kws):
     """Plot features vs target.
 
     Parameters
@@ -195,9 +191,6 @@ def plot_features_target(data, target, target_type='auto', title='auto',       s
     figsize : tuple
         Figure size.
 
-    show_plot : bool
-        Whether to show the plot.
-
     Examples
     --------
     >>> import numpy as np
@@ -217,15 +210,14 @@ def plot_features_target(data, target, target_type='auto', title='auto',       s
     n_rows     = int(np.ceil(n_features/n_cols))
     fig, axes  = plt.subplots(n_rows, n_cols, figsize=PLOT_PARAMS.get('figsize', figsize))
     axes       = np.array(axes) if n_rows*n_cols == 1 else axes
-    with FigProcessor(fig, save_dir, show_plot, "Features vs Target"):
+    with FigProcessor(fig, save_dir, "Features vs Target"):
         for ax in axes.flat[n_features:]:
             ax.axis('off')
         for ax, f in zip(axes.flat, data.columns.drop(target)):
             eval(f"plot_{dtype(data[f])}_{target_type}_features")(data, f, target, ax=ax, **plot_kws)
             ax.set_title(f"{f} vs {target}" if title == 'auto' else title)
             ax.set_xlabel(None);  ax.set_ylabel(None)
-
-def plot_two_features(data, f1, f2, title='auto',                     ax=None, save_dir=None, figsize=None, show_plot=None, **plot_kws):
+def plot_two_features(data, f1, f2,                     ax=None, title='auto', save_dir=None, figsize=None, **plot_kws):
     """Plot joint distribution of two features.
 
     Parameters
@@ -239,20 +231,17 @@ def plot_two_features(data, f1, f2, title='auto',                     ax=None, s
     f2 : str
         Feature 2.
 
-    title : str
-        Title.
-
     ax : matplotlib.axes.Axes
         Axis to plot.
+
+    title : str
+        Title.
 
     save_dir : str
         Directory path to save the plot.
 
     figsize : tuple
         Figure size.
-
-    show_plot : bool
-        Whether to show the plot.
 
     Examples
     --------
@@ -262,61 +251,8 @@ def plot_two_features(data, f1, f2, title='auto',                     ax=None, s
     >>> eda.plot_two_features(data, 'a', 'b', save_dir='.')
     """
     plot_fn = lambda ax: eval(f"plot_{dtype(data[f1])}_{dtype(data[f2])}_features")(data, f1, f2, ax=ax, **plot_kws)
-    plot_on_ax(plot_fn, f"{f1} vs {f2}" if title == 'auto' else title, ax, save_dir, figsize, show_plot, **plot_kws)
-
-def plot_corr(corr1, corr2=None, annot=True, mask=True, title='auto',          save_dir=None, figsize=(15, 15), show_plot=None, **plot_kws):
-    """Plot correlation matrix.
-
-    Parameters
-    ----------
-    corr1 : pandas.DataFrame
-        Correlation matrix.
-
-    corr2 : pandas.DataFrame
-        Correlation matrix.
-
-    annot : bool
-        Whether to show values.
-
-    mask : bool
-        Whether to show only lower triangular matrix.
-
-    title : str
-        Title.
-
-    save_dir : str
-        Directory path to save the plot.
-
-    figsize : tuple
-        Figure size.
-
-    show_plot : bool
-        Whether to show the plot.
-
-    Examples
-    --------
-    >>> import pandas as pd
-    >>> import analysis_tools.eda as eda
-    >>> data = pd.DataFrame({'a': [1, 2, 3, 1, 2], 'b': ['a', 'b', 'c', 'd', 'e'], 'c': [10, 20, 30, 10, 20]})
-    >>> eda.plot_corr(corr, save_dir='.')
-    """
-    title = "Correlation matrix" if title == 'auto' else title
-    if corr2 is None:
-        def plot_fn(ax):
-            mask_mat = np.eye(len(corr1), dtype=bool)
-            mask_mat[np.triu_indices_from(mask_mat, k=1)] = mask
-            sns.heatmap(corr1, mask=mask_mat, ax=ax, annot=annot, fmt=".2f", cmap='coolwarm', center=0)
-        plot_on_ax(plot_fn, title, None, save_dir, figsize, show_plot)
-    else:
-        figsize = PLOT_PARAMS.get('figsize', figsize)
-        fig, axes = plt.subplots(1, 2, figsize=(2*figsize[0], figsize[1]))
-        with FigProcessor(fig, save_dir, show_plot, title):
-            for ax, corr in zip(axes.flat, (corr1, corr2)):
-                mask_mat = np.eye(len(corr), dtype=bool)
-                mask_mat[np.triu_indices_from(mask_mat, k=1)] = mask
-                sns.heatmap(corr, mask=mask_mat, ax=ax, annot=annot, fmt=".2f", cmap='coolwarm', center=0)
-
-def plot_num_feature(data_f, title='auto',                            ax=None, save_dir=None, figsize=None, show_plot=None, **plot_kws):
+    plot_on_ax(plot_fn, ax, f"{f1} vs {f2}" if title == 'auto' else title, save_dir, figsize, **plot_kws)
+def plot_num_feature(data_f,                            ax=None, title='auto', save_dir=None, figsize=None, **plot_kws):
     """Plot histogram of a numeric feature.
 
     Parameters
@@ -324,20 +260,17 @@ def plot_num_feature(data_f, title='auto',                            ax=None, s
     data_f : pandas.Series
         Series to be analyzed.
 
-    title : str
-        Title.
-
     ax : matplotlib.axes.Axes
         Axis to plot.
+
+    title : str
+        Title.
 
     save_dir : str
         Directory path to save the plot.
 
     figsize : tuple
         Figure size.
-
-    show_plot : bool
-        Whether to show the plot.
 
     Examples
     --------
@@ -348,8 +281,8 @@ def plot_num_feature(data_f, title='auto',                            ax=None, s
     """
     def plot_fn(ax):
         plot_fn_num(data_f, ax, **plot_kws)
-    plot_on_ax(plot_fn, data_f.name if title == 'auto' else title, ax, save_dir, figsize, show_plot, **plot_kws)
-def plot_cat_feature(data_f, title='auto',                            ax=None, save_dir=None, figsize=None, show_plot=None, **plot_kws):
+    plot_on_ax(plot_fn, ax, data_f.name if title == 'auto' else title, save_dir, figsize, **plot_kws)
+def plot_cat_feature(data_f,                            ax=None, title='auto', save_dir=None, figsize=None, **plot_kws):
     """Plot bar of a categorical feature.
 
     Parameters
@@ -357,20 +290,17 @@ def plot_cat_feature(data_f, title='auto',                            ax=None, s
     data_f : pandas.Series
         Series to be analyzed.
 
-    title : str
-        Title.
-
     ax : matplotlib.axes.Axes
         Axis to plot.
+
+    title : str
+        Title.
 
     save_dir : str
         Directory path to save the plot.
 
     figsize : tuple
         Figure size.
-
-    show_plot : bool
-        Whether to show the plot.
 
     Examples
     --------
@@ -381,8 +311,8 @@ def plot_cat_feature(data_f, title='auto',                            ax=None, s
     """
     def plot_fn(ax):
         plot_fn_cat(data_f, ax, **plot_kws)
-    plot_on_ax(plot_fn, data_f.name if title == 'auto' else title, ax, save_dir, figsize, show_plot, **plot_kws)
-def plot_num_num_features(data, f1, f2, sample=100_000, title='auto', ax=None, save_dir=None, figsize=None, show_plot=None, **plot_kws):
+    plot_on_ax(plot_fn, ax, data_f.name if title == 'auto' else title, save_dir, figsize, **plot_kws)
+def plot_num_num_features(data, f1, f2, sample=100_000, ax=None, title='auto', save_dir=None, figsize=None, **plot_kws):
     """Plot scatter plot of two numeric features.
 
     Parameters
@@ -400,20 +330,17 @@ def plot_num_num_features(data, f1, f2, sample=100_000, title='auto', ax=None, s
         Number of samples.
         If sample is None or False, then use entire data.
 
-    title : str
-        Title.
-
     ax : matplotlib.axes.Axes
         Axis to plot.
+
+    title : str
+        Title.
 
     save_dir : str
         Directory path to save the plot.
 
     figsize : tuple
         Figure size.
-
-    show_plot : bool
-        Whether to show the plot.
 
     Examples
     --------
@@ -426,8 +353,8 @@ def plot_num_num_features(data, f1, f2, sample=100_000, title='auto', ax=None, s
         sns.scatterplot(x=data[f1], y=data[f2], alpha=PLOT_PARAMS.get('alpha', plot_kws), ax=ax, color=plot_kws.get('color', None))
     if sample and (len(data) > sample):
         data = data.sample(sample)
-    plot_on_ax(plot_fn, f"{f1} vs {f2}" if title == 'auto' else title, ax, save_dir, figsize, show_plot, **plot_kws)
-def plot_num_cat_features(data, f1, f2, title='auto',                 ax=None, save_dir=None, figsize=None, show_plot=None, **plot_kws):
+    plot_on_ax(plot_fn, ax, f"{f1} vs {f2}" if title == 'auto' else title, save_dir, figsize, **plot_kws)
+def plot_num_cat_features(data, f1, f2,                 ax=None, title='auto', save_dir=None, figsize=None, **plot_kws):
     """Plot violinplot of categorical, numerical features.
 
     Parameters
@@ -441,20 +368,18 @@ def plot_num_cat_features(data, f1, f2, title='auto',                 ax=None, s
     f2 : str
         Second categorical feature.
 
-    title : str
-        Title.
 
     ax : matplotlib.axes.Axes
         Axis to plot.
+
+    title : str
+        Title.
 
     save_dir : str
         Directory path to save the plot.
 
     figsize : tuple
         Figure size.
-
-    show_plot : bool
-        Whether to show the plot.
 
     Examples
     --------
@@ -468,8 +393,8 @@ def plot_num_cat_features(data, f1, f2, title='auto',                 ax=None, s
         idxs_selected    = data[f2][data[f2].isin(selected_classes)].index
         data_f1, data_f2 = data[f1][idxs_selected], data[f2][idxs_selected]
         sns.violinplot(x=data_f1, y=data_f2, ax=ax, orient='h', order=reversed(sorted(selected_classes)), cut=0)
-    plot_on_ax(plot_fn, f"{f1} vs {f2}" if title == 'auto' else title, ax, save_dir, figsize, show_plot, **plot_kws)
-def plot_cat_num_features(data, f1, f2, title='auto',                 ax=None, save_dir=None, figsize=None, show_plot=None, **plot_kws):
+    plot_on_ax(plot_fn, ax, f"{f1} vs {f2}" if title == 'auto' else title, save_dir, figsize, **plot_kws)
+def plot_cat_num_features(data, f1, f2,                 ax=None, title='auto', save_dir=None, figsize=None, **plot_kws):
     """Plot violinplot of categorical, numerical features.
 
     Parameters
@@ -483,20 +408,17 @@ def plot_cat_num_features(data, f1, f2, title='auto',                 ax=None, s
     f2 : str
         Second numerical feature.
 
-    title : str
-        Title.
-
     ax : matplotlib.axes.Axes
         Axis to plot.
+
+    title : str
+        Title.
 
     save_dir : str
         Directory path to save the plot.
 
     figsize : tuple
         Figure size.
-
-    show_plot : bool
-        Whether to show the plot.
 
     Examples
     --------
@@ -510,8 +432,8 @@ def plot_cat_num_features(data, f1, f2, title='auto',                 ax=None, s
         idxs_selected    = data[f1][data[f1].isin(selected_classes)].index
         data_f1, data_f2 = data[f1][idxs_selected], data[f2][idxs_selected]
         sns.violinplot(x=data_f1, y=data_f2, ax=ax, orient='v', order=sorted(selected_classes), cut=0)
-    plot_on_ax(plot_fn, f"{f1} vs {f2}" if title == 'auto' else title, ax, save_dir, figsize, show_plot, **plot_kws)
-def plot_cat_cat_features(data, f1, f2, title='auto',                 ax=None, save_dir=None, figsize=None, show_plot=None, **plot_kws):
+    plot_on_ax(plot_fn, ax, f"{f1} vs {f2}" if title == 'auto' else title, save_dir, figsize, **plot_kws)
+def plot_cat_cat_features(data, f1, f2,                 ax=None, title='auto', save_dir=None, figsize=None, **plot_kws):
     """Plot heatmap of two categorical features.
 
     Parameters
@@ -525,20 +447,17 @@ def plot_cat_cat_features(data, f1, f2, title='auto',                 ax=None, s
     f2 : str
         Second categorical feature.
 
-    title : str
-        Title.
-
     ax : matplotlib.axes.Axes
         Axis to plot.
+
+    title : str
+        Title.
 
     save_dir : str
         Directory path to save the plot.
 
     figsize : tuple
         Figure size.
-
-    show_plot : bool
-        Whether to show the plot.
 
     Examples
     --------
@@ -554,8 +473,8 @@ def plot_cat_cat_features(data, f1, f2, title='auto',                 ax=None, s
         n_classes = PLOT_PARAMS.get('n_classes', plot_kws)
         ratio = ratio.iloc[:n_classes, :n_classes]
         sns.heatmap(ratio, ax=ax, annot=True, fmt=".2f", cmap=sns.light_palette('firebrick', as_cmap=True), cbar=False)
-    plot_on_ax(plot_fn, f"{f1} vs {f2}" if title == 'auto' else title, ax, save_dir, figsize, show_plot, **plot_kws)
-def plot_pair(data1, data2=None, subplot=True, title='auto',                   save_dir=None, figsize=(20, 20), show_plot=None, **plot_kws):
+    plot_on_ax(plot_fn, ax, f"{f1} vs {f2}" if title == 'auto' else title, save_dir, figsize, **plot_kws)
+def plot_pair(data1, data2=None, subplot=True,                   title='auto', save_dir=None, figsize=(20, 20), **plot_kws):
     """Plot pair plot for all numerical features.
 
     Parameters
@@ -566,20 +485,17 @@ def plot_pair(data1, data2=None, subplot=True, title='auto',                   s
     data2 : pandas.DataFrame
         DataFrame to be analyzed.
 
-    plot_kws : dict
-        Plot parameters.
-
     subplot : bool
-        Whether to split figure
+        Whether to split figure.
+
+    title : str
+        Title.
 
     save_dir : str
         Directory path to save the plot.
 
     figsize : tuple
         Figure size.
-
-    show_plot : bool
-        Whether to show the plot.
 
     Examples
     --------
@@ -605,7 +521,7 @@ def plot_pair(data1, data2=None, subplot=True, title='auto',                   s
         fs = data1.columns
         g  = sns.PairGrid(data1, diag_sharey=False, x_vars=fs, y_vars=fs)
         fig, axes = g.fig, g.axes
-        with FigProcessor(fig, save_dir, show_plot, title, tight_layout=False):
+        with FigProcessor(fig, save_dir, title, tight_layout=False):
             plot_custom_pair(data1, g)
             fig.set_size_inches(figsize)
     else:
@@ -613,7 +529,7 @@ def plot_pair(data1, data2=None, subplot=True, title='auto',                   s
             n_cols = 1 if data2 is None else 2
             grids  = gridspec.GridSpec(1, n_cols)
             fig    = plt.figure(figsize=(n_cols*figsize[0], figsize[1]))
-            with FigProcessor(fig, save_dir, show_plot, title, tight_layout=False):
+            with FigProcessor(fig, save_dir, title, tight_layout=False):
                 colors = [c['color'] for c in plt.rcParams['axes.prop_cycle']]
                 for grid, data, color in zip(grids, (data1, data2), colors):
                     plot_kws['color'] = color
@@ -626,12 +542,60 @@ def plot_pair(data1, data2=None, subplot=True, title='auto',                   s
             data1['ID'], data2['ID'] = 'First', 'Second'
             data = pd.concat([data1, data2], ignore_index=True)
             fig  = sns.pairplot(data, hue='ID', plot_kws={'alpha': PLOT_PARAMS.get('alpha', plot_kws), 's': PLOT_PARAMS.get('marker_size', plot_kws), 'markers': ['o', 'D'], 'diag_kind': 'hist'}).fig
-            with FigProcessor(fig, save_dir, show_plot, title, tight_layout=False):
+            with FigProcessor(fig, save_dir, title, tight_layout=False):
                 fig.set_size_inches(figsize)
+def plot_corr(corr1, corr2=None, annot=True, mask=True,          title='auto', save_dir=None, figsize=(15, 15), **plot_kws):
+    """Plot correlation matrix.
+
+    Parameters
+    ----------
+    corr1 : pandas.DataFrame
+        Correlation matrix.
+
+    corr2 : pandas.DataFrame
+        Correlation matrix.
+
+    annot : bool
+        Whether to show values.
+
+    mask : bool
+        Whether to show only lower triangular matrix.
+
+    title : str
+        Title.
+
+    save_dir : str
+        Directory path to save the plot.
+
+    figsize : tuple
+        Figure size.
+
+    Examples
+    --------
+    >>> import pandas as pd
+    >>> import analysis_tools.eda as eda
+    >>> data = pd.DataFrame({'a': [1, 2, 3, 1, 2], 'b': ['a', 'b', 'c', 'd', 'e'], 'c': [10, 20, 30, 10, 20]})
+    >>> eda.plot_corr(corr, save_dir='.')
+    """
+    title = "Correlation matrix" if title == 'auto' else title
+    if corr2 is None:
+        def plot_fn(ax):
+            mask_mat = np.eye(len(corr1), dtype=bool)
+            mask_mat[np.triu_indices_from(mask_mat, k=1)] = mask
+            sns.heatmap(corr1, mask=mask_mat, ax=ax, annot=annot, fmt=".2f", cmap='coolwarm', center=0)
+        plot_on_ax(plot_fn, None, title, save_dir, figsize, **plot_kws)
+    else:
+        figsize = PLOT_PARAMS.get('figsize', figsize)
+        fig, axes = plt.subplots(1, 2, figsize=(2*figsize[0], figsize[1]))
+        with FigProcessor(fig, save_dir, title):
+            for ax, corr in zip(axes.flat, (corr1, corr2)):
+                mask_mat = np.eye(len(corr), dtype=bool)
+                mask_mat[np.triu_indices_from(mask_mat, k=1)] = mask
+                sns.heatmap(corr, mask=mask_mat, ax=ax, annot=annot, fmt=".2f", cmap='coolwarm', center=0)
 
 
 # Time series features
-def plot_ts_features(data, title='auto',                                       save_dir=None, figsize=None, show_plot=None, **plot_kws):
+def plot_ts_features(data,                                       title='auto', save_dir=None, figsize=None, **plot_kws):
     """Plot time series line plot for all numerical features.
 
     Parameters
@@ -648,9 +612,6 @@ def plot_ts_features(data, title='auto',                                       s
     figsize : tuple
         Figure size.
 
-    show_plot : bool
-        Whether to show the plot.
-
     Examples
     --------
     >>> import pandas as pd
@@ -659,4 +620,4 @@ def plot_ts_features(data, title='auto',                                       s
     >>> eda.plot_ts_features(data, save_dir='.')
     """
     plot_on_ax(lambda ax: data.select_dtypes('number').plot(subplots=True, ax=ax, sharex=True),
-               'Features' if title == 'auto' else title, None, save_dir, figsize, show_plot)
+               None, 'Features' if title == 'auto' else title, save_dir, figsize, **plot_kws)
