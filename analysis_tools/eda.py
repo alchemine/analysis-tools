@@ -92,23 +92,22 @@ def plot_missing_value(data, show_df=False,                      save_dir=None, 
 def plot_fn_num(data_f, ax, **plot_kws):
     if len(data_f.dropna()) == 0:
         return
-    sns.histplot(data_f, bins=PLOT_PARAMS.get('bins', plot_kws), ax=ax, kde=True, stat='density', color=plot_kws.get('color', None))
-def plot_fn_cat(data_f, ax, **plot_kws):
-    if len(data_f.dropna()) == 0:
-        return
-    flag_datetime = is_datetime_format(data_f.unique()[0])
-    if flag_datetime:
+    if is_datetime_format(data_f.unique()[0]):
         data_f = pd.to_datetime(data_f)
         sns.histplot(data_f, bins=PLOT_PARAMS.get('bins', plot_kws), ax=ax, kde=True, stat='density', color=plot_kws.get('color', None))
         ax.tick_params(axis='x', labelrotation=30)
     else:
-        cnts = data_f.value_counts(normalize=True).sort_index()
-        sns.barplot(cnts.index, cnts.values, order=cnts.index, ax=ax)
-        xticklabels = cnts.sort_values()[-PLOT_PARAMS.get('n_classes', plot_kws):].index
-        ax.set_xticks(lmap(lambda l: cnts.index.get_loc(l), xticklabels))
-        ax.set_xticklabels(xticklabels, rotation=30, ha='right', rotation_mode='anchor')
+        sns.histplot(data_f, bins=PLOT_PARAMS.get('bins', plot_kws), ax=ax, kde=True, stat='density', color=plot_kws.get('color', None))
+def plot_fn_cat(data_f, ax, **plot_kws):
+    if len(data_f.dropna()) == 0:
+        return
+    cnts = data_f.value_counts(normalize=True).sort_index()
+    sns.barplot(cnts.index, cnts.values, order=cnts.index, ax=ax)
+    xticklabels = cnts.sort_values()[-PLOT_PARAMS.get('n_classes', plot_kws):].index
+    ax.set_xticks(lmap(lambda l: cnts.index.get_loc(l), xticklabels))
+    ax.set_xticklabels(xticklabels, rotation=30, ha='right', rotation_mode='anchor')
 
-def plot_features(data1, data2=None, title='Features',           save_dir=None, figsize=None, show_plot=None, **plot_kws):
+def plot_features(data1, data2=None, title='Features', sample_cat=1000, save_dir=None, figsize=None, show_plot=None, **plot_kws):
     """Plot histogram or bar for all features.
 
     Parameters
@@ -120,7 +119,10 @@ def plot_features(data1, data2=None, title='Features',           save_dir=None, 
         DataFrame to be analyzed.
 
     title : str
-        Title
+        Title.
+
+    sample_cat : int
+        Number of samples for categorical features.
 
     save_dir : str
         Directory path to save the plot.
@@ -146,19 +148,24 @@ def plot_features(data1, data2=None, title='Features',           save_dir=None, 
         for ax in axes.flat[n_features:]:
             ax.axis('off')
         for ax, f in zip(axes.flat, data1):
+            ax.set_title(f)
             datas  = [data1] if data2 is None else [data1, data2]
             colors = [c['color'] for c in plt.rcParams['axes.prop_cycle']]
             for data, color in zip(datas, colors):
                 plot_kws['color'] = color
-                if is_numeric_dtype(data[f]):
+                if dtype(data[f]) == 'num':
                     plot_fn_num(data[f], ax, **plot_kws)
                     # ax.hist(data[f], bins=bins, density=True, color=color, alpha=0.5)
                 else:
-                    plot_fn_cat(data[f], ax, **plot_kws)
-            ax.set_title(f)
+                    if sample_cat < len(data[f].dropna()):
+                        data_f_sampled = data[f].sample(sample_cat)
+                        ax.set_title(f"{f}(sample={sample_cat})")
+                    else:
+                        data_f_sampled = data[f]
+                    plot_fn_cat(data_f_sampled, ax, **plot_kws)
             ax.set_xlabel(None);  ax.set_ylabel(None)
 
-def plot_features_target(data, target, target_type='auto',       save_dir=None, figsize=None, show_plot=None, **plot_kws):
+def plot_features_target(data, target, target_type='auto',              save_dir=None, figsize=None, show_plot=None, **plot_kws):
     """Plot features vs target.
 
     Parameters
@@ -212,7 +219,7 @@ def plot_features_target(data, target, target_type='auto',       save_dir=None, 
             ax.set_title(f"{f} vs {target}")
             ax.set_xlabel(None);  ax.set_ylabel(None)
 
-def plot_two_features(data, f1, f2, title=None,         ax=None, save_dir=None, figsize=None, show_plot=None, **plot_kws):
+def plot_two_features(data, f1, f2, title=None,                ax=None, save_dir=None, figsize=None, show_plot=None, **plot_kws):
     """Plot joint distribution of two features.
 
     Parameters
@@ -251,7 +258,7 @@ def plot_two_features(data, f1, f2, title=None,         ax=None, save_dir=None, 
     plot_fn = lambda ax: eval(f"plot_{dtype(data[f1])}_{dtype(data[f2])}_features")(data, f1, f2, ax=ax, **plot_kws)
     plot_on_ax(plot_fn, f"{f1} vs {f2}" if title is None else title, ax, save_dir, figsize, show_plot, **plot_kws)
 
-def plot_corr(corr1, corr2=None, annot=True, mask=True,          save_dir=None, figsize=(15, 15), show_plot=None, **plot_kws):
+def plot_corr(corr1, corr2=None, annot=True, mask=True,                 save_dir=None, figsize=(15, 15), show_plot=None, **plot_kws):
     """Plot correlation matrix.
 
     Parameters
@@ -299,7 +306,7 @@ def plot_corr(corr1, corr2=None, annot=True, mask=True,          save_dir=None, 
                 mask_mat[np.triu_indices_from(mask_mat, k=1)] = mask
                 sns.heatmap(corr, mask=mask_mat, ax=ax, annot=annot, fmt=".2f", cmap='coolwarm', center=0)
 
-def plot_num_feature(data_f,                            ax=None, save_dir=None, figsize=None, show_plot=None, **plot_kws):
+def plot_num_feature(data_f,                                     ax=None, save_dir=None, figsize=None, show_plot=None, **plot_kws):
     """Plot histogram of a numeric feature.
 
     Parameters
