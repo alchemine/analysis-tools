@@ -90,8 +90,12 @@ def plot_missing_value(data, show_df=False,                      save_dir=None, 
 
 # Features
 def plot_fn_num(data_f, ax, **plot_kws):
+    if len(data_f.dropna()) == 0:
+        return
     sns.histplot(data_f, bins=PLOT_PARAMS.get('bins', plot_kws), ax=ax, kde=True, stat='density', color=plot_kws.get('color', None))
 def plot_fn_cat(data_f, ax, **plot_kws):
+    if len(data_f.dropna()) == 0:
+        return
     flag_datetime = is_datetime_format(data_f.unique()[0])
     if flag_datetime:
         data_f = pd.to_datetime(data_f)
@@ -146,12 +150,11 @@ def plot_features(data1, data2=None, title='Features',           save_dir=None, 
             colors = [c['color'] for c in plt.rcParams['axes.prop_cycle']]
             for data, color in zip(datas, colors):
                 plot_kws['color'] = color
-                data_f_notnull = data[f].dropna()
-                if is_numeric_dtype(data_f_notnull):
-                    plot_fn_num(data_f_notnull, ax, **plot_kws)
-                    # ax.hist(data_f_notnull, bins=bins, density=True, color=color, alpha=0.5)
+                if is_numeric_dtype(data[f]):
+                    plot_fn_num(data[f], ax, **plot_kws)
+                    # ax.hist(data[f], bins=bins, density=True, color=color, alpha=0.5)
                 else:
-                    plot_fn_cat(data_f_notnull, ax, **plot_kws)
+                    plot_fn_cat(data[f], ax, **plot_kws)
             ax.set_title(f)
             ax.set_xlabel(None);  ax.set_ylabel(None)
 
