@@ -32,7 +32,7 @@ import inspect
 # External packages
 import numpy as np
 import pandas as pd
-from pandas.api.types import is_numeric_dtype
+from pandas.api.types import is_numeric_dtype, is_datetime64_ns_dtype
 from tabulate import tabulate
 import numba as nb
 from numba import njit, cuda

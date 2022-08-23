@@ -198,7 +198,7 @@ class SeabornFig2Grid:
 
 
 def dtype(data_f):
-    """Get data type of array
+    """Return 'num' if data type is number or datetime else 'cat'
 
     Parameters
     ----------
@@ -210,7 +210,10 @@ def dtype(data_f):
     Data Type : str
         Data type should be 'num' or 'cat'
     """
-    return 'num' if is_numeric_dtype(data_f) else 'cat'
+    if is_numeric_dtype(data_f) or is_datetime64_ns_dtype(data_f):
+        return 'num'
+    else:
+        return 'cat'
 def is_datetime_format(s):
     """Check if the input string is datetime format or not
 
