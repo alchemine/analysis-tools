@@ -513,7 +513,7 @@ def plot_cat_cat_features(data, f1, f2,                 ax=None, save_dir=None, 
     >>> eda.plot_cat_cat_features(data, 'b', 'c', save_dir='.')
     """
     def plot_fn(ax):
-        ratio = pd.crosstab(data[f2], data[f1], normalize='columns')
+        ratio = pd.crosstab(data[f2], data[f1], normalize='index')
         ratio.sort_index(inplace=True, ascending=False)  # sort by index
         ratio = ratio[sorted(ratio)]                     # sort by column
         n_classes = PLOT_PARAMS.get('n_classes', plot_kws)
