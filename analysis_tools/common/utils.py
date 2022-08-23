@@ -94,10 +94,10 @@ class FigProcessor(contextlib.ContextDecorator):
     show_plot : bool
         Whether to show the figure.
 
-    suptitle : str
+    title : str
         Super title of the figure.
 
-    suptitle_options : dict
+    title_options : dict
         Options for super title.
 
     tight_layout : bool
@@ -107,16 +107,16 @@ class FigProcessor(contextlib.ContextDecorator):
     --------
     >>> from analysis_tools.common.util import FigProcessor
     >>> fig, ax = plt.subplots()
-    >>> with FigProcessor(fig, suptitle="Feature distribution"):
+    >>> with FigProcessor(fig, title="Feature distribution"):
     ...     ax.plot(...)
     """
-    def __init__(self, fig, save_dir, show_plot=None, suptitle=None, suptitle_options={}, tight_layout=True):
-        self.fig              = fig
-        self.save_dir         = save_dir
-        self.show_plot        = PLOT_PARAMS.get('show_plot', show_plot)
-        self.suptitle         = suptitle
-        self.suptitle_options = suptitle_options
-        self.tight_layout     = tight_layout
+    def __init__(self, fig, save_dir, show_plot=None, title=None, title_options={}, tight_layout=True):
+        self.fig           = fig
+        self.save_dir      = save_dir
+        self.show_plot     = PLOT_PARAMS.get('show_plot', show_plot)
+        self.title         = title
+        self.title_options = title_options
+        self.tight_layout  = tight_layout
     def __enter__(self):
         pass
     def __exit__(self, *exc):
@@ -128,13 +128,13 @@ class FigProcessor(contextlib.ContextDecorator):
             Exception information.(dummy)
         """
         if self.tight_layout:
-            if self.fig.suptitle:
-                self.fig.suptitle(self.suptitle, **self.suptitle_options)
+            if self.title:
+                self.fig.suptitle(self.title, **self.title_options)
             self.fig.tight_layout(rect=[0, 0.03, 1, 0.97])
         if self.save_dir:
             idx = 1
             while True:
-                path = join(self.save_dir, f"{self.suptitle}_{idx}.png")
+                path = join(self.save_dir, f"{self.title}_{idx}.png")
                 if not exists(path):
                     break
                 idx += 1
@@ -210,9 +210,9 @@ def dtype(data_f):
     Data Type : str
         Data type should be 'num' or 'cat'
     """
-    if is_numeric_dtype(data_f) or is_datetime64_ns_dtype(data_f):
+    if is_numeric_dtype(data_f):
         return 'num'
-    else:
+    else:  # is_datetime64_ns_dtype(data_f)
         return 'cat'
 def is_datetime_format(s):
     """Check if the input string is datetime format or not
@@ -229,5 +229,5 @@ def is_datetime_format(s):
     try:
         dateutil.parser.parse(s)
         return True
-    except ValueError:
+    except:
         return False
