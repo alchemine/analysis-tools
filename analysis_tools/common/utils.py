@@ -212,7 +212,7 @@ def dtype(data_f):
     """
     if is_numeric_dtype(data_f):
         return 'num'
-    else:  # is_datetime64_ns_dtype(data_f)
+    else:
         return 'cat'
 def is_datetime_format(s):
     """Check if the input string is datetime format or not
