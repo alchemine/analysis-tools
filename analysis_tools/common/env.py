@@ -41,6 +41,7 @@ from dask.distributed import Client
 from dask.diagnostics import ProgressBar
 import missingno as msno
 import dateutil
+from switch import Switch
 
 
 # Plot packages
