@@ -1,3 +1,10 @@
+"""setup.py
+
+Distribution info file
+"""
+# Author: Dongjin Yoon <djyoon0223@gmail.com>
+
+
 import setuptools
 
 

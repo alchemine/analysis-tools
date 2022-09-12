@@ -2,7 +2,6 @@
 
 Commonly used packages and default settings are defined here.
 """
-
 # Author: Dongjin Yoon <djyoon0223@gmail.com>
 
 

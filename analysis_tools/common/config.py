@@ -2,7 +2,6 @@
 
 Commonly used constant parameters are defined in capital letters.
 """
-
 # Author: Dongjin Yoon <djyoon0223@gmail.com>
 
 
