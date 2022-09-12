@@ -28,6 +28,7 @@ from dataclasses import dataclass
 from IPython.display import display, Markdown
 import subprocess
 import inspect
+from abc import ABCMeta, abstractmethod
 
 
 # External packages
