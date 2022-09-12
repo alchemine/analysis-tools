@@ -11,34 +11,24 @@ from analysis_tools.common.env import *
 from analysis_tools.common.plot_utils import *
 
 
-def print_guide():
-    """Print machine learning project guide for the user.
-    """
-    print(f"┌{' MACHINE LEARNING PROJECT GUIDE ':─^50}┐")
-    print(f"│{' 1. Load data':<50}│")
-    print(f"│{'    1.1 Define target':<50}│")
-    print(f"│{' 2. Separate training, validation, test data':<50}│")
-    print(f"│{' 3. Exploratory Data Analysis(EDA)':<50}│")
-    print(f"│{'    3.1 Missing value':<50}│")
-    print(f"│{'    3.2 Copy data':<50}│")
-    print(f"│{'    3.3 Explore features':<50}│")
-    print(f"│{'    3.4 Pair plot':<50}│")
-    print(f"│{' 4. Preprocessing':<50}│")
-    print(f"│{'    4.1 Split X, y':<50}│")
-    print(f"│{'    4.2 Imputing':<50}│")
-    print(f"│{'    4.3 Detailed preprocessing(feedback loop)':<50}│")
-    print(f"│{' 5. Model selection':<50}│")
-    print(f"│{' 6. Model tuning':<50}│")
-    print(f"│{' 7. Evaluate the model on test data':<50}│")
-    print(f"└{'─' * 50}┘ \n\n")
-
-
 # Lambda functions
 tprint  = lambda dic: print(tabulate(dic, headers='keys', tablefmt='psql'))  # print with fancy 'psql' format
 ls_all  = lambda path: [path for path in glob(f"{path}/*")]
 ls_dir  = lambda path: [path for path in glob(f"{path}/*") if isdir(path)]
 ls_file = lambda path: [path for path in glob(f"{path}/*") if isfile(path)]
 lmap    = lambda fn, arr: list(map(fn, arr))
+
+
+# Converter
+def str2bool(s):
+    if isinstance(s, bool):
+        return s
+    if s.lower() in ('yes', 'true', 't', 'y', '1'):
+        return True
+    elif s.lower() in ('no', 'false', 'f', 'n', '0'):
+        return False
+    else:
+        raise ValueError(f'Invalid input: {s} (type: {type(s)})')
 
 
 # Check dtype
