@@ -15,7 +15,21 @@ tprint  = lambda dic: print(tabulate(dic, headers='keys', tablefmt='psql'))  # p
 ls_all  = lambda path: [path for path in glob(f"{path}/*")]
 ls_dir  = lambda path: [path for path in glob(f"{path}/*") if isdir(path)]
 ls_file = lambda path: [path for path in glob(f"{path}/*") if isfile(path)]
-lmap    = lambda fn, arr: list(map(fn, arr))
+
+def lmap(fn, arr, scheduler=None):
+    if scheduler is None:
+        return list(map(fn, arr))
+    else:
+        tasks = [delayed(fn)(e) for e in arr]
+        return list(compute(*tasks, scheduler=scheduler))
+
+def lstarmap(fn, *arrs, scheduler=None):
+    assert np.unqiue(list(map(len, arrs))) == 1, "All parameters should have same length."
+    if scheduler is None:
+        return list(starmap(fn, arrs))
+    else:
+        tasks = [delayed(fn)(*es) for es in zip(*arrs)]
+        return list(compute(*tasks, scheduler=scheduler))
 
 
 # Converter

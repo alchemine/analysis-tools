@@ -17,7 +17,7 @@ import datetime
 import joblib
 import json
 import re
-from itertools import product, combinations, permutations
+from itertools import product, combinations, permutations, starmap
 from time import time, sleep
 from collections import defaultdict
 from copy import deepcopy as copy
