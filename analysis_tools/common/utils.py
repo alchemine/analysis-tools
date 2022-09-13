@@ -42,6 +42,10 @@ def str2bool(s):
         return False
     else:
         raise ValueError(f'Invalid input: {s} (type: {type(s)})')
+def ini2dict(path):
+    config = ConfigParser()
+    config.read(path)
+    return dict(config._sections)
 
 
 # Check dtype
