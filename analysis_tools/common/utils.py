@@ -104,7 +104,8 @@ class Timer(contextlib.ContextDecorator):
     ...
     * Code1: 1.00s (0.02m)
     """
-    name: str = ''
+    def __init__(self, name=''):
+        self.name = name
     def __enter__(self):
         """Start timing the execution of a block of code.
         """
