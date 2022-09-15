@@ -46,6 +46,8 @@ def ini2dict(path):
     config = ConfigParser()
     config.read(path)
     return dict(config._sections)
+str2dt = lambda s: datetime.datetime.strptime(s, "%Y-%m-%d")
+dt2str = lambda dt: dt.strftime("%Y-%m-%d")
 
 
 # Check dtype
