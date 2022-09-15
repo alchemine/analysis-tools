@@ -39,8 +39,10 @@ from pandas.api.types import is_numeric_dtype
 from tabulate import tabulate
 import numba as nb
 from numba import njit, cuda
+import dask
 from dask import delayed, compute
-from dask.distributed import Client
+import dask.distributed
+import dask.dataframe as dd
 from dask.diagnostics import ProgressBar
 import missingno as msno
 import dateutil
