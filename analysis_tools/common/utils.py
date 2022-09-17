@@ -48,7 +48,10 @@ def ini2dict(path):
     return dict(config._sections)
 str2dt = lambda s: datetime.datetime.strptime(s, "%Y-%m-%d")
 dt2str = lambda dt: dt.strftime("%Y-%m-%d")
-
+def double2float(data):
+    num_cols = data.select_dtypes('float64').columns
+    data[num_cols] = data[num_cols].astype('float32')
+    return data
 
 # Check dtype
 def dtype(data_f):
