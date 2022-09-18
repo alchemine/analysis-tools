@@ -57,13 +57,22 @@ import seaborn as sns
 
 
 # Plot options
+#   Use korean fonts
+"""
+$ sudo apt-get install fonts-nanum*
+$ sudo fc-cache -fv
+$ sudo cp /usr/share/fonts/truetype/nanum/Nanum* /opt/conda/envs/trading-system/lib/python3.8/site-packages/matplotlib/mpl-data/fonts/ttf/
+$ rm -rf /root/.cache/matplotlib/*
+"""
 from pandas.plotting import register_matplotlib_converters
 register_matplotlib_converters()
-plt.rc('font', family='DejaVu Sans')
+plt.rc('font', family='NanumGothic')
+# plt.rc('font', family='DejaVu Sans')
 plt.rc('axes', unicode_minus=False)
 plt.rc('font', size=20)
 plt.rc('figure', titlesize=40, titleweight='bold')
 plt.style.use('ggplot')
+
 
 
 # Set options
