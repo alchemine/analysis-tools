@@ -15,6 +15,9 @@ tprint  = lambda dic: print(tabulate(dic, headers='keys', tablefmt='psql'))  # p
 ls_all  = lambda path: [path for path in glob(f"{path}/*")]
 ls_dir  = lambda path: [path for path in glob(f"{path}/*") if isdir(path)]
 ls_file = lambda path: [path for path in glob(f"{path}/*") if isfile(path)]
+farray  = lambda shape, val=None: np.full(shape, val, dtype='float32')
+iarray  = lambda shape, val=None: np.full(shape, val, dtype='int32')
+
 
 def lmap(fn, arr, scheduler=None):
     if scheduler is None:
