@@ -18,7 +18,7 @@ ls_file = lambda path: [path for path in glob(f"{path}/*") if isfile(path)]
 farray  = lambda shape, val=None: np.full(shape, val, dtype='float32')
 iarray  = lambda shape, val=None: np.full(shape, val, dtype='int32')
 
-COLORS  = [c['color'] for c in plt.rcParams['axes.prop_cycle']]
+COLORS  = [c['color'] for c in plt.rcParams['axes.prop_cycle']]  # CAUTION: len(COLORS) == 7
 
 
 def lmap(fn, arr, scheduler=None):
