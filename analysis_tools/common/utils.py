@@ -89,8 +89,15 @@ def is_datetime_str(data_f):
     Whether the input string is datetime format or not
     """
     try:
-        sample = data_f.unique()[0]
-        dateutil.parser.parse(sample)
+        # Check numerical type
+        data_f.astype('float32')
+        return False
+    except:
+        pass
+
+    try:
+        pd.to_datetime(data_f)
+        # dateutil.parser.parse(sample)
         return True
     except:
         return False
