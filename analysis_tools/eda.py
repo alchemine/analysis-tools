@@ -468,8 +468,7 @@ def plot_cat_cat_features(data, f1, f2,                 ax=None, title='auto', s
     >>> eda.plot_cat_cat_features(data, 'b', 'c', save_dir='.')
     """
     def plot_fn(ax):
-        ratio = pd.crosstab(data[f2], data[f1], normalize='index')
-        # ratio = pd.crosstab(data[f2], data[f1], normalize='index' if plot_kws.get('normalize', None) is None else plot_kws['normalize'])
+        ratio = pd.crosstab(data[f2], data[f1], normalize=plot_kws.get('normalize', 'columns'))  # normalize is in ['index', 'columns', 'all']
         ratio.sort_index(inplace=True, ascending=False)  # sort by index
         ratio = ratio[sorted(ratio)]                     # sort by column
         n_classes = PLOT_PARAMS.get('n_classes', plot_kws)
