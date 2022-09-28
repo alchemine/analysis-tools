@@ -53,13 +53,17 @@ def plot_fn_cat(data_f, ax, **plot_kws):  # cat: not numerical dtypes
     if is_datetime_str(data_f):
         plot_fn_datetime(data_f, ax, **plot_kws)
     else:
-        if plot_kws.get('sample', None) and plot_kws['sample'] < len(data_f):
+        if (plot_kws.get('sample') is not None) and (plot_kws['sample'] < data_f.nunique()):
             data_f = data_f.sample(plot_kws['sample'])
+            title = f"{data_f.name}(sample={plot_kws['sample']})"
+        else:
+            title = data_f.name
         cnts = data_f.value_counts(normalize=True).sort_index()
         sns.barplot(cnts.index, cnts.values, order=cnts.index, ax=ax)
         xticklabels = cnts.sort_values()[-PLOT_PARAMS.get('n_classes', plot_kws):].index
         ax.set_xticks(lmap(lambda l: cnts.index.get_loc(l), xticklabels))
         ax.set_xticklabels(xticklabels, rotation=30, ha='right', rotation_mode='anchor')
+    return title
 def plot_fn_datetime(data_f, ax, **plot_kws):
     if len(data_f.dropna()) == 0:
         return
@@ -150,19 +154,17 @@ def plot_features(data1, data2=None, sample_cat=1000,            title='auto', s
         for ax in axes.flat[n_features:]:
             ax.axis('off')
         for ax, f in zip(axes.flat, data1):
-            datas  = [data1] if data2 is None else [data1, data2]
-            colors = [c['color'] for c in plt.rcParams['axes.prop_cycle']]
-            for data, color in zip(datas, colors):
+            datas = [data1] if data2 is None else [data1, data2]
+            for data, color in zip(datas, COLORS):
                 plot_kws['color'] = color
                 if dtype(data[f]) == 'num':
                     plot_fn_num(data[f], ax, **plot_kws)
                     # ax.hist(data[f], bins=bins, density=True, color=color, alpha=0.5)
                     title = f
                 else:
-                    plot_fn_cat(data[f], ax, sample=sample_cat, **plot_kws)
-                    title = f"{f}(sample={sample_cat})" if (sample_cat is not None) and (dtype(data[f]) != 'num') and (not is_datetime_str(data[f])) else f
+                    title = plot_fn_cat(data[f], ax, sample=sample_cat, **plot_kws)
             ax.set_title(title)
-            ax.set_xlabel(None);  ax.set_ylabel(None)
+            ax.set_xlabel(None), ax.set_ylabel(None)
 def plot_features_target(data, target, target_type='auto',       title='auto', save_dir=None, figsize=None, **plot_kws):
     """Plot features vs target.
 
@@ -467,6 +469,7 @@ def plot_cat_cat_features(data, f1, f2,                 ax=None, title='auto', s
     """
     def plot_fn(ax):
         ratio = pd.crosstab(data[f2], data[f1], normalize='index')
+        # ratio = pd.crosstab(data[f2], data[f1], normalize='index' if plot_kws.get('normalize', None) is None else plot_kws['normalize'])
         ratio.sort_index(inplace=True, ascending=False)  # sort by index
         ratio = ratio[sorted(ratio)]                     # sort by column
         n_classes = PLOT_PARAMS.get('n_classes', plot_kws)
@@ -529,8 +532,7 @@ def plot_pair(data1, data2=None, subplot=True,                   title='auto', s
             grids  = gridspec.GridSpec(1, n_cols)
             fig    = plt.figure(figsize=(n_cols*figsize[0], figsize[1]))
             with FigProcessor(fig, save_dir, title, tight_layout=False):
-                colors = [c['color'] for c in plt.rcParams['axes.prop_cycle']]
-                for grid, data, color in zip(grids, (data1, data2), colors):
+                for grid, data, color in zip(grids, (data1, data2), COLORS):
                     plot_kws['color'] = color
                     fs = data.columns
                     g  = sns.PairGrid(data, diag_sharey=False, x_vars=fs, y_vars=fs)
