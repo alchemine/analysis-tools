@@ -52,6 +52,7 @@ def plot_fn_cat(data_f, ax, **plot_kws):  # cat: not numerical dtypes
         return
     if is_datetime_str(data_f):
         plot_fn_datetime(data_f, ax, **plot_kws)
+        title = data_f.name
     else:
         if (plot_kws.get('sample') is not None) and (plot_kws['sample'] < data_f.nunique()):
             data_f = data_f.sample(plot_kws['sample'])
