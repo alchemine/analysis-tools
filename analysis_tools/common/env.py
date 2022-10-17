@@ -60,7 +60,7 @@ import seaborn as sns
 # Plot options
 #   Use korean fonts
 """
-$ sudo apt-get install fonts-nanum*
+$ sudo apt-get install fonts-nanum* fontconfig
 $ sudo fc-cache -fv
 $ sudo cp /usr/share/fonts/truetype/nanum/Nanum* /opt/conda/envs/trading-system/lib/python3.8/site-packages/matplotlib/mpl-data/fonts/ttf/
 $ rm -rf /root/.cache/matplotlib/*
