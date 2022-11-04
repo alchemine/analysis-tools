@@ -12,6 +12,7 @@ from analysis_tools.common.plot_utils import *
 
 # Lambda functions
 tprint  = lambda dic: print(tabulate(dic, headers='keys', tablefmt='psql'))  # print with fancy 'psql' format
+vars_   = lambda obj: {k: v for k, v in vars(obj).items() if not k.startswith('__')}
 ls_all  = lambda path: [path for path in glob(f"{path}/*")]
 ls_dir  = lambda path: [path for path in glob(f"{path}/*") if isdir(path)]
 ls_file = lambda path: [path for path in glob(f"{path}/*") if isfile(path)]
