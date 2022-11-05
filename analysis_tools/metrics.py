@@ -349,7 +349,7 @@ def compare_models(models, X_train, y_train, X_val=None, y_val=None):
         results.append((score_train, score_val, model))
     results = sorted(results, key=lambda result: result[1], reverse=True)  # sort by score_val
 
-    print("- Scores")  # accuracy(regression), r-square(classification)
+    print("- Scores")  # accuracy(classification), r-square(regression)
     for score_train, score_val, model in results:
         print(f"{score_train:.3f} (train) / {score_val:.3f} (val) : {model.__class__.__name__}")
     return results
