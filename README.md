@@ -1,4 +1,4 @@
-# Analysis tools for Machine learning projects
+# Analysis tools for machine learning projects
 
 ## 1. Usage
 ```bash
