@@ -151,7 +151,7 @@ def plot_features(data1, data2=None, sample_cat=1000,            title='auto', s
     n_features = len(data1.columns)
     n_rows     = int(np.ceil(n_features / n_cols))
     fig, axes = plt.subplots(n_rows, n_cols, figsize=PLOT_PARAMS.get('figsize', figsize))
-    with FigProcessor(fig, save_dir, 'Features' if title == 'auto' else title):
+    with FigProcessor(fig, save_dir, "Features" if title == 'auto' else title):
         for ax in axes.flat[n_features:]:
             ax.axis('off')
         for ax, f in zip(axes.flat, data1):
@@ -212,12 +212,12 @@ def plot_features_target(data, target, target_type='auto',       title='auto', s
     n_rows     = int(np.ceil(n_features/n_cols))
     fig, axes  = plt.subplots(n_rows, n_cols, figsize=PLOT_PARAMS.get('figsize', figsize))
     axes       = np.array(axes) if n_rows*n_cols == 1 else axes
-    with FigProcessor(fig, save_dir, "Features vs Target"):
+    with FigProcessor(fig, save_dir, "Features vs Target" if title == 'auto' else title):
         for ax in axes.flat[n_features:]:
             ax.axis('off')
         for ax, f in zip(axes.flat, data.columns.drop(target)):
             eval(f"plot_{dtype(data[f])}_{target_type}_features")(data, f, target, ax=ax, **plot_kws)
-            ax.set_title(f"{f} vs {target}" if title == 'auto' else title)
+            ax.set_title(f"{f} vs {target}")
             ax.set_xlabel(None);  ax.set_ylabel(None)
 def plot_two_features(data, f1, f2,                     ax=None, title='auto', save_dir=None, figsize=None, **plot_kws):
     """Plot joint distribution of two features.
