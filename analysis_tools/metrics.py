@@ -182,14 +182,14 @@ def get_feature_importance(data, target, bins=None, problem='classification',   
     with FigProcessor(fig, save_dir, "Feature importance"):
         for ax, data, ylabel, title in zip(axes,
                                           [MDI_importance.head(bins), perm_importance.head(bins), mean_fi.head(bins)],
-                                          ["Mean decrease in impurity", "Mean accuracy decrease", "Mean rank"],
+                                          ["Mean decrease in impurity", "Mean score decrease", "Mean rank"],
                                           ["Feature importance using MDI", "Feature importance using permutation on full model", "Feature importance using MDI, permutation on full model"]):
-            sns.barplot(data.index, data, ax=ax)
+            sns.barplot(x=data.index, y=data, ax=ax)
             ax.set_ylabel(ylabel)
             ax.set_title(title)
             ax.tick_params(axis='x', rotation=30)
 
-    return pd.concat([MDI_importance, perm_importance, mean_fi], axis='columns')
+    return pd.concat([fi1, fi2, mean_fi], axis='columns').sort_values('Mean')
 
 def plot_learning_curve(model, X_train, y_train, X_val, y_val, n_subsets_step=None, problem='classification', save_dir=None, figsize=None, **plot_kws):
     """Plot learning curve

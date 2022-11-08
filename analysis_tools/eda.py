@@ -60,7 +60,7 @@ def plot_fn_cat(data_f, ax, **plot_kws):  # cat: not numerical dtypes
         else:
             title = data_f.name
         cnts = data_f.value_counts(normalize=True).sort_index()
-        sns.barplot(cnts.index, cnts.values, order=cnts.index, ax=ax)
+        sns.barplot(x=cnts.index, y=cnts.values, order=cnts.index, ax=ax)
         xticklabels = cnts.sort_values()[-PLOT_PARAMS.get('n_classes', plot_kws):].index
         ax.set_xticks(lmap(lambda l: cnts.index.get_loc(l), xticklabels))
         ax.set_xticklabels(xticklabels, rotation=30, ha='right', rotation_mode='anchor')
@@ -105,7 +105,7 @@ def plot_missing_value(data, show_df=False,                      title='auto', s
     with FigProcessor(fig, save_dir, "Missing value" if title == 'auto' else title):
         msno.matrix(data, ax=axes[0])
         ms = data.isnull().sum()
-        sns.barplot(ms.index, ms, ax=axes[1])
+        sns.barplot(x=ms.index, y=ms, ax=axes[1])
         axes[1].bar_label(axes[1].containers[0])
         axes[1].set_xticklabels([])
 
