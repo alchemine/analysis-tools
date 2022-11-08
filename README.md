@@ -2,10 +2,6 @@
 
 ## 1. Usage
 ```bash
-# Load repository manually
-$ git clone https://github.com/djy-git/analysis-tools.git 
-
-# Install with Pypi
 $ pip install analysis-tools
 ```
 
@@ -13,7 +9,7 @@ $ pip install analysis-tools
 [examples/titanic/eda.ipynb](https://github.com/djy-git/analysis-tools/blob/main/examples/titanic/eda.ipynb)를 참고
 
 ```python
-from analysis_tools.eda import *
+from analysis_tools import eda, metrics
 
 data   = pd.DataFrame(..)
 target = 'survived'
@@ -23,13 +19,15 @@ cat_features       = data.columns.drop(num_features)
 data[num_features] = data[num_features].astype('float32')
 data[cat_features] = data[cat_features].astype('string')
 
-plot_missing_value(data)
-plot_features(data)
-plot_features_target(data, target)
-plot_corr(data.corr())
+eda.plot_missing_value(data)
+eda.plot_features(data)
+eda.plot_features_target(data, target)
+eda.plot_corr(data.corr())
+metrics.get_feature_importance(data, target)
 ```
 
 ![](https://github.com/djy-git/analysis-tools/blob/main/examples/titanic/visualization/Missing%20value_1.png?raw=true)
 ![](https://github.com/djy-git/analysis-tools/blob/main/examples/titanic/visualization/Features_1.png?raw=true)
 ![](https://github.com/djy-git/analysis-tools/blob/main/examples/titanic/visualization/Features%20vs%20Target_1.png?raw=true)
 ![](https://github.com/djy-git/analysis-tools/blob/main/examples/titanic/visualization/Correlation%20matrix_1.png?raw=true)
+![](https://github.com/djy-git/analysis-tools/blob/main/examples/titanic/visualization/Feature%20importance_1.png?raw=true)
