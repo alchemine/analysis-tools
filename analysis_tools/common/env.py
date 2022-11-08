@@ -62,7 +62,7 @@ import seaborn as sns
 """
 $ sudo apt-get install fonts-nanum* fontconfig
 $ sudo fc-cache -fv
-$ sudo cp /usr/share/fonts/truetype/nanum/Nanum* /opt/conda/envs/trading-system/lib/python3.8/site-packages/matplotlib/mpl-data/fonts/ttf/
+$ sudo cp /usr/share/fonts/truetype/nanum/Nanum* /opt/conda/envs/caret/lib/python3.8/site-packages/matplotlib/mpl-data/fonts/ttf/
 $ rm -rf /root/.cache/matplotlib/*
 """
 from pandas.plotting import register_matplotlib_converters
