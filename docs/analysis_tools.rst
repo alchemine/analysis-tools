@@ -44,6 +44,22 @@ analysis\_tools.preprocessing module
    :undoc-members:
    :show-inheritance:
 
+analysis\_tools.random module
+-----------------------------
+
+.. automodule:: analysis_tools.random
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+analysis\_tools.utils module
+----------------------------
+
+.. automodule:: analysis_tools.utils
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 Module contents
 ---------------
 

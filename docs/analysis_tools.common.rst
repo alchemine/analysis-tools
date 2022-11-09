@@ -20,10 +20,18 @@ analysis\_tools.common.env module
    :undoc-members:
    :show-inheritance:
 
-analysis\_tools.common.util module
-----------------------------------
+analysis\_tools.common.plot\_utils module
+-----------------------------------------
 
-.. automodule:: analysis_tools.common.util
+.. automodule:: analysis_tools.common.plot_utils
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+analysis\_tools.common.utils module
+-----------------------------------
+
+.. automodule:: analysis_tools.common.utils
    :members:
    :undoc-members:
    :show-inheritance:
