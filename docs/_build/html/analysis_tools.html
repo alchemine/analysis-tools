@@ -1,0 +1,1136 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>analysis_tools package &mdash; analysis-tools 0.2.1 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/sphinx_highlight.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="analysis_tools.common package" href="analysis_tools.common.html" />
+    <link rel="prev" title="analysis_tools" href="modules.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="index.html" class="icon icon-home"> analysis-tools
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">analysis_tools</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">analysis_tools package</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#subpackages">Subpackages</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="analysis_tools.common.html">analysis_tools.common package</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#submodules">Submodules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-analysis_tools.eda">analysis_tools.eda module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#analysis_tools.eda.plot_cat_cat_features"><code class="docutils literal notranslate"><span class="pre">plot_cat_cat_features()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#analysis_tools.eda.plot_cat_feature"><code class="docutils literal notranslate"><span class="pre">plot_cat_feature()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#analysis_tools.eda.plot_cat_num_features"><code class="docutils literal notranslate"><span class="pre">plot_cat_num_features()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#analysis_tools.eda.plot_corr"><code class="docutils literal notranslate"><span class="pre">plot_corr()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#analysis_tools.eda.plot_features"><code class="docutils literal notranslate"><span class="pre">plot_features()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#analysis_tools.eda.plot_features_target"><code class="docutils literal notranslate"><span class="pre">plot_features_target()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#analysis_tools.eda.plot_fn_cat"><code class="docutils literal notranslate"><span class="pre">plot_fn_cat()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#analysis_tools.eda.plot_fn_datetime"><code class="docutils literal notranslate"><span class="pre">plot_fn_datetime()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#analysis_tools.eda.plot_fn_num"><code class="docutils literal notranslate"><span class="pre">plot_fn_num()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#analysis_tools.eda.plot_missing_value"><code class="docutils literal notranslate"><span class="pre">plot_missing_value()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#analysis_tools.eda.plot_num_cat_features"><code class="docutils literal notranslate"><span class="pre">plot_num_cat_features()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#analysis_tools.eda.plot_num_feature"><code class="docutils literal notranslate"><span class="pre">plot_num_feature()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#analysis_tools.eda.plot_num_num_features"><code class="docutils literal notranslate"><span class="pre">plot_num_num_features()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#analysis_tools.eda.plot_on_ax"><code class="docutils literal notranslate"><span class="pre">plot_on_ax()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#analysis_tools.eda.plot_pair"><code class="docutils literal notranslate"><span class="pre">plot_pair()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#analysis_tools.eda.plot_ts_features"><code class="docutils literal notranslate"><span class="pre">plot_ts_features()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#analysis_tools.eda.plot_two_features"><code class="docutils literal notranslate"><span class="pre">plot_two_features()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#module-analysis_tools.metrics">analysis_tools.metrics module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#analysis_tools.metrics.compare_models"><code class="docutils literal notranslate"><span class="pre">compare_models()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#analysis_tools.metrics.confusion_matrix_analysis"><code class="docutils literal notranslate"><span class="pre">confusion_matrix_analysis()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#analysis_tools.metrics.curve_analysis"><code class="docutils literal notranslate"><span class="pre">curve_analysis()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#analysis_tools.metrics.get_feature_importance"><code class="docutils literal notranslate"><span class="pre">get_feature_importance()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#analysis_tools.metrics.plot_learning_curve"><code class="docutils literal notranslate"><span class="pre">plot_learning_curve()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#module-analysis_tools.modeling">analysis_tools.modeling module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#analysis_tools.modeling.generate_dataloader_torch"><code class="docutils literal notranslate"><span class="pre">generate_dataloader_torch()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#analysis_tools.modeling.generate_dataset_tf"><code class="docutils literal notranslate"><span class="pre">generate_dataset_tf()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#analysis_tools.modeling.get_scaled_model"><code class="docutils literal notranslate"><span class="pre">get_scaled_model()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#analysis_tools.modeling.save_tree_visualization"><code class="docutils literal notranslate"><span class="pre">save_tree_visualization()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#module-analysis_tools.preprocessing">analysis_tools.preprocessing module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-analysis_tools.random">analysis_tools.random module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#analysis_tools.random.set_random_seed"><code class="docutils literal notranslate"><span class="pre">set_random_seed()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#analysis_tools.random.set_random_seed_tf"><code class="docutils literal notranslate"><span class="pre">set_random_seed_tf()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#analysis_tools.random.set_random_seed_torch"><code class="docutils literal notranslate"><span class="pre">set_random_seed_torch()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#module-analysis_tools.utils">analysis_tools.utils module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#analysis_tools.utils.check_nan"><code class="docutils literal notranslate"><span class="pre">check_nan()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#analysis_tools.utils.set_memory_growth"><code class="docutils literal notranslate"><span class="pre">set_memory_growth()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#module-analysis_tools">Module contents</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id50">Examples</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">analysis-tools</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home"></a></li>
+          <li class="breadcrumb-item"><a href="modules.html">analysis_tools</a></li>
+      <li class="breadcrumb-item active">analysis_tools package</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/analysis_tools.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="analysis-tools-package">
+<h1>analysis_tools package<a class="headerlink" href="#analysis-tools-package" title="Permalink to this heading"></a></h1>
+<section id="subpackages">
+<h2>Subpackages<a class="headerlink" href="#subpackages" title="Permalink to this heading"></a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="analysis_tools.common.html">analysis_tools.common package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="analysis_tools.common.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="analysis_tools.common.html#module-analysis_tools.common.config">analysis_tools.common.config module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="analysis_tools.common.html#analysis_tools.common.config.PARAMS"><code class="docutils literal notranslate"><span class="pre">PARAMS</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="analysis_tools.common.html#analysis_tools.common.config.PARAMS.get"><code class="docutils literal notranslate"><span class="pre">PARAMS.get()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="analysis_tools.common.html#analysis_tools.common.config.PARAMS.seed"><code class="docutils literal notranslate"><span class="pre">PARAMS.seed</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="analysis_tools.common.html#analysis_tools.common.config.PARAMS.test_size"><code class="docutils literal notranslate"><span class="pre">PARAMS.test_size</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="analysis_tools.common.html#analysis_tools.common.config.PLOT_PARAMS"><code class="docutils literal notranslate"><span class="pre">PLOT_PARAMS</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="analysis_tools.common.html#analysis_tools.common.config.PLOT_PARAMS.alpha"><code class="docutils literal notranslate"><span class="pre">PLOT_PARAMS.alpha</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="analysis_tools.common.html#analysis_tools.common.config.PLOT_PARAMS.bins"><code class="docutils literal notranslate"><span class="pre">PLOT_PARAMS.bins</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="analysis_tools.common.html#analysis_tools.common.config.PLOT_PARAMS.figsize"><code class="docutils literal notranslate"><span class="pre">PLOT_PARAMS.figsize</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="analysis_tools.common.html#analysis_tools.common.config.PLOT_PARAMS.marker_size"><code class="docutils literal notranslate"><span class="pre">PLOT_PARAMS.marker_size</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="analysis_tools.common.html#analysis_tools.common.config.PLOT_PARAMS.n_classes"><code class="docutils literal notranslate"><span class="pre">PLOT_PARAMS.n_classes</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="analysis_tools.common.html#analysis_tools.common.config.PLOT_PARAMS.n_cols"><code class="docutils literal notranslate"><span class="pre">PLOT_PARAMS.n_cols</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="analysis_tools.common.html#analysis_tools.common.config.PLOT_PARAMS.show_plot"><code class="docutils literal notranslate"><span class="pre">PLOT_PARAMS.show_plot</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="analysis_tools.common.html#module-analysis_tools.common.env">analysis_tools.common.env module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="analysis_tools.common.html#module-analysis_tools.common.plot_utils">analysis_tools.common.plot_utils module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="analysis_tools.common.html#analysis_tools.common.plot_utils.FigProcessor"><code class="docutils literal notranslate"><span class="pre">FigProcessor</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="analysis_tools.common.html#analysis_tools.common.plot_utils.SeabornFig2Grid"><code class="docutils literal notranslate"><span class="pre">SeabornFig2Grid</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="analysis_tools.common.html#module-analysis_tools.common.utils">analysis_tools.common.utils module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="analysis_tools.common.html#analysis_tools.common.utils.MetaSingleton"><code class="docutils literal notranslate"><span class="pre">MetaSingleton</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="analysis_tools.common.html#analysis_tools.common.utils.Timer"><code class="docutils literal notranslate"><span class="pre">Timer</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="analysis_tools.common.html#analysis_tools.common.utils.double2float"><code class="docutils literal notranslate"><span class="pre">double2float()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="analysis_tools.common.html#analysis_tools.common.utils.dt2str"><code class="docutils literal notranslate"><span class="pre">dt2str()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="analysis_tools.common.html#analysis_tools.common.utils.dtype"><code class="docutils literal notranslate"><span class="pre">dtype()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="analysis_tools.common.html#analysis_tools.common.utils.farray"><code class="docutils literal notranslate"><span class="pre">farray()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="analysis_tools.common.html#analysis_tools.common.utils.iarray"><code class="docutils literal notranslate"><span class="pre">iarray()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="analysis_tools.common.html#analysis_tools.common.utils.ini2dict"><code class="docutils literal notranslate"><span class="pre">ini2dict()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="analysis_tools.common.html#analysis_tools.common.utils.is_datetime_str"><code class="docutils literal notranslate"><span class="pre">is_datetime_str()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="analysis_tools.common.html#analysis_tools.common.utils.lmap"><code class="docutils literal notranslate"><span class="pre">lmap()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="analysis_tools.common.html#analysis_tools.common.utils.ls_all"><code class="docutils literal notranslate"><span class="pre">ls_all()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="analysis_tools.common.html#analysis_tools.common.utils.ls_dir"><code class="docutils literal notranslate"><span class="pre">ls_dir()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="analysis_tools.common.html#analysis_tools.common.utils.ls_file"><code class="docutils literal notranslate"><span class="pre">ls_file()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="analysis_tools.common.html#analysis_tools.common.utils.lstarmap"><code class="docutils literal notranslate"><span class="pre">lstarmap()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="analysis_tools.common.html#analysis_tools.common.utils.str2bool"><code class="docutils literal notranslate"><span class="pre">str2bool()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="analysis_tools.common.html#analysis_tools.common.utils.str2dt"><code class="docutils literal notranslate"><span class="pre">str2dt()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="analysis_tools.common.html#analysis_tools.common.utils.tprint"><code class="docutils literal notranslate"><span class="pre">tprint()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="analysis_tools.common.html#analysis_tools.common.utils.vars_"><code class="docutils literal notranslate"><span class="pre">vars_()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="analysis_tools.common.html#module-analysis_tools.common">Module contents</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="analysis_tools.common.html#id9">Examples</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</section>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this heading"></a></h2>
+</section>
+<section id="module-analysis_tools.eda">
+<span id="analysis-tools-eda-module"></span><h2>analysis_tools.eda module<a class="headerlink" href="#module-analysis_tools.eda" title="Permalink to this heading"></a></h2>
+<p>Exploratory Data Analysis tools</p>
+<p>This module contains functions and classes for exploratory data analysis.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="analysis_tools.eda.plot_cat_cat_features">
+<span class="sig-prename descclassname"><span class="pre">analysis_tools.eda.</span></span><span class="sig-name descname"><span class="pre">plot_cat_cat_features</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">f1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">f2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ax</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">title</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'auto'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">save_dir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">figsize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">plot_kws</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/analysis_tools/eda.html#plot_cat_cat_features"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#analysis_tools.eda.plot_cat_cat_features" title="Permalink to this definition"></a></dt>
+<dd><p>Plot heatmap of two categorical features.</p>
+<section id="parameters">
+<h3>Parameters<a class="headerlink" href="#parameters" title="Permalink to this heading"></a></h3>
+<dl class="simple">
+<dt>data<span class="classifier">pandas.DataFrame</span></dt><dd><p>DataFrame to be analyzed.</p>
+</dd>
+<dt>f1<span class="classifier">str</span></dt><dd><p>First categorical feature.</p>
+</dd>
+<dt>f2<span class="classifier">str</span></dt><dd><p>Second categorical feature.</p>
+</dd>
+<dt>ax<span class="classifier">matplotlib.axes.Axes</span></dt><dd><p>Axis to plot.</p>
+</dd>
+<dt>title<span class="classifier">str</span></dt><dd><p>Title.</p>
+</dd>
+<dt>save_dir<span class="classifier">str</span></dt><dd><p>Directory path to save the plot.</p>
+</dd>
+<dt>figsize<span class="classifier">tuple</span></dt><dd><p>Figure size.</p>
+</dd>
+</dl>
+</section>
+<section id="examples">
+<h3>Examples<a class="headerlink" href="#examples" title="Permalink to this heading"></a></h3>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">analysis_tools.eda</span> <span class="k">as</span> <span class="nn">eda</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s1">&#39;a&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">],</span> <span class="s1">&#39;b&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;c&#39;</span><span class="p">,</span> <span class="s1">&#39;d&#39;</span><span class="p">,</span> <span class="s1">&#39;e&#39;</span><span class="p">],</span> <span class="s1">&#39;c&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;a10&#39;</span><span class="p">,</span> <span class="s1">&#39;b22&#39;</span><span class="p">,</span> <span class="s1">&#39;c11&#39;</span><span class="p">,</span> <span class="s1">&#39;a10&#39;</span><span class="p">,</span> <span class="s1">&#39;b22&#39;</span><span class="p">]})</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">eda</span><span class="o">.</span><span class="n">plot_cat_cat_features</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;c&#39;</span><span class="p">,</span> <span class="n">save_dir</span><span class="o">=</span><span class="s1">&#39;.&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="analysis_tools.eda.plot_cat_feature">
+<span class="sig-prename descclassname"><span class="pre">analysis_tools.eda.</span></span><span class="sig-name descname"><span class="pre">plot_cat_feature</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data_f</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ax</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">title</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'auto'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">save_dir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">figsize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">plot_kws</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/analysis_tools/eda.html#plot_cat_feature"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#analysis_tools.eda.plot_cat_feature" title="Permalink to this definition"></a></dt>
+<dd><p>Plot bar of a categorical feature.</p>
+<section id="id1">
+<h3>Parameters<a class="headerlink" href="#id1" title="Permalink to this heading"></a></h3>
+<dl class="simple">
+<dt>data_f<span class="classifier">pandas.Series</span></dt><dd><p>Series to be analyzed.</p>
+</dd>
+<dt>ax<span class="classifier">matplotlib.axes.Axes</span></dt><dd><p>Axis to plot.</p>
+</dd>
+<dt>title<span class="classifier">str</span></dt><dd><p>Title.</p>
+</dd>
+<dt>save_dir<span class="classifier">str</span></dt><dd><p>Directory path to save the plot.</p>
+</dd>
+<dt>figsize<span class="classifier">tuple</span></dt><dd><p>Figure size.</p>
+</dd>
+</dl>
+</section>
+<section id="id2">
+<h3>Examples<a class="headerlink" href="#id2" title="Permalink to this heading"></a></h3>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">analysis_tools.eda</span> <span class="k">as</span> <span class="nn">eda</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s1">&#39;a&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">],</span> <span class="s1">&#39;b&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;c&#39;</span><span class="p">,</span> <span class="s1">&#39;d&#39;</span><span class="p">,</span> <span class="s1">&#39;e&#39;</span><span class="p">],</span> <span class="s1">&#39;c&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mf">1.2</span><span class="p">,</span> <span class="mf">2.3</span><span class="p">,</span> <span class="mf">3.4</span><span class="p">,</span> <span class="mf">4.5</span><span class="p">,</span> <span class="mf">5.6</span><span class="p">]})</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">eda</span><span class="o">.</span><span class="n">plot_cat_feature</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;b&#39;</span><span class="p">],</span> <span class="n">save_dir</span><span class="o">=</span><span class="s1">&#39;.&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="analysis_tools.eda.plot_cat_num_features">
+<span class="sig-prename descclassname"><span class="pre">analysis_tools.eda.</span></span><span class="sig-name descname"><span class="pre">plot_cat_num_features</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">f1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">f2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ax</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">title</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'auto'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">save_dir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">figsize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">plot_kws</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/analysis_tools/eda.html#plot_cat_num_features"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#analysis_tools.eda.plot_cat_num_features" title="Permalink to this definition"></a></dt>
+<dd><p>Plot violinplot of categorical, numerical features.</p>
+<section id="id3">
+<h3>Parameters<a class="headerlink" href="#id3" title="Permalink to this heading"></a></h3>
+<dl class="simple">
+<dt>data<span class="classifier">pandas.DataFrame</span></dt><dd><p>DataFrame to be analyzed.</p>
+</dd>
+<dt>f1<span class="classifier">str</span></dt><dd><p>First categorical feature.</p>
+</dd>
+<dt>f2<span class="classifier">str</span></dt><dd><p>Second numerical feature.</p>
+</dd>
+<dt>ax<span class="classifier">matplotlib.axes.Axes</span></dt><dd><p>Axis to plot.</p>
+</dd>
+<dt>title<span class="classifier">str</span></dt><dd><p>Title.</p>
+</dd>
+<dt>save_dir<span class="classifier">str</span></dt><dd><p>Directory path to save the plot.</p>
+</dd>
+<dt>figsize<span class="classifier">tuple</span></dt><dd><p>Figure size.</p>
+</dd>
+</dl>
+</section>
+<section id="id4">
+<h3>Examples<a class="headerlink" href="#id4" title="Permalink to this heading"></a></h3>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">analysis_tools.eda</span> <span class="k">as</span> <span class="nn">eda</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s1">&#39;a&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">],</span> <span class="s1">&#39;b&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;c&#39;</span><span class="p">,</span> <span class="s1">&#39;d&#39;</span><span class="p">,</span> <span class="s1">&#39;e&#39;</span><span class="p">],</span> <span class="s1">&#39;c&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mf">1.2</span><span class="p">,</span> <span class="mf">2.3</span><span class="p">,</span> <span class="mf">3.4</span><span class="p">,</span> <span class="mf">4.5</span><span class="p">,</span> <span class="mf">5.6</span><span class="p">]})</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">eda</span><span class="o">.</span><span class="n">plot_cat_num_features</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="n">save_dir</span><span class="o">=</span><span class="s1">&#39;.&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="analysis_tools.eda.plot_corr">
+<span class="sig-prename descclassname"><span class="pre">analysis_tools.eda.</span></span><span class="sig-name descname"><span class="pre">plot_corr</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">corr1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">corr2</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">annot</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mask</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">title</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'auto'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">save_dir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">figsize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">(15,</span> <span class="pre">15)</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">plot_kws</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/analysis_tools/eda.html#plot_corr"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#analysis_tools.eda.plot_corr" title="Permalink to this definition"></a></dt>
+<dd><p>Plot correlation matrix.</p>
+<section id="id5">
+<h3>Parameters<a class="headerlink" href="#id5" title="Permalink to this heading"></a></h3>
+<dl class="simple">
+<dt>corr1<span class="classifier">pandas.DataFrame</span></dt><dd><p>Correlation matrix.</p>
+</dd>
+<dt>corr2<span class="classifier">pandas.DataFrame</span></dt><dd><p>Correlation matrix.</p>
+</dd>
+<dt>annot<span class="classifier">bool</span></dt><dd><p>Whether to show values.</p>
+</dd>
+<dt>mask<span class="classifier">bool</span></dt><dd><p>Whether to show only lower triangular matrix.</p>
+</dd>
+<dt>title<span class="classifier">str</span></dt><dd><p>Title.</p>
+</dd>
+<dt>save_dir<span class="classifier">str</span></dt><dd><p>Directory path to save the plot.</p>
+</dd>
+<dt>figsize<span class="classifier">tuple</span></dt><dd><p>Figure size.</p>
+</dd>
+</dl>
+</section>
+<section id="id6">
+<h3>Examples<a class="headerlink" href="#id6" title="Permalink to this heading"></a></h3>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">analysis_tools.eda</span> <span class="k">as</span> <span class="nn">eda</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s1">&#39;a&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="s1">&#39;b&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;c&#39;</span><span class="p">,</span> <span class="s1">&#39;d&#39;</span><span class="p">,</span> <span class="s1">&#39;e&#39;</span><span class="p">],</span> <span class="s1">&#39;c&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">30</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">]})</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">eda</span><span class="o">.</span><span class="n">plot_corr</span><span class="p">(</span><span class="n">corr</span><span class="p">,</span> <span class="n">save_dir</span><span class="o">=</span><span class="s1">&#39;.&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="analysis_tools.eda.plot_features">
+<span class="sig-prename descclassname"><span class="pre">analysis_tools.eda.</span></span><span class="sig-name descname"><span class="pre">plot_features</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data2</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sample_cat</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1000</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">title</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'auto'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">save_dir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">figsize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">plot_kws</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/analysis_tools/eda.html#plot_features"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#analysis_tools.eda.plot_features" title="Permalink to this definition"></a></dt>
+<dd><p>Plot histogram or bar for all features.</p>
+<section id="id7">
+<h3>Parameters<a class="headerlink" href="#id7" title="Permalink to this heading"></a></h3>
+<dl class="simple">
+<dt>data1<span class="classifier">pandas.DataFrame</span></dt><dd><p>DataFrame to be analyzed.</p>
+</dd>
+<dt>data2<span class="classifier">pandas.DataFrame</span></dt><dd><p>DataFrame to be analyzed.</p>
+</dd>
+<dt>sample_cat<span class="classifier">int</span></dt><dd><p>Number of samples for categorical features.</p>
+</dd>
+<dt>title<span class="classifier">str</span></dt><dd><p>Title.</p>
+</dd>
+<dt>save_dir<span class="classifier">str</span></dt><dd><p>Directory path to save the plot.</p>
+</dd>
+<dt>figsize<span class="classifier">tuple</span></dt><dd><p>Figure size.</p>
+</dd>
+</dl>
+</section>
+<section id="id8">
+<h3>Examples<a class="headerlink" href="#id8" title="Permalink to this heading"></a></h3>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">analysis_tools.eda</span> <span class="k">as</span> <span class="nn">eda</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s1">&#39;a&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">],</span> <span class="s1">&#39;b&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;c&#39;</span><span class="p">,</span> <span class="s1">&#39;d&#39;</span><span class="p">,</span> <span class="s1">&#39;e&#39;</span><span class="p">],</span> <span class="s1">&#39;c&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mf">1.2</span><span class="p">,</span> <span class="mf">2.3</span><span class="p">,</span> <span class="mf">3.4</span><span class="p">,</span> <span class="mf">4.5</span><span class="p">,</span> <span class="mf">5.6</span><span class="p">]})</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">eda</span><span class="o">.</span><span class="n">plot_features</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">save_dir</span><span class="o">=</span><span class="s1">&#39;.&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="analysis_tools.eda.plot_features_target">
+<span class="sig-prename descclassname"><span class="pre">analysis_tools.eda.</span></span><span class="sig-name descname"><span class="pre">plot_features_target</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target_type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'auto'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">title</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'auto'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">save_dir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">figsize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">plot_kws</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/analysis_tools/eda.html#plot_features_target"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#analysis_tools.eda.plot_features_target" title="Permalink to this definition"></a></dt>
+<dd><p>Plot features vs target.</p>
+<section id="id9">
+<h3>Parameters<a class="headerlink" href="#id9" title="Permalink to this heading"></a></h3>
+<dl class="simple">
+<dt>data<span class="classifier">pandas.DataFrame</span></dt><dd><p>DataFrame to be analyzed.
+Dtypes of numerical features should be <cite>number`(`numpy.float32</cite> is recommended).
+Dtypes of categorical features should be <cite>string</cite> or <cite>category</cite>.</p>
+</dd>
+<dt>target<span class="classifier">str</span></dt><dd><p>Target feature.</p>
+</dd>
+<dt>target_type<span class="classifier">str</span></dt><dd><p>Type of target.
+target_type should be ‘auto’ or ‘num’, ‘cat’.
+target_type is inferred automatically when ‘auto’ is set.</p>
+</dd>
+<dt>title<span class="classifier">str</span></dt><dd><p>Title.</p>
+</dd>
+<dt>save_dir<span class="classifier">str</span></dt><dd><p>Directory path to save the plot.</p>
+</dd>
+<dt>figsize<span class="classifier">tuple</span></dt><dd><p>Figure size.</p>
+</dd>
+</dl>
+</section>
+<section id="id10">
+<h3>Examples<a class="headerlink" href="#id10" title="Permalink to this heading"></a></h3>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">analysis_tools.eda</span> <span class="k">as</span> <span class="nn">eda</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s1">&#39;a&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="s1">&#39;b&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;c&#39;</span><span class="p">,</span> <span class="s1">&#39;d&#39;</span><span class="p">,</span> <span class="s1">&#39;e&#39;</span><span class="p">],</span> <span class="s1">&#39;c&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;a10&#39;</span><span class="p">,</span> <span class="s1">&#39;b22&#39;</span><span class="p">,</span> <span class="s1">&#39;c11&#39;</span><span class="p">,</span> <span class="s1">&#39;a10&#39;</span><span class="p">,</span> <span class="s1">&#39;b22&#39;</span><span class="p">]})</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">num_features</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;a&#39;</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">cat_features</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">num_features</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">data</span><span class="p">[</span><span class="n">num_features</span><span class="p">]</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="n">num_features</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s1">&#39;float32&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">data</span><span class="p">[</span><span class="n">cat_features</span><span class="p">]</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="n">cat_features</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s1">&#39;string&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">eda</span><span class="o">.</span><span class="n">plot_features_target</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="n">save_dir</span><span class="o">=</span><span class="s1">&#39;.&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="analysis_tools.eda.plot_fn_cat">
+<span class="sig-prename descclassname"><span class="pre">analysis_tools.eda.</span></span><span class="sig-name descname"><span class="pre">plot_fn_cat</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data_f</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ax</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">plot_kws</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/analysis_tools/eda.html#plot_fn_cat"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#analysis_tools.eda.plot_fn_cat" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="analysis_tools.eda.plot_fn_datetime">
+<span class="sig-prename descclassname"><span class="pre">analysis_tools.eda.</span></span><span class="sig-name descname"><span class="pre">plot_fn_datetime</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data_f</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ax</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">plot_kws</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/analysis_tools/eda.html#plot_fn_datetime"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#analysis_tools.eda.plot_fn_datetime" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="analysis_tools.eda.plot_fn_num">
+<span class="sig-prename descclassname"><span class="pre">analysis_tools.eda.</span></span><span class="sig-name descname"><span class="pre">plot_fn_num</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data_f</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ax</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">plot_kws</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/analysis_tools/eda.html#plot_fn_num"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#analysis_tools.eda.plot_fn_num" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="analysis_tools.eda.plot_missing_value">
+<span class="sig-prename descclassname"><span class="pre">analysis_tools.eda.</span></span><span class="sig-name descname"><span class="pre">plot_missing_value</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">show_df</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">title</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'auto'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">save_dir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">figsize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">plot_kws</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/analysis_tools/eda.html#plot_missing_value"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#analysis_tools.eda.plot_missing_value" title="Permalink to this definition"></a></dt>
+<dd><p>Plot counts of missing values of each feature.</p>
+<section id="id11">
+<h3>Parameters<a class="headerlink" href="#id11" title="Permalink to this heading"></a></h3>
+<dl class="simple">
+<dt>data<span class="classifier">pandas.DataFrame</span></dt><dd><p>DataFrame to be analyzed.</p>
+</dd>
+<dt>show_df<span class="classifier">bool</span></dt><dd><p>Whether to show value counts dataframe.</p>
+</dd>
+<dt>title<span class="classifier">str</span></dt><dd><p>Title.</p>
+</dd>
+<dt>save_dir<span class="classifier">str</span></dt><dd><p>Directory path to save the plot.</p>
+</dd>
+<dt>figsize<span class="classifier">tuple</span></dt><dd><p>Figure size.</p>
+</dd>
+</dl>
+</section>
+<section id="id12">
+<h3>Examples<a class="headerlink" href="#id12" title="Permalink to this heading"></a></h3>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">analysis_tools.eda</span> <span class="k">as</span> <span class="nn">eda</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s1">&#39;a&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="kc">None</span><span class="p">],</span> <span class="s1">&#39;b&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">],</span> <span class="s1">&#39;c&#39;</span><span class="p">:</span> <span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">]})</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">eda</span><span class="o">.</span><span class="n">plot_missing_value</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">save_dir</span><span class="o">=</span><span class="s1">&#39;.&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="analysis_tools.eda.plot_num_cat_features">
+<span class="sig-prename descclassname"><span class="pre">analysis_tools.eda.</span></span><span class="sig-name descname"><span class="pre">plot_num_cat_features</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">f1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">f2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ax</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">title</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'auto'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">save_dir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">figsize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">plot_kws</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/analysis_tools/eda.html#plot_num_cat_features"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#analysis_tools.eda.plot_num_cat_features" title="Permalink to this definition"></a></dt>
+<dd><p>Plot violinplot of categorical, numerical features.</p>
+<section id="id13">
+<h3>Parameters<a class="headerlink" href="#id13" title="Permalink to this heading"></a></h3>
+<dl class="simple">
+<dt>data<span class="classifier">pandas.DataFrame</span></dt><dd><p>DataFrame to be analyzed.</p>
+</dd>
+<dt>f1<span class="classifier">str</span></dt><dd><p>First numerical feature.</p>
+</dd>
+<dt>f2<span class="classifier">str</span></dt><dd><p>Second categorical feature.</p>
+</dd>
+<dt>ax<span class="classifier">matplotlib.axes.Axes</span></dt><dd><p>Axis to plot.</p>
+</dd>
+<dt>title<span class="classifier">str</span></dt><dd><p>Title.</p>
+</dd>
+<dt>save_dir<span class="classifier">str</span></dt><dd><p>Directory path to save the plot.</p>
+</dd>
+<dt>figsize<span class="classifier">tuple</span></dt><dd><p>Figure size.</p>
+</dd>
+</dl>
+</section>
+<section id="id14">
+<h3>Examples<a class="headerlink" href="#id14" title="Permalink to this heading"></a></h3>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">analysis_tools.eda</span> <span class="k">as</span> <span class="nn">eda</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s1">&#39;a&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">],</span> <span class="s1">&#39;b&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;c&#39;</span><span class="p">,</span> <span class="s1">&#39;d&#39;</span><span class="p">,</span> <span class="s1">&#39;e&#39;</span><span class="p">],</span> <span class="s1">&#39;c&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mf">1.2</span><span class="p">,</span> <span class="mf">2.3</span><span class="p">,</span> <span class="mf">3.4</span><span class="p">,</span> <span class="mf">4.5</span><span class="p">,</span> <span class="mf">5.6</span><span class="p">]})</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">eda</span><span class="o">.</span><span class="n">plot_num_cat_features</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="n">save_dir</span><span class="o">=</span><span class="s1">&#39;.&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="analysis_tools.eda.plot_num_feature">
+<span class="sig-prename descclassname"><span class="pre">analysis_tools.eda.</span></span><span class="sig-name descname"><span class="pre">plot_num_feature</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data_f</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ax</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">title</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'auto'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">save_dir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">figsize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">plot_kws</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/analysis_tools/eda.html#plot_num_feature"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#analysis_tools.eda.plot_num_feature" title="Permalink to this definition"></a></dt>
+<dd><p>Plot histogram of a numeric feature.</p>
+<section id="id15">
+<h3>Parameters<a class="headerlink" href="#id15" title="Permalink to this heading"></a></h3>
+<dl class="simple">
+<dt>data_f<span class="classifier">pandas.Series</span></dt><dd><p>Series to be analyzed.</p>
+</dd>
+<dt>ax<span class="classifier">matplotlib.axes.Axes</span></dt><dd><p>Axis to plot.</p>
+</dd>
+<dt>title<span class="classifier">str</span></dt><dd><p>Title.</p>
+</dd>
+<dt>save_dir<span class="classifier">str</span></dt><dd><p>Directory path to save the plot.</p>
+</dd>
+<dt>figsize<span class="classifier">tuple</span></dt><dd><p>Figure size.</p>
+</dd>
+</dl>
+</section>
+<section id="id16">
+<h3>Examples<a class="headerlink" href="#id16" title="Permalink to this heading"></a></h3>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">analysis_tools.eda</span> <span class="k">as</span> <span class="nn">eda</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s1">&#39;a&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">],</span> <span class="s1">&#39;b&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;c&#39;</span><span class="p">,</span> <span class="s1">&#39;d&#39;</span><span class="p">,</span> <span class="s1">&#39;e&#39;</span><span class="p">],</span> <span class="s1">&#39;c&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mf">1.2</span><span class="p">,</span> <span class="mf">2.3</span><span class="p">,</span> <span class="mf">3.4</span><span class="p">,</span> <span class="mf">4.5</span><span class="p">,</span> <span class="mf">5.6</span><span class="p">]})</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">eda</span><span class="o">.</span><span class="n">plot_num_feature</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;a&#39;</span><span class="p">],</span> <span class="n">save_dir</span><span class="o">=</span><span class="s1">&#39;.&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="analysis_tools.eda.plot_num_num_features">
+<span class="sig-prename descclassname"><span class="pre">analysis_tools.eda.</span></span><span class="sig-name descname"><span class="pre">plot_num_num_features</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">f1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">f2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sample</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">100000</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ax</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">title</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'auto'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">save_dir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">figsize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">plot_kws</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/analysis_tools/eda.html#plot_num_num_features"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#analysis_tools.eda.plot_num_num_features" title="Permalink to this definition"></a></dt>
+<dd><p>Plot scatter plot of two numeric features.</p>
+<section id="id17">
+<h3>Parameters<a class="headerlink" href="#id17" title="Permalink to this heading"></a></h3>
+<dl class="simple">
+<dt>data<span class="classifier">pandas.DataFrame</span></dt><dd><p>DataFrame to be analyzed.</p>
+</dd>
+<dt>f1<span class="classifier">str</span></dt><dd><p>First numerical feature.</p>
+</dd>
+<dt>f2<span class="classifier">str</span></dt><dd><p>Second numerical feature.</p>
+</dd>
+<dt>sample<span class="classifier">int</span></dt><dd><p>Number of samples.
+If sample is None or False, then use entire data.</p>
+</dd>
+<dt>ax<span class="classifier">matplotlib.axes.Axes</span></dt><dd><p>Axis to plot.</p>
+</dd>
+<dt>title<span class="classifier">str</span></dt><dd><p>Title.</p>
+</dd>
+<dt>save_dir<span class="classifier">str</span></dt><dd><p>Directory path to save the plot.</p>
+</dd>
+<dt>figsize<span class="classifier">tuple</span></dt><dd><p>Figure size.</p>
+</dd>
+</dl>
+</section>
+<section id="id18">
+<h3>Examples<a class="headerlink" href="#id18" title="Permalink to this heading"></a></h3>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">analysis_tools.eda</span> <span class="k">as</span> <span class="nn">eda</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s1">&#39;a&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">],</span> <span class="s1">&#39;b&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;c&#39;</span><span class="p">,</span> <span class="s1">&#39;d&#39;</span><span class="p">,</span> <span class="s1">&#39;e&#39;</span><span class="p">],</span> <span class="s1">&#39;c&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mf">1.2</span><span class="p">,</span> <span class="mf">2.3</span><span class="p">,</span> <span class="mf">3.4</span><span class="p">,</span> <span class="mf">4.5</span><span class="p">,</span> <span class="mf">5.6</span><span class="p">]})</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">eda</span><span class="o">.</span><span class="n">plot_num_num_features</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;c&#39;</span><span class="p">,</span> <span class="n">save_dir</span><span class="o">=</span><span class="s1">&#39;.&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="analysis_tools.eda.plot_on_ax">
+<span class="sig-prename descclassname"><span class="pre">analysis_tools.eda.</span></span><span class="sig-name descname"><span class="pre">plot_on_ax</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">plot_fn</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ax</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">title</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">save_dir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">figsize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">plot_kws</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/analysis_tools/eda.html#plot_on_ax"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#analysis_tools.eda.plot_on_ax" title="Permalink to this definition"></a></dt>
+<dd><p>Plot on a single axis if ax is not None. Otherwise, plot on a new figure.</p>
+<section id="id19">
+<h3>Parameters<a class="headerlink" href="#id19" title="Permalink to this heading"></a></h3>
+<dl class="simple">
+<dt>plot_fn<span class="classifier">function</span></dt><dd><p>Function to plot.</p>
+</dd>
+<dt>ax<span class="classifier">matplotlib.axes.Axes</span></dt><dd><p>Axis to plot.</p>
+</dd>
+<dt>title<span class="classifier">str</span></dt><dd><p>Title of the plot.</p>
+</dd>
+<dt>save_dir<span class="classifier">str</span></dt><dd><p>Directory path to save the plot.</p>
+</dd>
+<dt>figsize<span class="classifier">tuple</span></dt><dd><p>Figure size.</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="analysis_tools.eda.plot_pair">
+<span class="sig-prename descclassname"><span class="pre">analysis_tools.eda.</span></span><span class="sig-name descname"><span class="pre">plot_pair</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data2</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">subplot</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">title</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'auto'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">save_dir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">figsize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">(20,</span> <span class="pre">20)</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">plot_kws</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/analysis_tools/eda.html#plot_pair"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#analysis_tools.eda.plot_pair" title="Permalink to this definition"></a></dt>
+<dd><p>Plot pair plot for all numerical features.</p>
+<section id="id20">
+<h3>Parameters<a class="headerlink" href="#id20" title="Permalink to this heading"></a></h3>
+<dl class="simple">
+<dt>data1<span class="classifier">pandas.DataFrame</span></dt><dd><p>DataFrame to be analyzed.</p>
+</dd>
+<dt>data2<span class="classifier">pandas.DataFrame</span></dt><dd><p>DataFrame to be analyzed.</p>
+</dd>
+<dt>subplot<span class="classifier">bool</span></dt><dd><p>Whether to split figure.</p>
+</dd>
+<dt>title<span class="classifier">str</span></dt><dd><p>Title.</p>
+</dd>
+<dt>save_dir<span class="classifier">str</span></dt><dd><p>Directory path to save the plot.</p>
+</dd>
+<dt>figsize<span class="classifier">tuple</span></dt><dd><p>Figure size.</p>
+</dd>
+</dl>
+</section>
+<section id="id21">
+<h3>Examples<a class="headerlink" href="#id21" title="Permalink to this heading"></a></h3>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">analysis_tools.eda</span> <span class="k">as</span> <span class="nn">eda</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s1">&#39;a&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">],</span> <span class="s1">&#39;b&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;c&#39;</span><span class="p">,</span> <span class="s1">&#39;d&#39;</span><span class="p">,</span> <span class="s1">&#39;e&#39;</span><span class="p">],</span> <span class="s1">&#39;c&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mf">1.2</span><span class="p">,</span> <span class="mf">2.3</span><span class="p">,</span> <span class="mf">3.4</span><span class="p">,</span> <span class="mf">4.5</span><span class="p">,</span> <span class="mf">5.6</span><span class="p">]})</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">eda</span><span class="o">.</span><span class="n">plot_pair</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">save_dir</span><span class="o">=</span><span class="s1">&#39;.&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="analysis_tools.eda.plot_ts_features">
+<span class="sig-prename descclassname"><span class="pre">analysis_tools.eda.</span></span><span class="sig-name descname"><span class="pre">plot_ts_features</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">title</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'auto'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">save_dir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">figsize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">plot_kws</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/analysis_tools/eda.html#plot_ts_features"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#analysis_tools.eda.plot_ts_features" title="Permalink to this definition"></a></dt>
+<dd><p>Plot time series line plot for all numerical features.</p>
+<section id="id22">
+<h3>Parameters<a class="headerlink" href="#id22" title="Permalink to this heading"></a></h3>
+<dl class="simple">
+<dt>data<span class="classifier">pandas.DataFrame</span></dt><dd><p>DataFrame to be analyzed.</p>
+</dd>
+<dt>title<span class="classifier">str</span></dt><dd><p>Title</p>
+</dd>
+<dt>save_dir<span class="classifier">str</span></dt><dd><p>Directory path to save the plot.</p>
+</dd>
+<dt>figsize<span class="classifier">tuple</span></dt><dd><p>Figure size.</p>
+</dd>
+</dl>
+</section>
+<section id="id23">
+<h3>Examples<a class="headerlink" href="#id23" title="Permalink to this heading"></a></h3>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">analysis_tools.eda</span> <span class="k">as</span> <span class="nn">eda</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s1">&#39;a&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">],</span> <span class="s1">&#39;b&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;c&#39;</span><span class="p">,</span> <span class="s1">&#39;d&#39;</span><span class="p">,</span> <span class="s1">&#39;e&#39;</span><span class="p">],</span> <span class="s1">&#39;c&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mf">1.2</span><span class="p">,</span> <span class="mf">2.3</span><span class="p">,</span> <span class="mf">3.4</span><span class="p">,</span> <span class="mf">4.5</span><span class="p">,</span> <span class="mf">5.6</span><span class="p">]})</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">eda</span><span class="o">.</span><span class="n">plot_ts_features</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">save_dir</span><span class="o">=</span><span class="s1">&#39;.&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="analysis_tools.eda.plot_two_features">
+<span class="sig-prename descclassname"><span class="pre">analysis_tools.eda.</span></span><span class="sig-name descname"><span class="pre">plot_two_features</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">f1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">f2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ax</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">title</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'auto'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">save_dir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">figsize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">plot_kws</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/analysis_tools/eda.html#plot_two_features"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#analysis_tools.eda.plot_two_features" title="Permalink to this definition"></a></dt>
+<dd><p>Plot joint distribution of two features.</p>
+<section id="id24">
+<h3>Parameters<a class="headerlink" href="#id24" title="Permalink to this heading"></a></h3>
+<dl class="simple">
+<dt>data<span class="classifier">pandas.DataFrame</span></dt><dd><p>DataFrame to be analyzed.</p>
+</dd>
+<dt>f1<span class="classifier">str</span></dt><dd><p>Feature 1.</p>
+</dd>
+<dt>f2<span class="classifier">str</span></dt><dd><p>Feature 2.</p>
+</dd>
+<dt>ax<span class="classifier">matplotlib.axes.Axes</span></dt><dd><p>Axis to plot.</p>
+</dd>
+<dt>title<span class="classifier">str</span></dt><dd><p>Title.</p>
+</dd>
+<dt>save_dir<span class="classifier">str</span></dt><dd><p>Directory path to save the plot.</p>
+</dd>
+<dt>figsize<span class="classifier">tuple</span></dt><dd><p>Figure size.</p>
+</dd>
+</dl>
+</section>
+<section id="id25">
+<h3>Examples<a class="headerlink" href="#id25" title="Permalink to this heading"></a></h3>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">analysis_tools.eda</span> <span class="k">as</span> <span class="nn">eda</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s1">&#39;a&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">],</span> <span class="s1">&#39;b&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;c&#39;</span><span class="p">,</span> <span class="s1">&#39;d&#39;</span><span class="p">,</span> <span class="s1">&#39;e&#39;</span><span class="p">],</span> <span class="s1">&#39;c&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mf">1.2</span><span class="p">,</span> <span class="mf">2.3</span><span class="p">,</span> <span class="mf">3.4</span><span class="p">,</span> <span class="mf">4.5</span><span class="p">,</span> <span class="mf">5.6</span><span class="p">]})</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">eda</span><span class="o">.</span><span class="n">plot_two_features</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="n">save_dir</span><span class="o">=</span><span class="s1">&#39;.&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+</dd></dl>
+
+</section>
+<section id="module-analysis_tools.metrics">
+<span id="analysis-tools-metrics-module"></span><h2>analysis_tools.metrics module<a class="headerlink" href="#module-analysis_tools.metrics" title="Permalink to this heading"></a></h2>
+<p>Metric analysis tools</p>
+<p>Performance evaluation metrics are defined here.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="analysis_tools.metrics.compare_models">
+<span class="sig-prename descclassname"><span class="pre">analysis_tools.metrics.</span></span><span class="sig-name descname"><span class="pre">compare_models</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">models</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">X_train</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_train</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">X_val</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_val</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/analysis_tools/metrics.html#compare_models"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#analysis_tools.metrics.compare_models" title="Permalink to this definition"></a></dt>
+<dd><p>Compare models with <cite>model.score()</cite></p>
+<section id="id26">
+<h3>Parameters<a class="headerlink" href="#id26" title="Permalink to this heading"></a></h3>
+<dl class="simple">
+<dt>models<span class="classifier">list of sklearn.base.BaseEstimator</span></dt><dd><p>Models to compare.</p>
+</dd>
+<dt>X_train<span class="classifier">array-like of shape (n_samples, n_features)</span></dt><dd><p>Training data.</p>
+</dd>
+<dt>y_train<span class="classifier">array-like of shape (n_samples,)</span></dt><dd><p>Training target values.</p>
+</dd>
+<dt>X_val<span class="classifier">array-like of shape (n_samples, n_features)</span></dt><dd><p>Validation data.</p>
+</dd>
+<dt>y_val<span class="classifier">array-like of shape (n_samples,)</span></dt><dd><p>Validation target values.</p>
+</dd>
+</dl>
+</section>
+<section id="returns">
+<h3>Returns<a class="headerlink" href="#returns" title="Permalink to this heading"></a></h3>
+<p>list of tuple of (score, model)</p>
+</section>
+<section id="id27">
+<h3>Examples<a class="headerlink" href="#id27" title="Permalink to this heading"></a></h3>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">sklearn.datasets</span> <span class="kn">import</span> <span class="n">load_diabetes</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">StandardScaler</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="kn">import</span> <span class="n">LinearRegression</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">sklearn.svm</span> <span class="kn">import</span> <span class="n">SVR</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">sklearn.ensemble</span> <span class="kn">import</span> <span class="n">RandomForestRegressor</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">sklearn.neighbors</span> <span class="kn">import</span> <span class="n">KNeighborsRegressor</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">sklearn.ensemble</span> <span class="kn">import</span> <span class="n">VotingRegressor</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">analysis_tools.metrics</span> <span class="kn">import</span> <span class="n">compare_models</span>
+<span class="go">&gt;&gt;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">X</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">load_diabetes</span><span class="p">(</span><span class="n">return_X_y</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">X_train</span><span class="p">,</span> <span class="n">X_val</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_val</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">scaler</span> <span class="o">=</span> <span class="n">StandardScaler</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">X_train</span> <span class="o">=</span> <span class="n">scaler</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">X_train</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">X_val</span>  <span class="o">=</span> <span class="n">scaler</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">X_val</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">base_models</span> <span class="o">=</span> <span class="p">[</span>
+<span class="gp">... </span>   <span class="n">LinearRegression</span><span class="p">(</span><span class="n">n_jobs</span><span class="o">=-</span><span class="mi">1</span><span class="p">),</span>
+<span class="gp">... </span>   <span class="n">SVR</span><span class="p">(),</span>
+<span class="gp">... </span>   <span class="n">RandomForestRegressor</span><span class="p">(</span><span class="n">n_jobs</span><span class="o">=-</span><span class="mi">1</span><span class="p">),</span>
+<span class="gp">... </span>   <span class="n">KNeighborsRegressor</span><span class="p">(</span><span class="n">n_jobs</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
+<span class="gp">... </span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ensemble_models</span> <span class="o">=</span> <span class="p">[</span>
+<span class="gp">... </span>   <span class="n">VotingRegressor</span><span class="p">([(</span><span class="n">model</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="p">,</span> <span class="n">model</span><span class="p">)</span> <span class="k">for</span> <span class="n">model</span> <span class="ow">in</span> <span class="n">base_models</span><span class="p">],</span> <span class="n">n_jobs</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
+<span class="gp">... </span><span class="p">]</span>
+</pre></div>
+</div>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">models</span> <span class="o">=</span> <span class="n">base_models</span> <span class="o">+</span> <span class="n">ensemble_models</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">results</span> <span class="o">=</span> <span class="n">compare_models</span><span class="p">(</span><span class="n">models</span><span class="p">,</span> <span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">X_val</span><span class="p">,</span> <span class="n">y_val</span><span class="p">)</span>
+<span class="go">100%|█████████████████████████████████████████████| 5/5 [00:00&lt;00:00,  5.11it/s]</span>
+<span class="go">- Scores</span>
+<span class="go">0.658 (train) / 0.467 (val) : VotingRegressor</span>
+<span class="go">0.528 (train) / 0.453 (val) : LinearRegression</span>
+<span class="go">0.921 (train) / 0.443 (val) : RandomForestRegressor</span>
+<span class="go">0.580 (train) / 0.425 (val) : KNeighborsRegressor</span>
+<span class="go">0.167 (train) / 0.182 (val) : SVR</span>
+</pre></div>
+</div>
+</section>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="analysis_tools.metrics.confusion_matrix_analysis">
+<span class="sig-prename descclassname"><span class="pre">analysis_tools.metrics.</span></span><span class="sig-name descname"><span class="pre">confusion_matrix_analysis</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">y_true</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_pred</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">save_dir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">figsize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">plot_kws</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/analysis_tools/metrics.html#confusion_matrix_analysis"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#analysis_tools.metrics.confusion_matrix_analysis" title="Permalink to this definition"></a></dt>
+<dd><p>Plot confusion matrix</p>
+<section id="id28">
+<h3>Parameters<a class="headerlink" href="#id28" title="Permalink to this heading"></a></h3>
+<dl class="simple">
+<dt>y_true<span class="classifier">array-like of shape (n_samples,)</span></dt><dd><p>Ground truth (correct) target values.</p>
+</dd>
+<dt>y_pred<span class="classifier">array-like of shape (n_samples,)</span></dt><dd><p>Estimated targets as returned by a classifier.</p>
+</dd>
+<dt>save_dir<span class="classifier">str</span></dt><dd><p>Path to save the figure.</p>
+</dd>
+<dt>figsize<span class="classifier">tuple</span></dt><dd><p>Figure size.</p>
+</dd>
+</dl>
+</section>
+<section id="id29">
+<h3>Returns<a class="headerlink" href="#id29" title="Permalink to this heading"></a></h3>
+<dl class="simple">
+<dt>collections of metrics<span class="classifier">dictionary</span></dt><dd><p>Confusion matrix, accuracy, precision, recall, f1 score</p>
+</dd>
+</dl>
+</section>
+<section id="id30">
+<h3>Examples<a class="headerlink" href="#id30" title="Permalink to this heading"></a></h3>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">analysis_tools.metrics</span> <span class="kn">import</span> <span class="n">confusion_matrix_analysis</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">y_true</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">y_pred</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">confusion_matrix_analysis</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">,</span> <span class="n">save_dir</span><span class="o">=</span><span class="s1">&#39;.&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="analysis_tools.metrics.curve_analysis">
+<span class="sig-prename descclassname"><span class="pre">analysis_tools.metrics.</span></span><span class="sig-name descname"><span class="pre">curve_analysis</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">y_true</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_score</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">save_dir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">figsize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">plot_kws</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/analysis_tools/metrics.html#curve_analysis"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#analysis_tools.metrics.curve_analysis" title="Permalink to this definition"></a></dt>
+<dd><p>Plot Precision-Recall and ROC curves</p>
+<section id="id31">
+<h3>Parameters<a class="headerlink" href="#id31" title="Permalink to this heading"></a></h3>
+<dl class="simple">
+<dt>y_true<span class="classifier">array-like of shape (n_samples,)</span></dt><dd><p>Ground truth (correct) target values.</p>
+</dd>
+<dt>y_score<span class="classifier">array-like of shape (n_samples,)</span></dt><dd><p>Estimated probabilities or output of a decision function.</p>
+</dd>
+<dt>figsize<span class="classifier">tuple</span></dt><dd><p>Figure size.</p>
+</dd>
+<dt>save_dir<span class="classifier">str</span></dt><dd><p>Path to save the figure.</p>
+</dd>
+</dl>
+</section>
+<section id="id32">
+<h3>Examples<a class="headerlink" href="#id32" title="Permalink to this heading"></a></h3>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">analysis_tools.metrics</span> <span class="kn">import</span> <span class="n">curve_analysis</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">y_true</span>  <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">y_score</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.4</span><span class="p">,</span> <span class="mf">0.35</span><span class="p">,</span> <span class="mf">0.8</span><span class="p">,</span> <span class="mf">0.85</span><span class="p">,</span> <span class="mf">0.8</span><span class="p">,</span> <span class="mf">0.9</span><span class="p">,</span> <span class="mf">0.95</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">curve_analysis</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_score</span><span class="p">,</span> <span class="n">save_dir</span><span class="o">=</span><span class="s1">&#39;.&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="analysis_tools.metrics.get_feature_importance">
+<span class="sig-prename descclassname"><span class="pre">analysis_tools.metrics.</span></span><span class="sig-name descname"><span class="pre">get_feature_importance</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bins</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">problem</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'classification'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">save_dir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">figsize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">plot_kws</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/analysis_tools/metrics.html#get_feature_importance"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#analysis_tools.metrics.get_feature_importance" title="Permalink to this definition"></a></dt>
+<dd><p>Get feature importance using RandomForest model.</p>
+<p>The metrics are mean decrease in impurity, mean accuracy decrease, mean rank</p>
+<section id="id33">
+<h3>Parameters<a class="headerlink" href="#id33" title="Permalink to this heading"></a></h3>
+<dl class="simple">
+<dt>data<span class="classifier">pandas.DataFrame</span></dt><dd><p>DataFrame to be analyzed.</p>
+</dd>
+<dt>target<span class="classifier">str</span></dt><dd><p>Target feature.</p>
+</dd>
+<dt>bins<span class="classifier">int</span></dt><dd><p>Number of bins.</p>
+</dd>
+<dt>problem<span class="classifier">str</span></dt><dd><p>Problem type.(<cite>classification</cite> or <cite>regression</cite>)</p>
+</dd>
+<dt>save_dir<span class="classifier">str</span></dt><dd><p>Directory path to save the plot.</p>
+</dd>
+<dt>figsize<span class="classifier">tuple</span></dt><dd><p>Figure size.</p>
+</dd>
+</dl>
+</section>
+<section id="id34">
+<h3>Returns<a class="headerlink" href="#id34" title="Permalink to this heading"></a></h3>
+<dl class="simple">
+<dt>pandas.DataFrame</dt><dd><p>Feature importances.</p>
+</dd>
+</dl>
+</section>
+<section id="id35">
+<h3>Examples<a class="headerlink" href="#id35" title="Permalink to this heading"></a></h3>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">analysis_tools.eda</span> <span class="k">as</span> <span class="nn">eda</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s1">&#39;a&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="s1">&#39;b&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;c&#39;</span><span class="p">,</span> <span class="s1">&#39;d&#39;</span><span class="p">,</span> <span class="s1">&#39;e&#39;</span><span class="p">],</span> <span class="s1">&#39;c&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">30</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">]})</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">num_features</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;c&#39;</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">cat_features</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">num_features</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">data</span><span class="p">[</span><span class="n">num_features</span><span class="p">]</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="n">num_features</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">data</span><span class="p">[</span><span class="n">cat_features</span><span class="p">]</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="n">cat_features</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s1">&#39;category&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">eda</span><span class="o">.</span><span class="n">get_feature_importance</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="n">save_dir</span><span class="o">=</span><span class="s1">&#39;.&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="analysis_tools.metrics.plot_learning_curve">
+<span class="sig-prename descclassname"><span class="pre">analysis_tools.metrics.</span></span><span class="sig-name descname"><span class="pre">plot_learning_curve</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">X_train</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_train</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">X_val</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_val</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_subsets_step</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">problem</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'classification'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">save_dir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">figsize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">plot_kws</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/analysis_tools/metrics.html#plot_learning_curve"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#analysis_tools.metrics.plot_learning_curve" title="Permalink to this definition"></a></dt>
+<dd><p>Plot learning curve</p>
+<section id="id36">
+<h3>Parameters<a class="headerlink" href="#id36" title="Permalink to this heading"></a></h3>
+<dl class="simple">
+<dt>model<span class="classifier">sklearn.base.BaseEstimator</span></dt><dd><p>Model to train.</p>
+</dd>
+<dt>X_train<span class="classifier">array-like of shape (n_samples, n_features)</span></dt><dd><p>Training data.</p>
+</dd>
+<dt>y_train<span class="classifier">array-like of shape (n_samples,)</span></dt><dd><p>Training target values.</p>
+</dd>
+<dt>X_val<span class="classifier">array-like of shape (n_samples, n_features)</span></dt><dd><p>Validation data.</p>
+</dd>
+<dt>y_val<span class="classifier">array-like of shape (n_samples,)</span></dt><dd><p>Validation target values.</p>
+</dd>
+<dt>n_subsets_step<span class="classifier">int</span></dt><dd><p>Step size for subsets.</p>
+</dd>
+<dt>problem<span class="classifier">str</span></dt><dd><p>Problem type.(<cite>classification</cite> or <cite>regression</cite>)</p>
+</dd>
+<dt>save_dir<span class="classifier">str</span></dt><dd><p>Directory path to save the plot.</p>
+</dd>
+<dt>figsize<span class="classifier">tuple</span></dt><dd><p>Figure size.</p>
+</dd>
+</dl>
+</section>
+<section id="id37">
+<h3>Examples<a class="headerlink" href="#id37" title="Permalink to this heading"></a></h3>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">analysis_tools.metrics</span> <span class="kn">import</span> <span class="n">plot_learning_curve</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="kn">import</span> <span class="n">LogisticRegression</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">X_train</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">y_train</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">X_val</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">y_val</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">model</span> <span class="o">=</span> <span class="n">LogisticRegression</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">plot_learning_curve</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">X_val</span><span class="p">,</span> <span class="n">y_val</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+</dd></dl>
+
+</section>
+<section id="module-analysis_tools.modeling">
+<span id="analysis-tools-modeling-module"></span><h2>analysis_tools.modeling module<a class="headerlink" href="#module-analysis_tools.modeling" title="Permalink to this heading"></a></h2>
+<p>Modeling analysis tools</p>
+<p>Modeling wrapping functions or classes are defined here.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="analysis_tools.modeling.generate_dataloader_torch">
+<span class="sig-prename descclassname"><span class="pre">analysis_tools.modeling.</span></span><span class="sig-name descname"><span class="pre">generate_dataloader_torch</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">batch_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">32</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">shuffle</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">device</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/analysis_tools/modeling.html#generate_dataloader_torch"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#analysis_tools.modeling.generate_dataloader_torch" title="Permalink to this definition"></a></dt>
+<dd><p>Generate TensorFlow dataset from array-like data (X, y)</p>
+<section id="id38">
+<h3>Parameters<a class="headerlink" href="#id38" title="Permalink to this heading"></a></h3>
+<dl class="simple">
+<dt>X<span class="classifier">array-like</span></dt><dd><p>Input data</p>
+</dd>
+<dt>y<span class="classifier">numpy.ndarray (default=None)</span></dt><dd><p>Output data</p>
+</dd>
+<dt>batch_size<span class="classifier">int (default=32)</span></dt><dd><p>Batch size</p>
+</dd>
+<dt>shuffle<span class="classifier">bool (default=True)</span></dt><dd><p>Whether to shuffle data</p>
+</dd>
+<dt>device<span class="classifier">str (default=None)</span></dt><dd><p>Device to load the data</p>
+</dd>
+</dl>
+</section>
+<section id="id39">
+<h3>Returns<a class="headerlink" href="#id39" title="Permalink to this heading"></a></h3>
+<dl class="simple">
+<dt>PyTorch dataloader<span class="classifier">torch.utils.data.DataLoader</span></dt><dd><p>Generated dataloader</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="analysis_tools.modeling.generate_dataset_tf">
+<span class="sig-prename descclassname"><span class="pre">analysis_tools.modeling.</span></span><span class="sig-name descname"><span class="pre">generate_dataset_tf</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">batch_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">32</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">shuffle</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/analysis_tools/modeling.html#generate_dataset_tf"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#analysis_tools.modeling.generate_dataset_tf" title="Permalink to this definition"></a></dt>
+<dd><p>Generate TensorFlow dataset from array-like data (X, y)</p>
+<section id="id40">
+<h3>Parameters<a class="headerlink" href="#id40" title="Permalink to this heading"></a></h3>
+<dl class="simple">
+<dt>X<span class="classifier">array-like</span></dt><dd><p>Input data</p>
+</dd>
+<dt>y<span class="classifier">numpy.ndarray (default=None)</span></dt><dd><p>Output data</p>
+</dd>
+<dt>batch_size<span class="classifier">int (default=32)</span></dt><dd><p>Batch size</p>
+</dd>
+<dt>shuffle<span class="classifier">bool (default=True)</span></dt><dd><p>Whether to shuffle data</p>
+</dd>
+</dl>
+</section>
+<section id="id41">
+<h3>Returns<a class="headerlink" href="#id41" title="Permalink to this heading"></a></h3>
+<dl class="simple">
+<dt>TensorFlow dataset<span class="classifier">tf.data.Dataset</span></dt><dd><p>Generated dataset</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="analysis_tools.modeling.get_scaled_model">
+<span class="sig-prename descclassname"><span class="pre">analysis_tools.modeling.</span></span><span class="sig-name descname"><span class="pre">get_scaled_model</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scaler</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/analysis_tools/modeling.html#get_scaled_model"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#analysis_tools.modeling.get_scaled_model" title="Permalink to this definition"></a></dt>
+<dd><p>Creates a pipeline that applies the given scaler to the given model.</p>
+<section id="id42">
+<h3>Parameters<a class="headerlink" href="#id42" title="Permalink to this heading"></a></h3>
+<dl class="simple">
+<dt>model<span class="classifier">sklearn model</span></dt><dd><p>sklearn model.</p>
+</dd>
+<dt>scaler<span class="classifier">sklearn scaler</span></dt><dd><p>sklearn scaler.</p>
+</dd>
+</dl>
+</section>
+<section id="id43">
+<h3>Returns<a class="headerlink" href="#id43" title="Permalink to this heading"></a></h3>
+<p>scaled sklearn model</p>
+</section>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="analysis_tools.modeling.save_tree_visualization">
+<span class="sig-prename descclassname"><span class="pre">analysis_tools.modeling.</span></span><span class="sig-name descname"><span class="pre">save_tree_visualization</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fitted_model</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">X</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">file_path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">feature_names</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">class_names</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">orientation</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'LR'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">test_sample</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/analysis_tools/modeling.html#save_tree_visualization"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#analysis_tools.modeling.save_tree_visualization" title="Permalink to this definition"></a></dt>
+<dd><p>Save a dtreeviz visualization of the given model.</p>
+<section id="id44">
+<h3>Parameters<a class="headerlink" href="#id44" title="Permalink to this heading"></a></h3>
+<dl class="simple">
+<dt>fitted_model<span class="classifier">sklearn model</span></dt><dd><p>sklearn model fitted.</p>
+</dd>
+<dt>X<span class="classifier">pandas.dataframe or numpy.array</span></dt><dd><p>Feature array</p>
+</dd>
+<dt>y<span class="classifier">pandas.series or numpy.array</span></dt><dd><p>Target array</p>
+</dd>
+<dt>file_path<span class="classifier">string</span></dt><dd><p>Path to save the dtreeviz visualization. file_path must end with ‘.svg’.</p>
+</dd>
+<dt>feature_names<span class="classifier">list of strings</span></dt><dd><p>List of feature names.</p>
+</dd>
+<dt>class_names<span class="classifier">list of strings</span></dt><dd><p>List of class names.</p>
+</dd>
+<dt>orientation<span class="classifier">string</span></dt><dd><p>Orientation of the tree.
+‘LR’ for left to right, ‘TB’ for top to bottom.</p>
+</dd>
+<dt>test_sample<span class="classifier">pandas.series or numpy.array</span></dt><dd><p>One sample of test data</p>
+</dd>
+</dl>
+</section>
+<section id="id45">
+<h3>Examples<a class="headerlink" href="#id45" title="Permalink to this heading"></a></h3>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">analysis_tools.modeling</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">sklearn.datasets</span> <span class="kn">import</span> <span class="n">load_iris</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">sklearn.tree</span> <span class="kn">import</span> <span class="n">DecisionTreeClassifier</span>
+</pre></div>
+</div>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">iris</span> <span class="o">=</span> <span class="n">load_iris</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">X</span> <span class="o">=</span> <span class="n">iris</span><span class="o">.</span><span class="n">data</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">y</span> <span class="o">=</span> <span class="n">iris</span><span class="o">.</span><span class="n">target</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">model</span> <span class="o">=</span> <span class="n">DecisionTreeClassifier</span><span class="p">(</span><span class="n">max_depth</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">save_tree_visualization</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="s1">&#39;iris_tree.svg&#39;</span><span class="p">,</span> <span class="n">feature_names</span><span class="o">=</span><span class="n">iris</span><span class="o">.</span><span class="n">feature_names</span><span class="p">,</span> <span class="n">class_names</span><span class="o">=</span><span class="nb">list</span><span class="p">(</span><span class="n">iris</span><span class="o">.</span><span class="n">target_names</span><span class="p">),</span> <span class="n">test_sample</span><span class="o">=</span><span class="n">X</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+</pre></div>
+</div>
+</section>
+</dd></dl>
+
+</section>
+<section id="module-analysis_tools.preprocessing">
+<span id="analysis-tools-preprocessing-module"></span><h2>analysis_tools.preprocessing module<a class="headerlink" href="#module-analysis_tools.preprocessing" title="Permalink to this heading"></a></h2>
+<p>Preprocessing analysis tools</p>
+<p>Preprocessing wrapping functions or classes are defined here.</p>
+</section>
+<section id="module-analysis_tools.random">
+<span id="analysis-tools-random-module"></span><h2>analysis_tools.random module<a class="headerlink" href="#module-analysis_tools.random" title="Permalink to this heading"></a></h2>
+<p>Handling randomness analysis tools</p>
+<p>Randomness controlling functions or classes are defined here.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="analysis_tools.random.set_random_seed">
+<span class="sig-prename descclassname"><span class="pre">analysis_tools.random.</span></span><span class="sig-name descname"><span class="pre">set_random_seed</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">seed</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/analysis_tools/random.html#set_random_seed"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#analysis_tools.random.set_random_seed" title="Permalink to this definition"></a></dt>
+<dd><p>Set random seed for reproducibility without using TensorFlow, PyTorch</p>
+<section id="id46">
+<h3>Parameters<a class="headerlink" href="#id46" title="Permalink to this heading"></a></h3>
+<dl class="simple">
+<dt>seed<span class="classifier">int</span></dt><dd><p>Random seed</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="analysis_tools.random.set_random_seed_tf">
+<span class="sig-prename descclassname"><span class="pre">analysis_tools.random.</span></span><span class="sig-name descname"><span class="pre">set_random_seed_tf</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">seed</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/analysis_tools/random.html#set_random_seed_tf"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#analysis_tools.random.set_random_seed_tf" title="Permalink to this definition"></a></dt>
+<dd><p>Set random seed for reproducibility on TensorFlow</p>
+<section id="id47">
+<h3>Parameters<a class="headerlink" href="#id47" title="Permalink to this heading"></a></h3>
+<dl class="simple">
+<dt>seed<span class="classifier">int</span></dt><dd><p>Random seed</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="analysis_tools.random.set_random_seed_torch">
+<span class="sig-prename descclassname"><span class="pre">analysis_tools.random.</span></span><span class="sig-name descname"><span class="pre">set_random_seed_torch</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">seed</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/analysis_tools/random.html#set_random_seed_torch"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#analysis_tools.random.set_random_seed_torch" title="Permalink to this definition"></a></dt>
+<dd><p>Set random seed for reproducibility on PyTorch</p>
+<section id="id48">
+<h3>Parameters<a class="headerlink" href="#id48" title="Permalink to this heading"></a></h3>
+<dl class="simple">
+<dt>seed<span class="classifier">int</span></dt><dd><p>Random seed</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+</section>
+<section id="module-analysis_tools.utils">
+<span id="analysis-tools-utils-module"></span><h2>analysis_tools.utils module<a class="headerlink" href="#module-analysis_tools.utils" title="Permalink to this heading"></a></h2>
+<p>Utility analysis tools</p>
+<p>Utility functions or classes are defined here.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="analysis_tools.utils.check_nan">
+<span class="sig-prename descclassname"><span class="pre">analysis_tools.utils.</span></span><span class="sig-name descname"><span class="pre">check_nan</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/analysis_tools/utils.html#check_nan"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#analysis_tools.utils.check_nan" title="Permalink to this definition"></a></dt>
+<dd><p>Print number of data and nan rows</p>
+<section id="id49">
+<h3>Parameters<a class="headerlink" href="#id49" title="Permalink to this heading"></a></h3>
+<dl class="simple">
+<dt>data<span class="classifier">pandas.DataFrame</span></dt><dd><p>Input data</p>
+</dd>
+<dt>name<span class="classifier">str</span></dt><dd><p>Name to identify data</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="analysis_tools.utils.set_memory_growth">
+<span class="sig-prename descclassname"><span class="pre">analysis_tools.utils.</span></span><span class="sig-name descname"><span class="pre">set_memory_growth</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/analysis_tools/utils.html#set_memory_growth"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#analysis_tools.utils.set_memory_growth" title="Permalink to this definition"></a></dt>
+<dd><p>Allocate only the GPU memory needed for runtime.</p>
+</dd></dl>
+
+</section>
+<section id="module-analysis_tools">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-analysis_tools" title="Permalink to this heading"></a></h2>
+<p>analysis_tools package</p>
+<p>Advanced tools for analysis of data.</p>
+<section id="id50">
+<h3>Examples<a class="headerlink" href="#id50" title="Permalink to this heading"></a></h3>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">analysis_tools.eda</span> <span class="kn">import</span> <span class="o">*</span>
+</pre></div>
+</div>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="modules.html" class="btn btn-neutral float-left" title="analysis_tools" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="analysis_tools.common.html" class="btn btn-neutral float-right" title="analysis_tools.common package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Dongjin Yoon.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

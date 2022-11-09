@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>analysis_tools.common package &mdash; analysis-tools 0.2.1 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/sphinx_highlight.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="analysis_tools package" href="analysis_tools.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="index.html" class="icon icon-home"> analysis-tools
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">analysis_tools</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="analysis_tools.html">analysis_tools package</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="analysis_tools.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l4 current"><a class="current reference internal" href="#">analysis_tools.common package</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="analysis_tools.html#submodules">Submodules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="analysis_tools.html#module-analysis_tools.eda">analysis_tools.eda module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="analysis_tools.html#module-analysis_tools.metrics">analysis_tools.metrics module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="analysis_tools.html#module-analysis_tools.modeling">analysis_tools.modeling module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="analysis_tools.html#module-analysis_tools.preprocessing">analysis_tools.preprocessing module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="analysis_tools.html#module-analysis_tools.random">analysis_tools.random module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="analysis_tools.html#module-analysis_tools.utils">analysis_tools.utils module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="analysis_tools.html#module-analysis_tools">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">analysis-tools</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home"></a></li>
+          <li class="breadcrumb-item"><a href="modules.html">analysis_tools</a></li>
+          <li class="breadcrumb-item"><a href="analysis_tools.html">analysis_tools package</a></li>
+      <li class="breadcrumb-item active">analysis_tools.common package</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/analysis_tools.common.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="analysis-tools-common-package">
+<h1>analysis_tools.common package<a class="headerlink" href="#analysis-tools-common-package" title="Permalink to this heading"></a></h1>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this heading"></a></h2>
+</section>
+<section id="module-analysis_tools.common.config">
+<span id="analysis-tools-common-config-module"></span><h2>analysis_tools.common.config module<a class="headerlink" href="#module-analysis_tools.common.config" title="Permalink to this heading"></a></h2>
+<p>Configuration module</p>
+<p>Commonly used constant parameters are defined in capital letters.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="analysis_tools.common.config.PARAMS">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">analysis_tools.common.config.</span></span><span class="sig-name descname"><span class="pre">PARAMS</span></span><a class="reference internal" href="_modules/analysis_tools/common/config.html#PARAMS"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#analysis_tools.common.config.PARAMS" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Global parameters</p>
+<section id="parameters">
+<h3>Parameters<a class="headerlink" href="#parameters" title="Permalink to this heading"></a></h3>
+<dl class="simple">
+<dt>seed<span class="classifier">int</span></dt><dd><p>Random seed</p>
+</dd>
+<dt>test_size<span class="classifier">float</span></dt><dd><p>Size of test set size when splitting dataset</p>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="analysis_tools.common.config.PARAMS.get">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">val</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/analysis_tools/common/config.html#PARAMS.get"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#analysis_tools.common.config.PARAMS.get" title="Permalink to this definition"></a></dt>
+<dd><p>Return member variable(key) if val is None else val</p>
+<section id="id1">
+<h4>Parameters<a class="headerlink" href="#id1" title="Permalink to this heading"></a></h4>
+<dl class="simple">
+<dt>key<span class="classifier">str</span></dt><dd><p>Name of parameter</p>
+</dd>
+<dt>val<span class="classifier">any dtype</span></dt><dd><p>Value of the parameter</p>
+</dd>
+</dl>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">assert</span> <span class="n">PARAMS</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;seed&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">assert</span> <span class="n">PARAMS</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;seed&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span> <span class="o">==</span> <span class="n">PARAMS</span><span class="o">.</span><span class="n">seed</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">assert</span> <span class="n">PLOT_PARAMS</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;figsize&#39;</span><span class="p">,</span> <span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="mi">10</span><span class="p">))</span> <span class="o">==</span> <span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">assert</span> <span class="n">PLOT_PARAMS</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;alpha&#39;</span><span class="p">,</span> <span class="p">{</span><span class="s1">&#39;alpha&#39;</span><span class="p">:</span> <span class="mf">0.5</span><span class="p">})</span> <span class="o">==</span> <span class="mf">0.5</span>
+</pre></div>
+</div>
+</section>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="analysis_tools.common.config.PARAMS.seed">
+<span class="sig-name descname"><span class="pre">seed</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">42</span></em><a class="headerlink" href="#analysis_tools.common.config.PARAMS.seed" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="analysis_tools.common.config.PARAMS.test_size">
+<span class="sig-name descname"><span class="pre">test_size</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0.2</span></em><a class="headerlink" href="#analysis_tools.common.config.PARAMS.test_size" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</section>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="analysis_tools.common.config.PLOT_PARAMS">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">analysis_tools.common.config.</span></span><span class="sig-name descname"><span class="pre">PLOT_PARAMS</span></span><a class="reference internal" href="_modules/analysis_tools/common/config.html#PLOT_PARAMS"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#analysis_tools.common.config.PLOT_PARAMS" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#analysis_tools.common.config.PARAMS" title="analysis_tools.common.config.PARAMS"><code class="xref py py-class docutils literal notranslate"><span class="pre">PARAMS</span></code></a></p>
+<p>Global plot parameters</p>
+<section id="id2">
+<h3>Parameters<a class="headerlink" href="#id2" title="Permalink to this heading"></a></h3>
+<dl class="simple">
+<dt>show_plot<span class="classifier">bool</span></dt><dd><p>Whether to show plot</p>
+</dd>
+<dt>figsize<span class="classifier">tuple</span></dt><dd><p>Figure size</p>
+</dd>
+<dt>bins<span class="classifier">int</span></dt><dd><p>Number of bins for histogram plot</p>
+</dd>
+<dt>n_classes<span class="classifier">int</span></dt><dd><p>Number of classes to show for categorical features</p>
+</dd>
+<dt>n_cols<span class="classifier">int</span></dt><dd><p>Number of columns for subplots figure</p>
+</dd>
+<dt>alpha<span class="classifier">float</span></dt><dd><p>Transparency</p>
+</dd>
+<dt>marker_size<span class="classifier">float</span></dt><dd><p>Marker size for scatter plot</p>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="analysis_tools.common.config.PLOT_PARAMS.alpha">
+<span class="sig-name descname"><span class="pre">alpha</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0.3</span></em><a class="headerlink" href="#analysis_tools.common.config.PLOT_PARAMS.alpha" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="analysis_tools.common.config.PLOT_PARAMS.bins">
+<span class="sig-name descname"><span class="pre">bins</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">50</span></em><a class="headerlink" href="#analysis_tools.common.config.PLOT_PARAMS.bins" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="analysis_tools.common.config.PLOT_PARAMS.figsize">
+<span class="sig-name descname"><span class="pre">figsize</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">(30,</span> <span class="pre">10)</span></em><a class="headerlink" href="#analysis_tools.common.config.PLOT_PARAMS.figsize" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="analysis_tools.common.config.PLOT_PARAMS.marker_size">
+<span class="sig-name descname"><span class="pre">marker_size</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">20</span></em><a class="headerlink" href="#analysis_tools.common.config.PLOT_PARAMS.marker_size" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="analysis_tools.common.config.PLOT_PARAMS.n_classes">
+<span class="sig-name descname"><span class="pre">n_classes</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">5</span></em><a class="headerlink" href="#analysis_tools.common.config.PLOT_PARAMS.n_classes" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="analysis_tools.common.config.PLOT_PARAMS.n_cols">
+<span class="sig-name descname"><span class="pre">n_cols</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">5</span></em><a class="headerlink" href="#analysis_tools.common.config.PLOT_PARAMS.n_cols" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="analysis_tools.common.config.PLOT_PARAMS.show_plot">
+<span class="sig-name descname"><span class="pre">show_plot</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">True</span></em><a class="headerlink" href="#analysis_tools.common.config.PLOT_PARAMS.show_plot" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</section>
+</dd></dl>
+
+</section>
+<section id="module-analysis_tools.common.env">
+<span id="analysis-tools-common-env-module"></span><h2>analysis_tools.common.env module<a class="headerlink" href="#module-analysis_tools.common.env" title="Permalink to this heading"></a></h2>
+<p>Environment module</p>
+<p>Commonly used packages and default settings are defined here.</p>
+</section>
+<section id="module-analysis_tools.common.plot_utils">
+<span id="analysis-tools-common-plot-utils-module"></span><h2>analysis_tools.common.plot_utils module<a class="headerlink" href="#module-analysis_tools.common.plot_utils" title="Permalink to this heading"></a></h2>
+<p>Plot utility module</p>
+<p>Commonly used plot related utility functions or classes are defined here.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="analysis_tools.common.plot_utils.FigProcessor">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">analysis_tools.common.plot_utils.</span></span><span class="sig-name descname"><span class="pre">FigProcessor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fig</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">save_dir</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">title</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tight_layout</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">title_options</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">{}</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/analysis_tools/common/plot_utils.html#FigProcessor"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#analysis_tools.common.plot_utils.FigProcessor" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">ContextDecorator</span></code></p>
+<p>Context manager for processing figure.</p>
+<p>Plot the figure and save it to the specified path.</p>
+<section id="id3">
+<h3>Parameters<a class="headerlink" href="#id3" title="Permalink to this heading"></a></h3>
+<dl class="simple">
+<dt>fig<span class="classifier">matplotlib.figure.Figure</span></dt><dd><p>Figure to be processed.</p>
+</dd>
+<dt>save_dir<span class="classifier">str</span></dt><dd><p>Directory path to save the figure.</p>
+</dd>
+<dt>title<span class="classifier">str</span></dt><dd><p>Super title of the figure.</p>
+</dd>
+<dt>title_options<span class="classifier">dict</span></dt><dd><p>Options for super title.</p>
+</dd>
+<dt>tight_layout<span class="classifier">bool</span></dt><dd><p>Whether to use tight layout.</p>
+</dd>
+</dl>
+</section>
+<section id="examples">
+<h3>Examples<a class="headerlink" href="#examples" title="Permalink to this heading"></a></h3>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">analysis_tools.common.util</span> <span class="kn">import</span> <span class="n">FigProcessor</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">with</span> <span class="n">FigProcessor</span><span class="p">(</span><span class="n">fig</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Feature distribution&quot;</span><span class="p">):</span>
+<span class="gp">... </span>    <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="o">...</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="analysis_tools.common.plot_utils.SeabornFig2Grid">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">analysis_tools.common.plot_utils.</span></span><span class="sig-name descname"><span class="pre">SeabornFig2Grid</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">seaborngrid</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fig</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">subplot_spec</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/analysis_tools/common/plot_utils.html#SeabornFig2Grid"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#analysis_tools.common.plot_utils.SeabornFig2Grid" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+</dd></dl>
+
+</section>
+<section id="module-analysis_tools.common.utils">
+<span id="analysis-tools-common-utils-module"></span><h2>analysis_tools.common.utils module<a class="headerlink" href="#module-analysis_tools.common.utils" title="Permalink to this heading"></a></h2>
+<p>Utility module</p>
+<p>Commonly used utility functions or classes are defined here.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="analysis_tools.common.utils.MetaSingleton">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">analysis_tools.common.utils.</span></span><span class="sig-name descname"><span class="pre">MetaSingleton</span></span><a class="reference internal" href="_modules/analysis_tools/common/utils.html#MetaSingleton"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#analysis_tools.common.utils.MetaSingleton" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">type</span></code></p>
+<p>Superclass for singleton class</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="analysis_tools.common.utils.Timer">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">analysis_tools.common.utils.</span></span><span class="sig-name descname"><span class="pre">Timer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/analysis_tools/common/utils.html#Timer"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#analysis_tools.common.utils.Timer" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">ContextDecorator</span></code></p>
+<p>Context manager for timing the execution of a block of code.</p>
+<section id="id4">
+<h3>Parameters<a class="headerlink" href="#id4" title="Permalink to this heading"></a></h3>
+<dl class="simple">
+<dt>name<span class="classifier">str</span></dt><dd><p>Name of the timer.</p>
+</dd>
+</dl>
+</section>
+<section id="id5">
+<h3>Examples<a class="headerlink" href="#id5" title="Permalink to this heading"></a></h3>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">time</span> <span class="kn">import</span> <span class="n">sleep</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">analysis_tools.common.util</span> <span class="kn">import</span> <span class="n">Timer</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">with</span> <span class="n">Timer</span><span class="p">(</span><span class="s1">&#39;Code1&#39;</span><span class="p">):</span>
+<span class="gp">... </span>    <span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="gp">...</span>
+<span class="go">* Code1: 1.00s (0.02m)</span>
+</pre></div>
+</div>
+</section>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="analysis_tools.common.utils.double2float">
+<span class="sig-prename descclassname"><span class="pre">analysis_tools.common.utils.</span></span><span class="sig-name descname"><span class="pre">double2float</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/analysis_tools/common/utils.html#double2float"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#analysis_tools.common.utils.double2float" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="analysis_tools.common.utils.dt2str">
+<span class="sig-prename descclassname"><span class="pre">analysis_tools.common.utils.</span></span><span class="sig-name descname"><span class="pre">dt2str</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dt</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#analysis_tools.common.utils.dt2str" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="analysis_tools.common.utils.dtype">
+<span class="sig-prename descclassname"><span class="pre">analysis_tools.common.utils.</span></span><span class="sig-name descname"><span class="pre">dtype</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data_f</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/analysis_tools/common/utils.html#dtype"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#analysis_tools.common.utils.dtype" title="Permalink to this definition"></a></dt>
+<dd><p>Return ‘num’ if data type is number or datetime else ‘cat’</p>
+<section id="id6">
+<h3>Parameters<a class="headerlink" href="#id6" title="Permalink to this heading"></a></h3>
+<dl class="simple">
+<dt>data_f<span class="classifier">array-like</span></dt><dd><p>Input array</p>
+</dd>
+</dl>
+</section>
+<section id="returns">
+<h3>Returns<a class="headerlink" href="#returns" title="Permalink to this heading"></a></h3>
+<dl class="simple">
+<dt>Data Type<span class="classifier">str</span></dt><dd><p>Data type should be ‘num’ or ‘cat’</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="analysis_tools.common.utils.farray">
+<span class="sig-prename descclassname"><span class="pre">analysis_tools.common.utils.</span></span><span class="sig-name descname"><span class="pre">farray</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">shape</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">val</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#analysis_tools.common.utils.farray" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="analysis_tools.common.utils.iarray">
+<span class="sig-prename descclassname"><span class="pre">analysis_tools.common.utils.</span></span><span class="sig-name descname"><span class="pre">iarray</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">shape</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">val</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#analysis_tools.common.utils.iarray" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="analysis_tools.common.utils.ini2dict">
+<span class="sig-prename descclassname"><span class="pre">analysis_tools.common.utils.</span></span><span class="sig-name descname"><span class="pre">ini2dict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/analysis_tools/common/utils.html#ini2dict"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#analysis_tools.common.utils.ini2dict" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="analysis_tools.common.utils.is_datetime_str">
+<span class="sig-prename descclassname"><span class="pre">analysis_tools.common.utils.</span></span><span class="sig-name descname"><span class="pre">is_datetime_str</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data_f</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/analysis_tools/common/utils.html#is_datetime_str"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#analysis_tools.common.utils.is_datetime_str" title="Permalink to this definition"></a></dt>
+<dd><p>Check if the input string is datetime format or not</p>
+<section id="id7">
+<h3>Parameters<a class="headerlink" href="#id7" title="Permalink to this heading"></a></h3>
+<dl class="simple">
+<dt>data_f<span class="classifier">array-like</span></dt><dd><p>str dtype array</p>
+</dd>
+</dl>
+</section>
+<section id="id8">
+<h3>Returns<a class="headerlink" href="#id8" title="Permalink to this heading"></a></h3>
+<p>Whether the input string is datetime format or not</p>
+</section>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="analysis_tools.common.utils.lmap">
+<span class="sig-prename descclassname"><span class="pre">analysis_tools.common.utils.</span></span><span class="sig-name descname"><span class="pre">lmap</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fn</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">arr</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scheduler</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/analysis_tools/common/utils.html#lmap"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#analysis_tools.common.utils.lmap" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="analysis_tools.common.utils.ls_all">
+<span class="sig-prename descclassname"><span class="pre">analysis_tools.common.utils.</span></span><span class="sig-name descname"><span class="pre">ls_all</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#analysis_tools.common.utils.ls_all" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="analysis_tools.common.utils.ls_dir">
+<span class="sig-prename descclassname"><span class="pre">analysis_tools.common.utils.</span></span><span class="sig-name descname"><span class="pre">ls_dir</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#analysis_tools.common.utils.ls_dir" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="analysis_tools.common.utils.ls_file">
+<span class="sig-prename descclassname"><span class="pre">analysis_tools.common.utils.</span></span><span class="sig-name descname"><span class="pre">ls_file</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#analysis_tools.common.utils.ls_file" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="analysis_tools.common.utils.lstarmap">
+<span class="sig-prename descclassname"><span class="pre">analysis_tools.common.utils.</span></span><span class="sig-name descname"><span class="pre">lstarmap</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fn</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">arrs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scheduler</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/analysis_tools/common/utils.html#lstarmap"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#analysis_tools.common.utils.lstarmap" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="analysis_tools.common.utils.str2bool">
+<span class="sig-prename descclassname"><span class="pre">analysis_tools.common.utils.</span></span><span class="sig-name descname"><span class="pre">str2bool</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">s</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/analysis_tools/common/utils.html#str2bool"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#analysis_tools.common.utils.str2bool" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="analysis_tools.common.utils.str2dt">
+<span class="sig-prename descclassname"><span class="pre">analysis_tools.common.utils.</span></span><span class="sig-name descname"><span class="pre">str2dt</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">s</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#analysis_tools.common.utils.str2dt" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="analysis_tools.common.utils.tprint">
+<span class="sig-prename descclassname"><span class="pre">analysis_tools.common.utils.</span></span><span class="sig-name descname"><span class="pre">tprint</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dic</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#analysis_tools.common.utils.tprint" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="analysis_tools.common.utils.vars_">
+<span class="sig-prename descclassname"><span class="pre">analysis_tools.common.utils.</span></span><span class="sig-name descname"><span class="pre">vars_</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">obj</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#analysis_tools.common.utils.vars_" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</section>
+<section id="module-analysis_tools.common">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-analysis_tools.common" title="Permalink to this heading"></a></h2>
+<p>Package including commonly used modules</p>
+<section id="id9">
+<h3>Examples<a class="headerlink" href="#id9" title="Permalink to this heading"></a></h3>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">analysis_tools.common</span> <span class="kn">import</span> <span class="o">*</span>
+</pre></div>
+</div>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="analysis_tools.html" class="btn btn-neutral float-left" title="analysis_tools package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Dongjin Yoon.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
