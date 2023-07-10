@@ -5,7 +5,7 @@ This module contains functions and classes for exploratory data analysis.
 # Author: Dongjin Yoon <djyoon0223@gmail.com>
 
 
-from analysis_tools.common import *
+from analysis_tools.utils import *
 
 
 # Utility function

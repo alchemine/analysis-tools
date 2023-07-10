@@ -8,6 +8,7 @@ Commonly used utility functions or classes are defined here.
 from analysis_tools.common.config import *
 from analysis_tools.common.env import *
 from analysis_tools.common.plot_utils import *
+from analysis_tools.common.timer import *
 
 
 # Lambda functions
@@ -18,6 +19,8 @@ ls_dir  = lambda path: [path for path in glob(f"{path}/*") if isdir(path)]
 ls_file = lambda path: [path for path in glob(f"{path}/*") if isfile(path)]
 farray  = lambda shape, val=None: np.full(shape, val, dtype='float32')
 iarray  = lambda shape, val=None: np.full(shape, val, dtype='int32')
+str2dt = lambda s: datetime.datetime.strptime(s, "%Y-%m-%d")
+dt2str = lambda dt: dt.strftime("%Y-%m-%d")
 
 COLORS  = [c['color'] for c in plt.rcParams['axes.prop_cycle']]  # CAUTION: len(COLORS) == 7
 
@@ -28,7 +31,6 @@ def lmap(fn, arr, scheduler=None):
     else:
         tasks = [delayed(fn)(e) for e in arr]
         return list(compute(*tasks, scheduler=scheduler))
-
 def lstarmap(fn, *arrs, scheduler=None):
     assert np.unqiue(list(map(len, arrs))) == 1, "All parameters should have same length."
     if scheduler is None:
@@ -52,12 +54,11 @@ def ini2dict(path):
     config = ConfigParser()
     config.read(path)
     return dict(config._sections)
-str2dt = lambda s: datetime.datetime.strptime(s, "%Y-%m-%d")
-dt2str = lambda dt: dt.strftime("%Y-%m-%d")
-def double2float(data):
-    num_cols = data.select_dtypes('float64').columns
-    data[num_cols] = data[num_cols].astype('float32')
-    return data
+def yaml2dict(path):
+    with open(path, 'r') as f:
+        config = yaml.safe_load(f)
+    return config
+
 
 # Check dtype
 def dtype(data_f):
@@ -73,7 +74,7 @@ def dtype(data_f):
     Data Type : str
         Data type should be 'num' or 'cat'
     """
-    if is_numeric_dtype(data_f):
+    if pd.api.types.is_numeric_dtype(data_f):
         return 'num'
     else:
         return 'cat'
@@ -98,47 +99,8 @@ def is_datetime_str(data_f):
 
     try:
         pd.to_datetime(data_f)
-        # dateutil.parser.parse(sample)
         return True
     except:
-        return False
-
-
-@dataclass
-class Timer(contextlib.ContextDecorator):
-    """Context manager for timing the execution of a block of code.
-
-    Parameters
-    ----------
-    name : str
-        Name of the timer.
-
-    Examples
-    --------
-    >>> from time import sleep
-    >>> from analysis_tools.common.util import Timer
-    >>> with Timer('Code1'):
-    ...     sleep(1)
-    ...
-    * Code1: 1.00s (0.02m)
-    """
-    def __init__(self, name=''):
-        self.name = name
-    def __enter__(self):
-        """Start timing the execution of a block of code.
-        """
-        self.start_time = time()
-        return self
-    def __exit__(self, *exc):
-        """Stop timing the execution of a block of code.
-
-        Parameters
-        ----------
-        exc : tuple
-            Exception information.(dummy)
-        """
-        elapsed_time = time() - self.start_time
-        print(f"* {self.name}: {elapsed_time:.2f}s ({elapsed_time/60:.2f}m)")
         return False
 
 

@@ -10,4 +10,5 @@ Examples
 from .config import *
 from .env import *
 from .plot_utils import *
+from .timer import *
 from .utils import *

@@ -5,7 +5,12 @@ Performance evaluation metrics are defined here.
 # Author: Dongjin Yoon <djyoon0223@gmail.com>
 
 
-from analysis_tools.common import *
+from analysis_tools.utils import *
+from sklearn.metrics import confusion_matrix, accuracy_score, precision_score, recall_score, f1_score, precision_recall_curve, average_precision_score, roc_curve, roc_auc_score, mean_squared_error, r2_score
+from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor
+from sklearn.inspection import permutation_importance
+from sklearn.preprocessing import OrdinalEncoder
+from sklearn.model_selection import train_test_split
 
 
 def confusion_matrix_analysis(y_true, y_pred,                                                                 save_dir=None, figsize=None, **plot_kws):
@@ -37,8 +42,6 @@ def confusion_matrix_analysis(y_true, y_pred,                                   
     >>> y_pred = [0, 0, 0, 1, 1, 1, 1, 1]
     >>> confusion_matrix_analysis(y_true, y_pred, save_dir='.')
     """
-    from sklearn.metrics import confusion_matrix, accuracy_score, precision_score, recall_score, f1_score
-
     normalized_C = confusion_matrix(y_true, y_pred, normalize='true')
     assert all(normalized_C.sum(axis=1) == 1), "Confusion matrix is not normalized"
 
@@ -81,8 +84,6 @@ def curve_analysis(y_true, y_score,                                             
     >>> y_score = [0.1, 0.4, 0.35, 0.8, 0.85, 0.8, 0.9, 0.95]
     >>> curve_analysis(y_true, y_score, save_dir='.')
     """
-    from sklearn.metrics import precision_recall_curve, average_precision_score, roc_curve, roc_auc_score
-
     precisions, recalls, thresholds_pr = precision_recall_curve(y_true, y_score)
     fpr, tpr, thresholds_roc           = roc_curve(y_true, y_score)
     fig, axes = plt.subplots(1, 3, figsize=PLOT_PARAMS.get('figsize', figsize))
@@ -153,10 +154,6 @@ def get_feature_importance(data, target, bins=None, problem='classification',   
     >>> data[cat_features] = data[cat_features].astype('category')
     >>> eda.get_feature_importance(data, 'a', save_dir='.')
     """
-    from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor
-    from sklearn.inspection import permutation_importance
-    from sklearn.preprocessing import OrdinalEncoder
-
     # 1. Split data into X, y
     data               = data.dropna()
     cat_features       = data.select_dtypes('category').columns
@@ -234,12 +231,10 @@ def plot_learning_curve(model, X_train, y_train, X_val, y_val, n_subsets_step=No
     >>> model = LogisticRegression()
     >>> plot_learning_curve(model, X_train, y_train, X_val, y_val)
     """
-    from sklearn.metrics import precision_score, recall_score, f1_score, accuracy_score, mean_squared_error, r2_score
-
     if problem == 'classification':
         error_fn_names = ['F1 score', 'Precision', 'Recall', 'Accuracy']
         error_fns      = [precision_score, recall_score, f1_score, accuracy_score]
-        fig, axes = plt.subplots(4, 1, figsize=PLOT_PARAMS.get('figsize', figsize))
+        fig, axes      = plt.subplots(4, 1, figsize=PLOT_PARAMS.get('figsize', figsize))
     else:
         error_fn_names = ['MSE', 'R-squared']
         error_fns      = [mean_squared_error, r2_score]
@@ -333,9 +328,8 @@ def compare_models(models, X_train, y_train, X_val=None, y_val=None):
     0.580 (train) / 0.425 (val) : KNeighborsRegressor
     0.167 (train) / 0.182 (val) : SVR
     """
-    from sklearn.model_selection import train_test_split
-
     if X_val is None and y_val is None:
+        # TODO: cross validation
         try:  # classification
             X_train, X_val, y_train, y_val = train_test_split(X_train, y_train, stratify=y_train)
         except:  # regression
@@ -353,3 +347,54 @@ def compare_models(models, X_train, y_train, X_val=None, y_val=None):
     for score_train, score_val, model in results:
         print(f"{score_train:.3f} (train) / {score_val:.3f} (val) : {model.__class__.__name__}")
     return results
+
+def save_tree_visualization(fitted_model, X, y, file_path, feature_names=None, class_names=None, orientation='LR', test_sample=None):
+    """
+    Save a dtreeviz visualization of the given model.
+
+    Parameters
+    ----------
+    fitted_model : sklearn model
+        sklearn model fitted.
+
+    X : pandas.dataframe or numpy.array
+        Feature array
+
+    y : pandas.series or numpy.array
+        Target array
+
+    file_path : string
+        Path to save the dtreeviz visualization. file_path must end with '.svg'.
+
+    feature_names : list of strings
+        List of feature names.
+
+    class_names : list of strings
+        List of class names.
+
+    orientation : string
+        Orientation of the tree.
+        'LR' for left to right, 'TB' for top to bottom.
+
+    test_sample : pandas.series or numpy.array
+        One sample of test data
+
+    Examples
+    --------
+    >>> from analysis_tools.modeling import *
+    >>> from sklearn.datasets import load_iris
+    >>> from sklearn.tree import DecisionTreeClassifier
+
+    >>> iris = load_iris()
+    >>> X = iris.data
+    >>> y = iris.target
+    >>> model = DecisionTreeClassifier(max_depth=3)
+    >>> model.fit(X, y)
+
+    >>> save_tree_visualization(model, X, y, 'iris_tree.svg', feature_names=iris.feature_names, class_names=list(iris.target_names), test_sample=X[0])
+    """
+    from dtreeviz.trees import dtreeviz
+
+    viz = dtreeviz(fitted_model, X, y, feature_names=feature_names, class_names=class_names, orientation=orientation, X=test_sample)
+    assert file_path.endswith('.svg'), 'file_path must end with .svg'
+    viz.save(file_path)
