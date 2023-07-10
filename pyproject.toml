@@ -1,7 +1,7 @@
 [tool.poetry]
 name = "analysis-tools"
-version = "0.3.1"
-description = "Analysis tools for machine learning projects"
+version = "0.3.2"
+description = "Analysis tools for Machine learning projects"
 authors = ["Dongjin Yoon (djyoon0223@gmail.com)"]
 readme = "README.md"
 packages = [{include = "analysis_tools"}]
