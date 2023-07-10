@@ -2,7 +2,7 @@
 name = "analysis-tools"
 version = "0.3.2"
 description = "Analysis tools for Machine learning projects"
-authors = ["Dongjin Yoon (djyoon0223@gmail.com)"]
+authors = ["alchemine <djyoon0223@gmail.com>"]
 readme = "README.md"
 packages = [{include = "analysis_tools"}]
 
