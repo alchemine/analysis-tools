@@ -41,7 +41,7 @@ def T(fn):
     """
     @wraps(fn)
     def _log(*args, **kwargs):
-        with Timer():
+        with Timer(fn.__name__):
             rst = fn(*args, **kwargs)
         return rst
     return _log
